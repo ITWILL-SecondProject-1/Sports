@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>Sports</title>
-    <link rel="stylesheet" type="text/css" href="css/mouse.css">
-    <link rel="stylesheet" type="text/css" href="css/auth.css">
+    <link rel="stylesheet" type="text/css" href="css/mouse.css?ver=1">
+    <link rel="stylesheet" type="text/css" href="css/auth.css?ver=1">
 	<jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
 </head>
 <body>
