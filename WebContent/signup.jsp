@@ -3,11 +3,9 @@
 <html>
 <head>
     <title>Sports</title>
-<!--     <link rel="stylesheet" type="text/css" href="resources/static/mouse.css">
-    <link rel="stylesheet" type="text/css" href="resources/static/auth.css"> -->
+    <link rel="stylesheet" type="text/css" href="resources/static/mouse.css">
+    <link rel="stylesheet" type="text/css" href="resources/static/auth.css">
 	<jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-	<jsp:include page = 'partials/mouse_css.jsp' flush = "false"/>
-    <jsp:include page = 'partials/auth_css.jsp' flush = "false"/>
 </head>
 <body>
 <jsp:include page = 'partials/navbar.jsp' flush = "false"/>
