@@ -1,19 +1,21 @@
 package com.sports.model.vo;
 
 public class UserVO {
-	private String user_email;
+	private String email;
 	private String nickname;
 	private String password;
-	private String phone_number;
+	private String phone;
 	private String gender;
 	private String image;
 	
-	public String getUser_email() {
-		return user_email;
+	public String getEmail() {
+		return email;
 	}
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
+	
 	public String getNickname() {
 		return nickname;
 	}
@@ -29,13 +31,13 @@ public class UserVO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public String getPhone_number() {
-		return phone_number;
+
+	public String getPhone() {
+		return phone;
 	}
 	
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	public String getGender() {

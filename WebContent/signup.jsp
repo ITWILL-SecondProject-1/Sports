@@ -16,8 +16,8 @@
             <h3 class="mb-3 font-weight-normal">회원가입</h3>
         </div>
         <div class="mb-3">
-            <label for="user_email">Email address</label>
-            <input type="email" class="form-control" id="user_email" name="user_email" required>
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="mb-3">
             <label for="nickname">Nickname</label>
@@ -28,8 +28,8 @@
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
-            <label for="phone_number">Phone-Number</label>
-            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            <label for="phone">Phone-Number</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
         </div>
 		<div class="form-check">
 		  <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male" checked>

@@ -17,5 +17,14 @@ public class UserDAO {
 		} 
 		return false;
 	}
+	
+	public static UserVO login(UserVO user) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			return ss.selectOne("sports.authenticateUser", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
+	}
 
 }

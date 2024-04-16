@@ -11,13 +11,13 @@
 <div class="cursor" id="cursor"></div>
 <jsp:include page = 'partials/navbar.jsp' flush = "false"/>
 <div class="auth-wrapper">
-    <form method="POST" action="/auth/login">
+    <form method="POST" action="/STP/login">
         <div class="text-center">
             <h3 class="mb-3 font-weight-normal">로그인</h3>
         </div>
         <div class="mb-3">
-            <label for="user_email">Email address</label>
-            <input type="email" class="form-control" id="user_email" name="user_email">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="mb-3">
             <label for="password">Password</label>
