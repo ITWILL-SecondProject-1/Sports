@@ -11,7 +11,7 @@
 <div class="cursor" id="cursor"></div>
 <jsp:include page = 'partials/navbar.jsp' flush = "false"/>
 <div class="auth-wrapper">
-    <form method="POST" action="/auth/login">
+    <form method="POST" action="/STP/login">
         <div class="text-center">
             <h3 class="mb-3 font-weight-normal">로그인</h3>
         </div>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="text-end mt-2">
-            <a role="button" class="btn btn-info" href="/signup">회원 가입</a>
+            <a role="button" class="btn btn-info" href="/STP/signup">회원 가입</a>
         </div>
     </form>
 </div>
