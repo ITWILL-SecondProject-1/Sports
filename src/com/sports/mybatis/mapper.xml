@@ -16,7 +16,7 @@
                 NULL
             </otherwise>
         </choose>
-		);	
+		)
 	</insert>
 
 	<!-- 로그인 -->

@@ -16,8 +16,8 @@
             <h3 class="mb-3 font-weight-normal">로그인</h3>
         </div>
         <div class="mb-3">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <label for="user_email">Email address</label>
+            <input type="email" class="form-control" id="user_email" name="user_email">
         </div>
         <div class="mb-3">
             <label for="password">Password</label>
