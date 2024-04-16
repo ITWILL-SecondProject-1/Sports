@@ -20,16 +20,16 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <label for="nickname">Nickname</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" required>
         </div>
         <div class="mb-3">
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
-            <label for="phone">Phone-Number</label>
-            <input type="text" class="form-control" id="phone" name="phone" required>
+            <label for="phone_number">Phone-Number</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
         </div>
 		<div class="form-check">
 		  <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="male" checked>
