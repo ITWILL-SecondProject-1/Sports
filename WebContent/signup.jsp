@@ -47,7 +47,7 @@
         <button type="submit" class="btn btn-primary">가입하기</button>
 
         <div class="text-end mt-2">
-            <a href="/login">로그인 페이지로...</a>
+            <a href="/STP/login">로그인 페이지로...</a>
         </div>
     </form>
 </div>

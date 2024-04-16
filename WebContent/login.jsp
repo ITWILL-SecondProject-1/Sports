@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="text-end mt-2">
-            <a role="button" class="btn btn-info" href="/signup">회원 가입</a>
+            <a role="button" class="btn btn-info" href="/STP/signup">회원 가입</a>
         </div>
     </form>
 </div>
