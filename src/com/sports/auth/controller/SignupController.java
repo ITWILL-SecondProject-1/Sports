@@ -1,7 +1,6 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -40,25 +39,15 @@ public class SignupController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	    UserVO user = new UserVO();
 	    String imageUrl = null;
+	    boolean result = false;
 	    
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
             imageUrl = imgUpload.uploadImage(filePart);
             req.setAttribute("image", imageUrl);
-        }
+        }        
         
-        System.out.println("image URL : " + req.getAttribute("image"));
-        
-        @SuppressWarnings("rawtypes")
-        Enumeration params = req.getParameterNames();
-        while(params.hasMoreElements()) {
-        	String name = (String) params.nextElement();
-        	System.out.print(name + " : " + req.getParameter(name) + "     "); 
-        }
-        
-        
-	    boolean result = false;
 	    try {
 	        BeanUtils.populate(user, req.getParameterMap());
 	        user.setImage(imageUrl);
