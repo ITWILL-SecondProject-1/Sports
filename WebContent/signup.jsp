@@ -3,9 +3,18 @@
 <html>
 <head>
     <title>Sports</title>
-    <link rel="stylesheet" type="text/css" href="css/mouse.css?ver=1">
-    <link rel="stylesheet" type="text/css" href="css/auth.css?ver=1">
 	<jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
+	<jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
+	<jsp:include page = 'css/authStyle.jsp' flush = "false"/>
+	<script>
+        function sendEmail() {
+            var email = document.getElementById('email').value;
+<%
+			
+%>
+            alert("이메일이 " + email + " 로 전송되었습니다!");
+        }
+    </script>
 </head>
 <body>
 <jsp:include page = 'partials/navbar.jsp' flush = "false"/>
@@ -19,6 +28,7 @@
             <label for="email">Email address</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
+        <button onclick="sendEmail()" class="btn btn-primary">이메일 중복확인</button>
         <div class="mb-3">
             <label for="nickname">Nickname</label>
             <input type="text" class="form-control" id="nickname" name="nickname" required>
