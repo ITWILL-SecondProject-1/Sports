@@ -10,7 +10,7 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias alias="UserVO" type="com.sports.model.vo.UserVO"/>
+		
 	</typeAliases>
 
   <environments default="development">
@@ -19,14 +19,22 @@
       <dataSource type="POOLED">
         <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-        <property name="username" value="SCOTT"/>
-        <property name="password" value="tiger"/>
+        <property name="username" value="PROJECT2"/>
+        <property name="password" value="1234"/>
       </dataSource>
     </environment>
   </environments>
   
   <mappers>
-    <mapper resource="com/sports/mybatis/mapper.xml" />
+    <mapper resource="mybatis/mapper.xml" />
   </mappers>
   
 </configuration>
+
+
+
+
+
+
+
+
