@@ -11,7 +11,7 @@
 <jsp:include page = 'partials/navbar.jsp' flush = "false"/>
 <div class="cursor" id="cursor"></div>
 <div class="auth-wrapper">
-    <form method="POST" action="/STP/signup">
+    <form method="POST" action="/STP/signup" enctype="multipart/form-data">
         <div class="text-center">
             <h3 class="mb-3 font-weight-normal">회원가입</h3>
         </div>
@@ -43,6 +43,7 @@
 		    Female
 		  </label>
 		</div>
+		<input type="file" name="image" id="image">
 
         <button type="submit" class="btn btn-primary">가입하기</button>
 
