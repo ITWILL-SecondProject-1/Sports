@@ -1,12 +1,21 @@
 package com.sports.model.vo;
 
 public class UserVO {
+	private int userIdx;
 	private String email;
 	private String nickname;
 	private String password;
 	private String phone;
 	private String gender;
 	private String image;
+	
+	public int getUserIdx() {
+		return userIdx;
+	}
+	
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
 	
 	public String getEmail() {
 		return email;

@@ -1,3 +1,4 @@
+<%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +12,12 @@
 		frm.submit();
 	}
 	function write_board(frm){
-		frm.action = "write";
+		<%
+			UserVO vo = (UserVO) session.getAttribute("UserVO");
+			System.out.println(vo);
+			session.setAttribute("UserVO", vo);
+		%>
+		frm.action = "boardWrite";
 		frm.submit();
 	}
 </script>
