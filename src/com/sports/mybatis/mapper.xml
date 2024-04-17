@@ -19,12 +19,20 @@
 		)
 	</insert>
 
-	<!-- 로그인 -->
-	<select id="authenticateUser" parameterType="UserVO" resultType="UserVO">
+	<!-- 로그인 --><select id="authenticateUser" parameterType="UserVO" resultType="UserVO">
 	    SELECT * FROM SPORT_USER 
 	    WHERE EMAIL = #{email} AND PASSWORD = #{password}
 	</select>
 	
+	<!--  자유게시판 전체글 조회 -->
+	<select id="boardAll" resultType="BoardVO">
+		SELECT * FROM FREE_BBS
+	</select>
+	
+	<!-- 자유게시판 글 작성 -->
+	<insert id="writeBoard" parameterType="BoardVO">
+		
+	</insert>
 </mapper>
 
 

@@ -18,9 +18,9 @@ public class SignupController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		UserVO user11 = (UserVO) session.getAttribute("UserVO");
-		System.out.println(user11.getEmail());
+//		HttpSession session = req.getSession();
+//		UserVO user11 = (UserVO) session.getAttribute("UserVO");
+//		System.out.println(user11.getEmail());
 		req.getRequestDispatcher("signup.jsp").forward(req, res);
 	}
 	
