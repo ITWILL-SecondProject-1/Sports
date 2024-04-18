@@ -14,7 +14,7 @@
 <%		
 	} else {
 	System.out.println("vo : " + vo);
-	int idx = vo.getUserIdx();
+	String idx = vo.getUseridx();
 	}
 %>
 <!DOCTYPE html>

@@ -18,7 +18,7 @@
 	if (userVO != null) {
 		System.out.println("로그인 정보 : " + userVO);
 		//작성자와 로그인 정보 일치 확인
-		if (userVO.getUserIdx() == vo.getUserIdx()) {
+		if (userVO.getUseridx().equals(vo.getUseridx())) {
 			//일치하면 수정하기, 삭제하기 버튼
 		} else {
 			System.out.println("불일치");			
