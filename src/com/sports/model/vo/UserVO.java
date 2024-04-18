@@ -1,10 +1,10 @@
 package com.sports.model.vo;
-
 import java.io.Serializable;
 
 public class UserVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+  private int userIdx;
 	private String email;
 	private String nickname;
 	private String password;
@@ -13,14 +13,14 @@ public class UserVO implements Serializable {
 	private String image;
 	private String useridx;
 	
-	public String getUseridx() {
-		return useridx;
+	public int getUserIdx() {
+		return userIdx;
 	}
-
-	public void setUseridx(String useridx) {
-		this.useridx = useridx;
+	
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
-
+  
 	public String getEmail() {
 		return email;
 	}

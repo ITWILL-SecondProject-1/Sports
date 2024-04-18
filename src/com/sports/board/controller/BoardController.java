@@ -35,16 +35,5 @@ public class BoardController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
-	
-	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//전체글 데이터 가져오기
-		List<BoardVO> list = BoardDAO.boardAll();
-		System.out.println("list : " + list);
-		
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("board.jsp").forward(request, response);
-		
-		
-	}
+
 }

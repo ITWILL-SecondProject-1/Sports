@@ -41,8 +41,24 @@
 	
 	<!-- 자유게시판 글 작성 -->
 	<insert id="writeBoard" parameterType="BoardVO">
-		
+		INSERT INTO FREE_BBS (BBS_IDX, USERIDX, SUBJECT, CONTENT, WRITE_DATE)
+		VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{userIdx}, #{subject}, #{content}, SYSDATE)
 	</insert>
+	
+	<!-- 자유게시판 글 1개 조회 -->
+	<select id="boardOne" parameterType="int" resultType="BoardVO">
+		SELECT *
+		FROM FREE_BBS
+		WHERE BBS_IDX = ${bbsIdx}
+	</select>
+	
+	<!-- 자유게시판 게시글 수정 -->
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE FREE_BBS
+		SET SUBJECT = '${subject}',
+		    CONTENT = '${content}'
+		WHERE BBS_IDX = ${bbsIdx} 
+	</update>
 </mapper>
 
 
