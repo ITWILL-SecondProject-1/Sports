@@ -44,5 +44,4 @@
         </div>
     </form>
 </div>
-<br/>
 <jsp:include page = 'partials/footer.jsp' flush = "false"/>
