@@ -9,7 +9,7 @@
 	<jsp:include page = 'css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
-<jsp:include page = 'partials/navbar.jsp' flush = "false"/>
+<jsp:include page = 'partials/nav.jsp' flush = "false"/>
 <div class="cursor" id="cursor"></div>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/signup" enctype="multipart/form-data" onsubmit="return validateForm()">

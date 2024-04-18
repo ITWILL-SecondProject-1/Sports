@@ -1,6 +1,5 @@
 <%@page import="com.sports.model.vo.UserVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +23,10 @@
 </script>
 </head>
 <body>
+<jsp:include page="partials/nav.jsp"/>
 	<button onclick="location.href='board'">자유게시판</button >
 	<button onclick="location.href='boardWrite.jsp'">자유게시판 글작성</button >
 	<div style="position: fixed !important; width: 100vw; height: 100%; left: 0; bottom: 0;">
 		<div data-vbg-autoplay="true" data-vbg="https://www.youtube.com/watch?v=L3374C3OyrY"></div>
 	</div>
-</body>
-</html>
+<jsp:include page = 'partials/footer.jsp' flush = "false"/>

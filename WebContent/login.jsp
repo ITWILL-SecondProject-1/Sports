@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
-<jsp:include page = 'partials/navbar.jsp' flush = "false"/>
+<jsp:include page = 'partials/nav.jsp' flush = "false"/>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/login">
         <div class="text-center">
