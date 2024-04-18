@@ -5,24 +5,25 @@ import java.sql.Date;
 public class BoardVO {
 
 	private int bbsIdx;
-	private int userIdx;
+	private String useridx;
 	private String subject;
 	private String content;
 	private Date writeDate;
 	private String image;
 	
+	public String getUseridx() {
+		return useridx;
+	}
+	public void setUseridx(String useridx) {
+		this.useridx = useridx;
+	}
 	public int getBbsIdx() {
 		return bbsIdx;
 	}
 	public void setBbsIdx(int bbsIdx) {
 		this.bbsIdx = bbsIdx;
 	}
-	public int getUserIdx() {
-		return userIdx;
-	}
-	public void setUserIdx(int userIdx) {
-		this.userIdx = userIdx;
-	}
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -50,7 +51,7 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "BoardVO [bbsId=" + bbsIdx + ", userIdx=" + userIdx + ", subject=" + subject + ", content=" + content
+		return "BoardVO [bbsId=" + bbsIdx + ", userIdx=" + useridx + ", subject=" + subject + ", content=" + content
 				+ ", writeDate=" + writeDate + ", image=" + image + "]";
 	}
 

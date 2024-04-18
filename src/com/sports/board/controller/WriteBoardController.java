@@ -24,13 +24,13 @@ public class WriteBoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO) session.getAttribute("UserVO");
-		int userIdx = vo.getUserIdx();
+		String useridx = vo.getUseridx();
 		
 		BoardVO boardVO = new BoardVO();
 		System.out.println(request.getParameter("subject"));
 		System.out.println(request.getParameter("content"));
 		
-		boardVO.setUserIdx(userIdx);
+		boardVO.setUseridx(useridx);
 		boardVO.setSubject(request.getParameter("subject"));
 		boardVO.setContent(request.getParameter("content"));
 		

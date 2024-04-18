@@ -4,7 +4,6 @@ import java.io.Serializable;
 public class UserVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-  private int userIdx;
 	private String email;
 	private String nickname;
 	private String password;
@@ -12,15 +11,15 @@ public class UserVO implements Serializable {
 	private String gender;
 	private String image;
 	private String useridx;
-	
-	public int getUserIdx() {
-		return userIdx;
-	}
-	
-	public void setUserIdx(int userIdx) {
-		this.userIdx = userIdx;
-	}
   
+	public String getUseridx() {
+		return useridx;
+	}
+
+	public void setUseridx(String useridx) {
+		this.useridx = useridx;
+	}
+
 	public String getEmail() {
 		return email;
 	}
