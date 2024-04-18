@@ -1,6 +1,8 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -38,19 +40,28 @@ public class SignupController extends HttpServlet {
 	// BeanUtils를 사용하여 UserVO와 자동적으로 매핑하고, 해당 UserVO로 회원가입 처리.
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	    UserVO user = new UserVO();
-	    String imageUrl = null;
+	    String imageUrl = "null";
 	    boolean result = false;
+	    
+	    // 파라미터 값을 조회하기 위한 코드
+//	    Enumeration params = req.getParameterNames();
+//	    while(params.hasMoreElements()) {
+//	    	String name = (String) params.nextElement();
+//	    	System.out.println(name + " : " + req.getParameter(name));
+//	    }
+	    
+	    System.out.println();
 	    
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
             imageUrl = imgUpload.uploadImage(filePart);
             req.setAttribute("image", imageUrl);
-        }        
+            user.setImage(imageUrl);
+        }
         
 	    try {
-	        BeanUtils.populate(user, req.getParameterMap());
-	        user.setImage(imageUrl);
+	    	BeanUtils.populate(user, req.getParameterMap());
 	        result = UserDAO.register(user);
 	    } catch (Exception e) {
 	        e.printStackTrace();

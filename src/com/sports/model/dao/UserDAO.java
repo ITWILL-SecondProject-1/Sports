@@ -26,5 +26,14 @@ public class UserDAO {
 		} 
 		return null;
 	}
+	
+	public static Boolean emailDuplicateCheck(String email) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			return ss.selectOne("sports.emailDuplicateCheck", email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return false;
+	}
 
 }

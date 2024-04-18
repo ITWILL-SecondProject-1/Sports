@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="joinBbs">
+	
+	<select id="joinBbsList" parameterType="map" resultType="com.sport.joinBbs.vo.JoinBbsVO">
+	<![CDATA[
+		SELECT  * 
+		    FROM (SELECT ROWNUM AS RNUM, B.*
+		        FROM (SELECT J.*, S.NICKNAME 
+		        	FROM JOIN_BBS J, SPORT_USER S
+					WHERE S.USERIDX = J.USERIDX) B)
+		WHERE RNUM >= #{begin } 
+		    AND RNUM <= #{end }
+	]]>
+	</select>
+	
+	<select id="countJoinBbs" resultType="int">
+		SELECT COUNT(*) AS CNT FROM JOIN_BBS
+	</select>
+	
+	<select id="joinBbs" parameterType="String" resultType="com.sport.joinBbs.vo.JoinBbsVO">
+		SELECT J.*, S.NICKNAME FROM JOIN_BBS J, SPORT_USER S
+		WHERE S.USERIDX = J.USERIDX
+		AND J.BBS_IDX = #{bbsIdx }
+	</select>
+	
+	<select id="joinCommentList" parameterType="String" resultType="com.sport.joinBbs.vo.JoinCommentVO">
+		SELECT J.*, S.NICKNAME FROM JOIN_COMMENTS J, SPORT_USER S
+		WHERE S.USERIDX = J.USERIDX
+		AND J.BBS_IDX = #{bbsIdx }
+	</select>
+	
+	<insert id="joinCommentInsert" parameterType="com.sport.joinBbs.vo.JoinCommentVO">
+		INSERT INTO JOIN_COMMENTS (COMMENT_IDX, BBS_IDX, USERIDX, CONTENT, WRITE_DATE)
+		VALUES (SEQ_TEAM_COMMENTS.NEXTVAL, #{bbsIdx }, #{useridx }, #{content },SYSDATE)
+	</insert>
+</mapper>
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
