@@ -25,7 +25,7 @@
 		         WHEN EXISTS (SELECT 1 FROM SPORT_USER WHERE EMAIL = #{email}) THEN 'True'
 		         ELSE 'False'
 		       END AS Is_Exists
-		FROM dual;
+		FROM dual
 	</select>
 	
 	<!-- 로그인 -->

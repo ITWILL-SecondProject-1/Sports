@@ -1,6 +1,10 @@
 package com.sports.model.vo;
 
-public class UserVO {
+import java.io.Serializable;
+
+public class UserVO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String email;
 	private String nickname;
 	private String password;
