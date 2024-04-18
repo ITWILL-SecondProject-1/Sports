@@ -9,6 +9,7 @@ import com.sports.mybatis.DBService;
 
 public class BoardDAO {
 	
+	//전체글조회
 	public static List<BoardVO> boardAll() {
 		try(SqlSession ss = DBService.getFactory().openSession()) {
 			List<BoardVO> list = ss.selectList("sports.boardAll");
@@ -17,5 +18,41 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	//게시글 1개 조회
+	public static BoardVO boardOne(int bbsIdx) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			BoardVO vo = ss.selectOne("sports.boardOne", bbsIdx);
+			return vo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//게시글작성
+	public static int boardInsert(BoardVO vo) {
+		int result = 0;
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			result = ss.insert("sports.writeBoard", vo);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//게시글수정
+	public static int boardUpdate(BoardVO vo) {
+		int result = 0;
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			result = ss.update("sports.updateBoard", vo);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }

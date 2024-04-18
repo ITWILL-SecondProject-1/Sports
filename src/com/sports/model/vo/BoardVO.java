@@ -4,24 +4,24 @@ import java.sql.Date;
 
 public class BoardVO {
 
-	private int bbsId;
-	private String usermail;
+	private int bbsIdx;
+	private int userIdx;
 	private String subject;
 	private String content;
 	private Date writeDate;
 	private String image;
 	
-	public int getBbsId() {
-		return bbsId;
+	public int getBbsIdx() {
+		return bbsIdx;
 	}
-	public void setBbsId(int bbsId) {
-		this.bbsId = bbsId;
+	public void setBbsIdx(int bbsIdx) {
+		this.bbsIdx = bbsIdx;
 	}
-	public String getUsermail() {
-		return usermail;
+	public int getUserIdx() {
+		return userIdx;
 	}
-	public void setUsermail(String usermail) {
-		this.usermail = usermail;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
 	public String getSubject() {
 		return subject;
@@ -50,9 +50,8 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "BoardVO [bbsId=" + bbsId + ", usermail=" + usermail + ", subject=" + subject + ", content=" + content
+		return "BoardVO [bbsId=" + bbsIdx + ", userIdx=" + userIdx + ", subject=" + subject + ", content=" + content
 				+ ", writeDate=" + writeDate + ", image=" + image + "]";
 	}
-	
-	
+
 }

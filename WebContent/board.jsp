@@ -1,3 +1,5 @@
+<%@page import="com.sports.model.vo.BoardVO"%>
+<%@page import="com.sports.model.dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,7 +20,8 @@
 		<option value="2">내용</option>
 	</select>
 	<input>
-	<button>검색</button><br>
+	<button>검색</button>
+	<button onclick="location.href='boardWrite.jsp'">글작성하기</button ><br>
 	<hr>
 	<table class="table table-hover">
 		<thead>
@@ -31,13 +34,13 @@
 		<tbody id="tbody">
 		<c:forEach var="vo" items="${list }">
 			<tr>
-				<td>${vo.bbsId }</td>
-				<td>${vo.subject }</td>
+				<td>${vo.bbsIdx }</td>
+				<td>
+					<a href="viewBoardOne.jsp?bbsIdx=${vo.bbsIdx }">${vo.subject }</a>
+				</td>
 				<td>${vo.writeDate }</td>
 			</tr>
 		</c:forEach>
-		
-			
 		</tbody>
 	</table>
 </body>
