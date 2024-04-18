@@ -23,8 +23,11 @@
 	    transform-origin: 100% 100%;
 	    backdrop-filter: sepia(20%);
 	    background-size: cover;
-	    /*z-index: 2;*/
 	    background-color: transparent;
+	}
+	
+	.swal2-container {
+		z-index: 2;
 	}
 
 </style>
