@@ -4,8 +4,8 @@
 <head>
     <title>Sports</title>
     <jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-	<link rel="stylesheet" type="text/css" href="css/mouse.css?ver=1">
-    <link rel="stylesheet" type="text/css" href="css/auth.css?ver=1"> 
+    <jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
+    <jsp:include page = 'css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -44,5 +44,4 @@
         </div>
     </form>
 </div>
-<br/>
 <jsp:include page = 'partials/footer.jsp' flush = "false"/>
