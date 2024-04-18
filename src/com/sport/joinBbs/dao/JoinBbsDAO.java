@@ -51,4 +51,15 @@ public class JoinBbsDAO {
 		}
 		return null;
 	}
+
+	public static int insertComment(JoinCommentVO commVO) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("joinCommentInsert",commVO);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	
 }

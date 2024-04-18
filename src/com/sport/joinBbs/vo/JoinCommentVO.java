@@ -8,7 +8,8 @@ public class JoinCommentVO {
 	private String writeDate; //댓글작성일
 
 	private String nickname; //작성자닉네임, SPORT_USER 테이블에서 가져옴 
-
+	
+	//getters
 	public int getCommentIdx() {
 		return commentIdx;
 	}
@@ -27,6 +28,8 @@ public class JoinCommentVO {
 	public String getNickname() {
 		return nickname;
 	}
+	
+	//setters
 	public void setCommentIdx(int commentIdx) {
 		this.commentIdx = commentIdx;
 	}

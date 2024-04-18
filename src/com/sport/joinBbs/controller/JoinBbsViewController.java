@@ -15,14 +15,17 @@ import com.sport.joinBbs.vo.JoinCommentVO;
 
 
 @WebServlet("/join_bbs_view")
-public class ViewController extends HttpServlet {
+public class JoinBbsViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/**/System.out.println("    >>\"/join_bbs_view\"");
 		String bbsIdx = request.getParameter("bbsIdx");
 		JoinBbsVO vo = JoinBbsDAO.getOndJoinBbs(bbsIdx);
 		List<JoinCommentVO> commlist = JoinBbsDAO.getCommentsList(bbsIdx);
+		/**/System.out.println("commlist : "+commlist.toString());
+		request.setAttribute("bbsIdx", bbsIdx);
 		request.setAttribute("vo", vo);
 		request.setAttribute("commentslist", commlist);
 		request.getRequestDispatcher("join_bbs/join_bbs_view.jsp").forward(request, response);

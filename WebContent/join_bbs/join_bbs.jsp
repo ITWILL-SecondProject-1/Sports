@@ -21,13 +21,6 @@
 		float: left;
 		padding: 3px 7px;
 	}
-	.paging li a {
-		text-decoration: none;
-		color: black;
-	}
-	.able {
-		text-decoration: underline;
-	}
 
 </style>
 <script>
@@ -97,7 +90,7 @@
 						<c:forEach var="pageNo" begin="${paging.beginPage }" end="${paging.endPage }">
 						<c:choose>
 						<c:when test="${pageNo == paging.nowPage }">
-							<li class="now"><b>${pageNo }</b></li>
+							<li class="now">${pageNo }</li>
 						</c:when>
 						<c:otherwise>
 							<li><a href="join_bbs?cPage=${pageNo }">${pageNo }</a></li>

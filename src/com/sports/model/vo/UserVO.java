@@ -7,7 +7,16 @@ public class UserVO {
 	private String phone;
 	private String gender;
 	private String image;
+	private String useridx;
 	
+	public String getUseridx() {
+		return useridx;
+	}
+
+	public void setUseridx(String useridx) {
+		this.useridx = useridx;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -54,6 +63,12 @@ public class UserVO {
 	
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	@Override
+	public String toString() {
+		return "UserVO [email=" + email + ", nickname=" + nickname + ", password=" + password + ", phone=" + phone
+				+ ", gender=" + gender + ", image=" + image + ", useridx=" + useridx + "]";
 	}
 
 	

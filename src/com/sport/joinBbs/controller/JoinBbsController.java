@@ -22,6 +22,7 @@ public class JoinBbsController extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/**/System.out.println("    >>\"/join_bbs\"");
 		/*
 		현재페이지에 표시할 데이터를 화면에 표시 
 		1. 페이징 처리를 위한 객체(Paging) 생성해서 필요한 데이터 참조
