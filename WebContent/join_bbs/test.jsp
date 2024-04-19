@@ -3,12 +3,12 @@
     pageEncoding="UTF-8"%>
 <%
 	UserVO test = new UserVO();
-	test.setEmail("example");
+	test.setEmail("example@example.com");
 	test.setNickname("[샘플]홍길동");
 	test.setPassword("example");
 	test.setPhone("example");
 	test.setGender("example");
-	test.setUseridx("1");
+	test.setUseridx("2");
 	session.setAttribute("UserVO", test);
 	/**/System.out.println(test.toString());
 %>

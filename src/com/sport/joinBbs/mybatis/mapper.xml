@@ -30,12 +30,15 @@
 		SELECT J.*, S.NICKNAME FROM JOIN_COMMENTS J, SPORT_USER S
 		WHERE S.USERIDX = J.USERIDX
 		AND J.BBS_IDX = #{bbsIdx }
+		ORDER BY COMMENT_IDX
 	</select>
 	
 	<insert id="joinCommentInsert" parameterType="com.sport.joinBbs.vo.JoinCommentVO">
 		INSERT INTO JOIN_COMMENTS (COMMENT_IDX, BBS_IDX, USERIDX, CONTENT, WRITE_DATE)
 		VALUES (SEQ_TEAM_COMMENTS.NEXTVAL, #{bbsIdx }, #{useridx }, #{content },SYSDATE)
 	</insert>
+	
+	
 </mapper>
 
 

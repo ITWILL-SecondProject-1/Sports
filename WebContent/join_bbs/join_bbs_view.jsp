@@ -29,7 +29,8 @@
 <script>
 	function back(){
 		//location.href="join_bbs?cPage=" + ${cPage };
-		location.href="join_bbs?cPage=<%=request.getParameter("cPage") %>";
+		let cPage = <%=request.getParameter("cPage") %>;
+		location.href="join_bbs?cPage=" + cPage;
 	}
 	
 	function update() {
@@ -75,8 +76,8 @@
 				<c:if test="${empty vo.content }">
 					<td colspan="2" class="center">- 작성된 내용이 없습니다 -</td>	
 				</c:if>
-				<c:if test="!${empty vo.content }">
-					<td colspan="2" class="center">${vo.content }</td>	
+				<c:if test="${!empty vo.content }">
+					<td colspan="2">${vo.content }</td>	
 				</c:if>
 			</tr>
 			<tr>
@@ -90,7 +91,7 @@
 			</c:forEach>
 			<tr>
 				<td colspan="2">
-					<textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea>
+					<pre><textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea></pre>
 					<input id="commButton" type="submit" value="댓글작성">
 				</td>
 			</tr>

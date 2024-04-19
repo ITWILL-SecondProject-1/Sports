@@ -24,6 +24,7 @@ public class JoinBbsViewController extends HttpServlet {
 		String bbsIdx = request.getParameter("bbsIdx");
 		JoinBbsVO vo = JoinBbsDAO.getOndJoinBbs(bbsIdx);
 		List<JoinCommentVO> commlist = JoinBbsDAO.getCommentsList(bbsIdx);
+		/**/System.out.println("vo : "+vo.toString());
 		/**/System.out.println("commlist : "+commlist.toString());
 		request.setAttribute("bbsIdx", bbsIdx);
 		request.setAttribute("vo", vo);
