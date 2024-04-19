@@ -3,13 +3,14 @@
 <html>
 <head>
     <title>Sports</title>
-    <jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-    <jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
+	<!-- 공통 링크 로딩 -->
+	<jsp:include page = 'partials/commonhead.jsp' flush = "false"/>
+	<!-- 회원가입, 로그인 창 스타일 -->
     <jsp:include page = 'css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
-<div class="cursor" id="cursor"></div>
-<jsp:include page = 'partials/navbar.jsp' flush = "false"/>
+<!-- 공통 링크 로딩 -->
+<jsp:include page = 'partials/commonbody.jsp' flush = "false"/>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/login">
         <div class="text-center">
@@ -44,4 +45,5 @@
         </div>
     </form>
 </div>
-<jsp:include page = 'partials/footer.jsp' flush = "false"/>
+</body>
+</html>
