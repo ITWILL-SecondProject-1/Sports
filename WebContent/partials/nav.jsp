@@ -1,3 +1,4 @@
+<%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 메뉴 바 -->
@@ -22,7 +23,7 @@
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold">
-					<img src="partials/logo.jpeg" alt="logo" class="logo-img">
+					<img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1713515312/logo/logo_mqkknu.jpg" alt="logo" class="logo-img">
 				</a>
 			</li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="Board.jsp">Board</a></li>
@@ -35,10 +36,22 @@
 			menu
 		</button>
 		<div class="dropdown-menu" aria-labelledby="DropdownButton">
-			<a class="dropdown-item" href="#">마이페이지</a>
+<%
+	UserVO userVO = (UserVO) session.getAttribute("UserVO");
+	if (userVO == null) {
+%>
+			<a class="dropdown-item" href="/STP/signup">회원가입</a>
+			<a class="dropdown-item" href="/STP/login">로그인</a>
+<%
+	} else {
+%>
+			<a class="dropdown-item" href="/STP/userpage?email=<%=userVO.getEmail()%>">마이페이지</a>
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="#">로그아웃</a>
+			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
+<%
+	}
+%>
 		</div>
 	</div>
 	
