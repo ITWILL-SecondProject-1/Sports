@@ -4,13 +4,13 @@
 <html>
 <head>
     <title>Sports</title>
-	<jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-	<jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
+    <!-- 공통 링크 로딩 -->
+	<jsp:include page = 'partials/commonhead.jsp' flush = "false"/>
 	<jsp:include page = 'css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
-<jsp:include page = 'partials/nav.jsp' flush = "false"/>
-<div class="cursor" id="cursor"></div>
+<!-- 공통 링크 로딩 -->
+<jsp:include page = 'partials/commonbody.jsp' flush = "false"/>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/signup" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="text-center">
@@ -119,4 +119,5 @@ function showBootstrapDangerAlert() {
 }
 
 </script>
-<jsp:include page = 'partials/footer.jsp' flush = "false"/>
+</body>
+</html>

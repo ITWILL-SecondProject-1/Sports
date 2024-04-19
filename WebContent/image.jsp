@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
+    <jsp:include page = 'partials/commonhead.jsp' flush = "false"/>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -15,4 +15,5 @@
 		<input id="img_upload" name="uploaded_file" type="file">
 		<button type="submit">Upload</button>
 	</form>
-<jsp:include page = 'partials/footer.jsp' flush = "false"/>
+</body>
+</html>

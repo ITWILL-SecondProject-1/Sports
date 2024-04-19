@@ -17,8 +17,8 @@
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold" href="Reserve.jsp">Reserve</a>
 			</li>
-			<li class="nav-item col-md-auto"><a
-				class="nav-link font-weight-bold" href="Gym.jsp">Gym</a></li>
+			<li class="nav-item col-md-auto">
+				<a class="nav-link font-weight-bold" href="Gym.jsp">Gym</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold">
@@ -31,14 +31,17 @@
 	</div>
 	<!-- 드롭다운 버튼 추가 -->
 	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="DropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">menu</button>
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="DropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			menu
+		</button>
 		<div class="dropdown-menu" aria-labelledby="DropdownButton">
-			<a class="dropdown-item" href="#">마이페이지</a> <a class="dropdown-item" href="#">고객센터</a>
+			<a class="dropdown-item" href="#">마이페이지</a>
+			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="#">로그아웃</a>
 		</div>
 	</div>
-
+	
 </nav>
 <script>
 	$(document).ready(function() {

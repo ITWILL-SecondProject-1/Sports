@@ -39,5 +39,41 @@
 
     .menu {
         z-index: 2; /* 'menu' 클래스가 적용된 요소도 포함 */
+		width: 80%; 
+		padding: 10px;
+		height: 60px; 
     }
+
+	.nav-link {
+	  font-weight: bold;
+	  color: white;
+	  font-size: 28px;
+	  line-height: 60px;
+	}
+
+	.navbar-nav {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center; 
+	  width: 100%; 
+	}
+
+	.navbar-nav .nav-item {
+	  text-align: center;
+	  margin: 0 30px; /* 硫붾돱 �꾩씠�� �ъ씠媛꾧꺽*/
+	}
+	
+	.navbar-nav .nav-item .nav-link {
+	  padding: 20px;
+	}
+	
+	#menuCollapse a {
+	  color: white;
+	 
+	}
+	
+	.dropdown-menu {
+	  right: 0; 
+	  left: auto; 
+	}
 </style>
