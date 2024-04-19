@@ -1,3 +1,5 @@
+<%@page import="com.sport.joinBbs.mybatis.DBService"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -22,7 +24,7 @@
 </head>
 <body>
 
-	<form action="join_bbs">
+	<form action="../join_bbs">
 		<input type="submit" value="[join_bbs]">
 	</form>
 	

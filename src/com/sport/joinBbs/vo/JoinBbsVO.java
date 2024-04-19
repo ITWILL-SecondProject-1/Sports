@@ -1,9 +1,9 @@
 package com.sport.joinBbs.vo;
 
 public class JoinBbsVO {
-	private int bbsIdx; //게시글 고유번호
+	private String bbsIdx; //게시글 고유번호
 	private String useridx; //작성자
-	private int teamIdx; //모집팀id
+	private String teamIdx; //모집팀id
 	private String subject; //제목
 	private String time; //모집시간
 	private String memberMax; //모집인원
@@ -18,11 +18,11 @@ public class JoinBbsVO {
 	private String nickname; //작성자 닉네임
 	private int hit = 0; //조회수
 	
-	public int getBbsIdx() {
+	public String getBbsIdx() {
 		return bbsIdx;
 	}
 
-	public void setBbsIdx(int bbsIdx) {
+	public void setBbsIdx(String bbsIdx) {
 		this.bbsIdx = bbsIdx;
 	}
 
@@ -126,7 +126,7 @@ public class JoinBbsVO {
 		return useridx;
 	}
 
-	public int getTeamIdx() {
+	public String getTeamIdx() {
 		return teamIdx;
 	}
 
@@ -134,7 +134,7 @@ public class JoinBbsVO {
 		this.useridx = useridx;
 	}
 
-	public void setTeamIdx(int teamIdx) {
+	public void setTeamIdx(String teamIdx) {
 		this.teamIdx = teamIdx;
 	}
 

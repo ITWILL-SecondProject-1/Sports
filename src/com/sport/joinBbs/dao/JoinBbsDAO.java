@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.sport.joinBbs.mybatis.DBService;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sport.joinBbs.vo.JoinCommentVO;
+import com.sport.joinBbs.vo.TeamVO;
 
 public class JoinBbsDAO {
 	
@@ -54,12 +55,38 @@ public class JoinBbsDAO {
 
 	public static int insertComment(JoinCommentVO commVO) {
 		try(SqlSession ss = DBService.getFactory().openSession(true)){
-			return ss.insert("joinCommentInsert",commVO);
+			return ss.insert("joinBbs.joinCommentInsert",commVO);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public static int insertJoinBbs(JoinBbsVO vo) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("joinBbs.joinBbsInsert",vo);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
 	}
 	
+	public static String getnewTeamIdx(){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectOne("joinBbs.getnewTeamIdx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	
+	public static int insertTeam(TeamVO teamVo) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("joinBbs.teamInsert",teamVo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

@@ -33,7 +33,7 @@ public class JoinCommentWriteController extends HttpServlet {
 		if (JoinBbsDAO.insertComment(commVO) == 1) {
 			request.setAttribute("bbsIdx", request.getParameter("bbsIdx"));
 			request.setAttribute("cPage", request.getParameter("cPage"));
-			request.getRequestDispatcher("join_bbs_view").forward(request, response);
+			request.getRequestDispatcher("join_bbs_write").forward(request, response);
 		};
 	}
 

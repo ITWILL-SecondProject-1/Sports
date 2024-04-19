@@ -91,7 +91,7 @@
 			</c:forEach>
 			<tr>
 				<td colspan="2">
-					<pre><textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea></pre>
+					<textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea>
 					<input id="commButton" type="submit" value="댓글작성">
 				</td>
 			</tr>
