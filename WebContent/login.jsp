@@ -4,7 +4,6 @@
 <head>
     <title>Sports</title>
     <jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-    <jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
     <jsp:include page = 'css/authStyle.jsp' flush = "false"/>
 </head>
 <body>

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!-- 메뉴 바 -->
 <nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
 
@@ -20,7 +22,7 @@
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold">
-					<img src="image/KakaoTalk_20240417_120243743.jpg" alt="logo" class="logo-img">
+					<img src="partials/logo.jpeg" alt="logo" class="logo-img">
 				</a>
 			</li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="Board.jsp">Board</a></li>
