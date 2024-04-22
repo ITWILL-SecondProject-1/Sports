@@ -72,8 +72,6 @@ function checkIdDuplication() {
         let duplication = document.getElementById('idDuplication');
         if (this.readyState == 4 && this.status == 200) {
             var responseText = this.responseText.trim();
-            console.log('Server response:', this.responseText);
-            console.log(responseText);
             if (responseText == 'duplicate') {
                 duplication.value = 'true';
                 showBootstrapDangerAlert();

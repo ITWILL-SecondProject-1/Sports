@@ -34,6 +34,30 @@
 	    WHERE EMAIL = #{email} AND PASSWORD = #{password}
 	</select>
 	
+	<!-- 프로필 수정 -->
+	<update id="editProfile" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET nickname = '${nickname}', password = '${password}', phone = '${phone}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 유저페이지에서 유저의 자유게시글 조회 -->
+	<select id="userFreeBoard" parameterType="string" resultType="BoardVO">
+		SELECT * 
+		FROM FREE_BBS 
+		WHERE USERIDX = (
+		    SELECT USERIDX 
+		    FROM SPORT_USER 
+		    WHERE EMAIL = '${email}'
+		)
+	</select>
+	
+	<!-- 유저의 정보를 비밀번호를 빼고 가져옴-->
+	<select id="getUserInfo" parameterType="string" resultType="UserVO">
+		SELECT EMAIL, NICKNAME, PHONE, GENDER, IMAGE FROM SPORT_USER
+		WHERE EMAIL = '${email}'
+	</select>
+	
 	<!--  자유게시판 전체글 조회 -->
 	<select id="boardAll" resultType="BoardVO">
 		SELECT * FROM FREE_BBS

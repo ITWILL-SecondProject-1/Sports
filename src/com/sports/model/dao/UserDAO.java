@@ -35,5 +35,26 @@ public class UserDAO {
 		} 
 		return false;
 	}
-
+	
+	public static UserVO getUserInfo(String email) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			UserVO user = ss.selectOne("sports.getUserInfo", email);
+			System.out.println(user.getEmail());
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
+	}
+	
+	public static boolean editUserProfile(UserVO user) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			int result = ss.update("sports.editProfile", user);
+			ss.commit();
+			return result > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

@@ -55,4 +55,16 @@ public class BoardDAO {
 		
 		return result;
 	}
+	
+	// 해당하는 유저의 자유게시글 조회
+	public static List<BoardVO> selectUserFreeBoards(String email) {
+		try(SqlSession ss = DBService.getFactory().openSession()) {
+			List<BoardVO> list = ss.selectList("sports.userFreeBoard", email);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
