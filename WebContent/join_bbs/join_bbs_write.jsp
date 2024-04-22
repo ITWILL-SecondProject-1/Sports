@@ -1,5 +1,10 @@
+<%@page import="com.sport.joinBbs.vo.TeamVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,27 +22,57 @@
 	}
 
 </style>
-<script>	
-	let isNew = null;
-	function writeBbs(frm) {
-		
-		switch (frm.option.value){
-		case "0" : 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+	function writeBbs(val) {
+		console.log("vo.teamIdx : "+ val);
+		if (val == 0){
 			document.getElementById("writeForm").style.opacity = "50%";
-			break;
-		case "1" :
-			
-			break;
-		case "2" :
+		} else if(val == "newTeam"){
 			document.getElementById("writeForm").style.opacity = "100%";
-			isNew = true;
-			console.log("isNew : " + isNew);
-			break;
+			document.getElementById("subject").value = "";
+			document.getElementById("event").value = "";
+			document.getElementById("place").value = "";
+			document.getElementById("time").value = "";
+			document.getElementById("memberMax").value = "";
+			document.getElementById("limit").value = "";
+			document.getElementById("content").value = "";
+			document.getElementById("teamIdx").value = "";
+		} else {
+			document.getElementById("writeForm").style.opacity = "100%";
+			$.ajax("getJsonJoinBbs?teamIdx=" + val, {
+				method : "get",
+				dataType : "json", //응답받을 데이터 타입(서버쪽으로부터)
+				success : function(respData){
+					console.log("Ajax 처리 성공 - 응답받은데이터 : " + respData);
+					console.log(respData); //JSON 객체 1개
+					console.log(respData.list); //배열데이터
+					
+					document.getElementById("subject").value = respData.subject;
+					document.getElementById("nickname").value = respData.nickname;
+					document.getElementById("event").value = respData.event;
+					document.getElementById("place").value = respData.place;
+					document.getElementById("time").value = respData.time;
+					document.getElementById("memberMax").value = respData.memberMax;
+					document.getElementById("limit").value = respData.limit;
+					document.getElementById("content").value = respData.content;
+					document.getElementById("teamIdx").value = respData.teamIdx;
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log("Ajax 처리 실패 : \n"
+							+ "jqXHR.readyState : " + jqXHR.readyState + "\n"
+							+ "textStatus : " + textStatus + "\n"
+							+ "errorThrown : " + errorThrown);
+				}
+			});
 		}
-	}
-	function goWrite(){
-		console.log("join_bbs_write_ok?isNew=" + isNew);
-		location.href = "join_bbs_write_ok?isNew=" + isNew;
+	
+	} 
+	
+	function goWrite(frm){
+		console.log(frm);
+		frm.action = "join_bbs_write_ok";
+		frm.submit();
 	}
 	
 </script>
@@ -45,71 +80,80 @@
 <body>
 	<h1>팀원모집글 작성[join_bbs_write]</h1>
 	<form>
-	<select name="option">
+	<select id="selectTeam" name="selectTeam" onchange="writeBbs(this.value)">
 		<option value="0">팀을 선택해 주세요</option>
-		<option value="1">team1</option>
-		<option value="1">team2</option>
-		<option value="1">team3</option>
-		<option value="2">새팀 만들기</option>
+		<c:forEach var="vo" items="${teams }">
+			<c:if test="${empty vo.teamName }" >
+				<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
+			</c:if>
+			<c:if test="${not empty vo.teamName }" >
+				<option value="${vo.teamIdx }">${vo.teamName }</option>
+			</c:if>
+		</c:forEach>
+		<option value="newTeam">새팀 만들기</option>
 	</select>
-	<input type="button" value="작성하기" onclick="writeBbs(this.form)">
-	</form>
-	<div id="writeForm" class="disable">
-		<form action="join_bbs_write_ok">
+		<div id="writeForm" class="disable">
 			<table>
 				<tbody>
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" name="subject" value="${vo.subject }" placeholder="ex) 동료 모집합니다">
+							<input id="subject" type="text" name="subject" value="-" placeholder="ex) 동료 모집합니다">
 						</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
 						<td>
-							<input type="text" name="nickname" value="${UserVO.nickname }" readonly >
+							<input id="nickname" type="text" name="nickname" value="${UserVO.nickname }" readonly >
 						</td>
 					</tr>
 					<tr>
 						<th>종목</th>
 						<td>
-							<input type="text" name="event" value="${vo.event }" placeholder="ex) 풋볼 등 구기종목">
+							<input id="event" type="text" name="event" value="-" placeholder="ex) 풋볼">
 						</td>
 					</tr>
 					<tr>
 						<th>장소</th>
 						<td>
-							<input type="text" name="place" value="${vo.place }" placeholder="ex) 동네 공원">
+							<input id="place" type="text" name="place" value="-" placeholder="ex) 동네 공원">
 						</td>
 					</tr>
 					<tr>
 						<th>시간</th>
 						<td>
-							<input type="text" name="time" value="${vo.time }" placeholder="ex) 주말 오후2시">
+							<input id="time" type="text" name="time" value="-" placeholder="ex) 주말 오후2시">
 						</td>
 					</tr>
 					<tr>
 						<th>모집인원</th>
 						<td>
-							<input type="text" name="memberMax" value="${vo.memberMax }" placeholder="ex) 제한없음">
+							<input id="memberMax" type="text" name="memberMax" value="-" placeholder="ex) 제한없음">
 						</td>
 					</tr>
 					<tr>
 						<th>조건</th>
 						<td>
-							<input type="text" name="limit" value="${vo.limit }" placeholder="ex) 누구나 환영합니다">
+							<input id="limit" type="text" name="limit" value="-" placeholder="ex) 누구나 환영합니다">
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<textarea name="content" rows="20" cols="60" placeholder="내용을 입력해 주세요"></textarea>
+							<textarea id="content" name="content" rows="20" cols="60" placeholder="내용을 입력해 주세요"></textarea>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<input type="hidden" name="useridx" value="${UserVO.useridx }" >
-			<input type="button" value="모집글 등록" onclick="goWrite()">
-		</form>
-	</div>
+			<input id="teamIdx" type="hidden" name="teamIdx" value="${vo.teamIdx }" >
+			<c:if test="${empty vo.teamName }" >
+				<input type="text" name="teamName" value="" placeholder="팀이름을 정해주세요">
+			</c:if>
+			<c:if test="${not empty vo.teamName }" >
+				<input type="text" name="teamName" value="${vo.teamName }">
+			</c:if>
+			<input type="button" value="모집글 등록" onclick="goWrite(this.form)">
+		</div>
+	</form>
 </body>
 </html>

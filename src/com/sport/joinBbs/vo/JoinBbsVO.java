@@ -13,6 +13,7 @@ public class JoinBbsVO {
 	private String content; //글내용
 	private String writeDate; //작성일
 	private String image; //이미지 첨부파일
+	private String imagePi;
 	private String teamName; //팀명
 	
 	private String nickname; //작성자 닉네임
@@ -137,13 +138,23 @@ public class JoinBbsVO {
 	public void setTeamIdx(String teamIdx) {
 		this.teamIdx = teamIdx;
 	}
+	
+	public String getImagePi() {
+		return imagePi;
+	}
+
+	public void setImagePi(String imagePi) {
+		this.imagePi = imagePi;
+	}
 
 	@Override
 	public String toString() {
 		return "JoinBbsVO [bbsIdx=" + bbsIdx + ", useridx=" + useridx + ", teamIdx=" + teamIdx + ", subject=" + subject
 				+ ", time=" + time + ", memberMax=" + memberMax + ", limit=" + limit + ", place=" + place + ", event="
-				+ event + ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + ", teamName="
-				+ teamName + ", nickname=" + nickname + ", hit=" + hit + "]";
+				+ event + ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + ", imagePi="
+				+ imagePi + ", teamName=" + teamName + ", nickname=" + nickname + ", hit=" + hit + "]";
 	}
+
+	
 	
 }

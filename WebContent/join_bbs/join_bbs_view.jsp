@@ -24,6 +24,9 @@
 	.center {
 		text-align: center;
 	}
+	#content {
+		height: 300px;
+	}
 	
 </style>
 <script>
@@ -74,10 +77,10 @@
 			</tr>
 			<tr>
 				<c:if test="${empty vo.content }">
-					<td colspan="2" class="center">- 작성된 내용이 없습니다 -</td>	
+					<td colspan="2" class="center"  id="content">- 작성된 내용이 없습니다 -</td>	
 				</c:if>
 				<c:if test="${!empty vo.content }">
-					<td colspan="2">${vo.content }</td>	
+					<td colspan="2"><p id="content">${vo.content }</p></td>	
 				</c:if>
 			</tr>
 			<tr>

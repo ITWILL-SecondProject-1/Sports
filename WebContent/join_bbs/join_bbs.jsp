@@ -24,7 +24,7 @@
 
 </style>
 <script>
-	function goWrite() {
+	function goWrite(frm) {
 		location.href = "join_bbs_write";
 	}
 	

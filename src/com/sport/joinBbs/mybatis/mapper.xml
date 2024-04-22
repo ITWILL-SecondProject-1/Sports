@@ -10,7 +10,10 @@
 		    FROM (SELECT ROWNUM AS RNUM, B.*
 		        FROM (SELECT J.*, S.NICKNAME 
 		        	FROM JOIN_BBS J, SPORT_USER S
-					WHERE S.USERIDX = J.USERIDX) B)
+					WHERE S.USERIDX = J.USERIDX
+					ORDER BY BBS_IDX DESC
+				) B
+			)
 		WHERE RNUM >= #{begin } 
 		    AND RNUM <= #{end }
 	]]>
@@ -26,11 +29,17 @@
 		AND J.BBS_IDX = #{bbsIdx }
 	</select>
 	
+	<select id="joinBbsByTeamIdx" parameterType="String" resultType="com.sport.joinBbs.vo.JoinBbsVO">
+		SELECT J.*, S.NICKNAME FROM JOIN_BBS J, SPORT_USER S
+		WHERE S.USERIDX = J.USERIDX
+		AND J.TEAM_IDX = #{teamIdx }
+	</select>
+	
 	<select id="joinCommentList" parameterType="String" resultType="com.sport.joinBbs.vo.JoinCommentVO">
 		SELECT J.*, S.NICKNAME FROM JOIN_COMMENTS J, SPORT_USER S
 		WHERE S.USERIDX = J.USERIDX
 		AND J.BBS_IDX = #{bbsIdx }
-		ORDER BY COMMENT_IDX
+		ORDER BY COMMENT_IDX 
 	</select>
 	
 	<insert id="joinCommentInsert" parameterType="com.sport.joinBbs.vo.JoinCommentVO">
@@ -53,7 +62,17 @@
 		INSERT INTO TEAMS (TEAM_IDX, USERIDX)
 		VALUES (#{teamIdx}, #{useridx})
 	</insert>
-
+	
+	<select id="myTeamList" resultType="com.sport.joinBbs.vo.TeamVO">
+		SELECT * FROM TEAMS ORDER BY TEAM_IDX
+	</select>
+	
+	<update id="teamUpdate" parameterType="com.sport.joinBbs.vo.TeamVO">
+		UPDATE TEAMS
+		SET TEAM_NAME = #{teamName }
+		WHERE TEAM_IDX = #{teamIdx }
+	</update>
+			
 </mapper>
 
 

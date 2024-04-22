@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sport.joinBbs.dao.JoinBbsDAO;
+import com.sport.joinBbs.dao.TeamDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sport.joinBbs.vo.TeamVO;
 
@@ -18,17 +19,18 @@ public class JoinBbsWriteOkController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/**/System.out.println("    >join_bbs_write_ok");
-		String isNew = request.getParameter("isNew");
-		/**/System.out.println("isNew : "+isNew);
-		if (isNew == null) {
+		String selectTeam = request.getParameter("selectTeam");
+		/**/System.out.println("selectTeam : "+selectTeam);
+		if (selectTeam == null) {
 		}
+		
 		
 		
 		String useridx = request.getParameter("useridx");
 		/**/System.out.println("useridx : "+useridx);
 		JoinBbsVO vo = new JoinBbsVO();
 		vo.setUseridx(useridx);
-		vo.setTeamIdx(useridx);
+		vo.setTeamIdx(request.getParameter("teamIdx"));
 		vo.setSubject(request.getParameter("subject"));
 		vo.setNickname(request.getParameter("nickname"));
 		vo.setEvent(request.getParameter("event"));
@@ -37,20 +39,25 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		vo.setMemberMax(request.getParameter("memberMax"));
 		vo.setLimit(request.getParameter("limit"));
 		vo.setContent(request.getParameter("content"));
+		vo.setTeamName(request.getParameter("teamName"));
 		
-		if(isNew.equals("true")) {
-			String teamIdx = JoinBbsDAO.getnewTeamIdx();
+		if(selectTeam.equals("newTeam")) {
 			TeamVO teamVo = new TeamVO();
+			String teamIdx = TeamDAO.getnewTeamIdx();
 			teamVo.setTeamIdx(teamIdx);
-			teamVo.setUseridx(teamIdx);
+			teamVo.setUseridx(useridx);
+			teamVo.setTeamName(vo.getTeamName());
 			vo.setTeamIdx(teamIdx);
-			JoinBbsDAO.insertTeam(teamVo);
+			TeamDAO.insertTeam(teamVo);
 		} else {
-			
+			TeamVO teamVo = new TeamVO();
+			teamVo.setTeamIdx(request.getParameter("teamIdx"));
+			teamVo.setTeamName(request.getParameter("teamName"));
+			/**/System.out.println("teamVo : "+teamVo);
+			TeamDAO.updateTeam(teamVo);
 		}
-		
+		/**/System.out.println("vo : "+vo);
 		JoinBbsDAO.insertJoinBbs(vo);
-		
 		
 		/* response.sendRedirect("join_bbs"); */
 		//request.getRequestDispatcher("join_bbs_write").forward(request, response);

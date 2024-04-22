@@ -44,6 +44,16 @@ public class JoinBbsDAO {
 		return null;
 	}
 	
+	public static JoinBbsVO getOndJoinBbsByTeamIdx(String teamIdx) {
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			JoinBbsVO vo = ss.selectOne("joinBbs.joinBbsByTeamIdx", teamIdx);
+			return vo;
+		}catch (Exception e) {
+				e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static List<JoinCommentVO> getCommentsList(String bbxIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectList("joinBbs.joinCommentList",bbxIdx);
@@ -71,22 +81,9 @@ public class JoinBbsDAO {
 		return -1;
 	}
 	
-	public static String getnewTeamIdx(){
-		try(SqlSession ss = DBService.getFactory().openSession()){
-			return ss.selectOne("joinBbs.getnewTeamIdx");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
+
 	
 	
-	public static int insertTeam(TeamVO teamVo) {
-		try(SqlSession ss = DBService.getFactory().openSession(true)){
-			return ss.insert("joinBbs.teamInsert",teamVo);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
+	
 }
