@@ -6,8 +6,8 @@
 	
 	<!-- 회원 가입 -->
 	<insert id="register" parameterType="UserVO">
-		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image)
-		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender}, 
+		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image, image_pi)
+		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender}, #{image_pi})
 		<choose>
             <when test="image != null">
                 #{image}

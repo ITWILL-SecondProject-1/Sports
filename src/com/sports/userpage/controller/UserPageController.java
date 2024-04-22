@@ -29,7 +29,7 @@ public class UserPageController extends HttpServlet {
 			}
 		}
 	    List<BoardVO> list = BoardDAO.selectUserFreeBoards(email);
-
+	    
 	    req.setAttribute("email", email);
 	    req.setAttribute("freeBoardList", list);
 	    req.setAttribute("auth", auth);

@@ -3,6 +3,7 @@ package com.sports.auth.controller;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -41,6 +42,7 @@ public class SignupController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	    UserVO user = new UserVO();
 	    String imageUrl = "null";
+	    String imagePI = "null";
 	    boolean result = false;
 	    
 	    // 파라미터 값을 조회하기 위한 코드
@@ -55,11 +57,14 @@ public class SignupController extends HttpServlet {
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
-            imageUrl = imgUpload.uploadImage(filePart);
+        	Map<String, String> resultMap = imgUpload.uploadImage(filePart);
+            imageUrl = resultMap.get("url");
+            imagePI = resultMap.get("PI");
             req.setAttribute("image", imageUrl);
             user.setImage(imageUrl);
+            user.setImage_pi(imagePI);
         }
-        
+
 	    try {
 	    	BeanUtils.populate(user, req.getParameterMap());
 	        result = UserDAO.register(user);

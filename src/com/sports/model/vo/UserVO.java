@@ -11,6 +11,7 @@ public class UserVO implements Serializable {
 	private String gender;
 	private String image;
 	private String useridx;
+	private String imagePi;
   
 	public String getUseridx() {
 		return useridx;
@@ -66,6 +67,14 @@ public class UserVO implements Serializable {
 	
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public String getImage_pi() {
+		return imagePi;
+	}
+	
+	public void setImage_pi(String imagePi) {
+		this.imagePi = imagePi;
 	}
 
 	@Override

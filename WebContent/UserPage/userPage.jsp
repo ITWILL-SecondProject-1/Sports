@@ -19,7 +19,12 @@
 <%
 	String reqEmail = ((String) request.getAttribute("email"));
 	UserVO reqUserVO = UserDAO.getUserInfo(reqEmail);
-	UserVO userVO = ((UserVO) session.getAttribute("UserVO"));
+	UserVO userVO = null;
+	try {
+		userVO = ((UserVO) session.getAttribute("UserVO"));		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	String userVOEmail = null;
 	if (userVO != null) {
 		userVOEmail = userVO.getEmail();
@@ -28,45 +33,53 @@
 %>
 <div class="row user-page-card">
 <div class="flex-column col-3 mr-4">
-	<div class="card" id="user-info">
-		<div class="card-body">
-			<p>유저정보</p>
+	<div class="user-info-profile-img-div">
+		<img src="<%= reqUserVO.getImage() %>" alt="profile-image" id="user-info-profile-img">	
+	</div>
+	<div class="card user-info">
+		<div class="card">
+			<div class="card-body">
+				<p>유저정보</p>
+			</div>
+	        <ul class="list-group list-group-flush">
+	            <li class="list-group-item">
+	                <i class="fa-regular fa-envelope"></i>
+	                <span class="ms-2"><%= reqUserVO.getEmail() %></span>
+	            </li>
+	            <li class="list-group-item">
+	                <i class="fa-regular fa-id-card"></i>
+	                <span class="ms-2"><%= reqUserVO.getNickname() %></span>
+	            </li>
+	            <li class="list-group-item">
+	                <i class="fa fa-phone fa-lg"></i>
+	                <span class="ms-2"><%= reqUserVO.getPhone() %></span>
+	            </li>
+	            <li class="list-group-item">
+	                <% if (reqUserVO.getGender().equals("female")) { %>
+	                    <!-- 남자 아이콘 표시 -->
+	                    <i class="fa fa-mars" aria-hidden="true"></i>
+					<% } else if (reqUserVO.getGender().equals("male")) { %>
+						<!-- 여자 아이콘 표시 -->
+						<i class="fa fa-venus" aria-hidden="true"></i>
+						<!-- 성 중립적 아이콘 -->
+					<% } else { %>
+						<i class="fa fa-question-circle" aria-hidden="true"></i>
+					<% } %>
+					<span class="ms-2"><%= reqUserVO.getGender() %></span>
+				</li>
+				<li class="list-group-item">
+					<i class="fa-solid fa-warehouse"></i>
+					<span class="ms-2"><%= reqUserVO.getImage() %></span>
+				</li>
+			</ul>
 		</div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <i class="fa fa-map-marker fa-lg"></i>
-                <span class="ms-2"><%= reqUserVO.getEmail() %></span>
-            </li>
-            <li class="list-group-item">
-                <i class="fa fa-briefcase fa-lg"></i>
-                <span class="ms-2"><%= reqUserVO.getNickname() %></span>
-            </li>
-            <li class="list-group-item">
-                <i class="fa fa-phone fa-lg"></i>
-                <span class="ms-2"><%= reqUserVO.getPhone() %></span>
-            </li>
-            <li class="list-group-item">
-                <% if (reqUserVO.getGender().equals("female")) { %>
-                    <!-- 남자 아이콘 표시 -->
-                    <i class="fa fa-mars" aria-hidden="true"></i>
-				<% } else if (reqUserVO.getGender().equals("male")) { %>
-					<!-- 여자 아이콘 표시 -->
-					<i class="fa fa-venus" aria-hidden="true"></i>
-					<!-- 성 중립적 아이콘 -->
-				<% } else { %>
-					<i class="fa fa-question-circle" aria-hidden="true"></i>
-				<% } %>
-				<span class="ms-2"><%= reqUserVO.getGender() %></span>
-			</li>
-			<li class="list-group-item">
-				<i class="fa fa-school fa-lg"></i>
-				<span class="ms-2"><%= reqUserVO.getImage() %></span>
-			</li>
-		</ul>
 	</div>
 <%
 	if (auth == true) {
 %>
+	<div class="card" id="edit-user-profile-img-button">
+		<button type="button" onclick="showEditProfilePopup();" class="btn btn-primary">프로필 사진 바꾸기</button>
+	</div>
 	<div class="card" id="edit-user-profile-button">
 		<button type="button" onclick="showEditProfilePopup();" class="btn btn-success">프로필 바꾸기</button>
 	</div>
@@ -97,7 +110,9 @@
 		</table>
 	</div>
 </div>
-
+<%
+	if (auth == true) {
+%>
 <!-- 프로필 편집 팝업창을 띄우는 스크립트 -->
 <script>
 function showEditProfilePopup() {
@@ -167,28 +182,33 @@ function confirmEditProfile(nickname, password, phone) {
 			reverseButtons: true
 		}).then((result) => {
 			if (result.isConfirmed) {
-				if(editProfile(nickname, password, phone) == true) {
-					swalWithBootstrapButtons.fire({
-						title: "Edit!",
-						text: "Your profile is edited! :)",
-						icon: "success"
-					});					
-				}
-			} else if (
-			    /* Read more about handling dismissals below */
-				result.dismiss === Swal.DismissReason.cancel
-			) {
+	            editProfile(nickname, password, phone, function(editResult) {  // 콜백 함수 사용
+					if(editResult) {
+						swalWithBootstrapButtons.fire({
+							title: "Edited!",
+							text: "Your profile has been updated!",
+							icon: "success"
+						});
+					} else {
+						swalWithBootstrapButtons.fire({
+							title: "Failed",
+							text: "Profile update failed!",
+							icon: "error"
+						});
+					}
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				swalWithBootstrapButtons.fire({
 					title: "Cancelled",
-					text: "Your profile edit is cancled :)",
+					text: "Your profile edit is cancelled :)",
 					icon: "error"
 				});
 			}
 		});
-}
+	}
 
 // 프로필 변경을 DB에 적용하는 코드
-function editProfile(nickname, password, phone) {
+function editProfile(nickname, password, phone, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "UserPage/editProfile.jsp", true)
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -196,11 +216,13 @@ function editProfile(nickname, password, phone) {
 		let result = false;
 		if (this.readyState == 4 && this.status == 200) {
 			var responseText = this.responseText.trim();
+			console.log("responseText : " + responseText);
 			if (responseText == 'true') {
 				result = true;
 			} else {
 				result = false;
 			}
+			callback(responseText === 'true');
 		}
 		return result;
 	};
@@ -210,5 +232,8 @@ function editProfile(nickname, password, phone) {
 			"&phone=" + encodeURIComponent(phone));
 }
 </script>
+<%
+	} 
+%>
 </body>
 </html>

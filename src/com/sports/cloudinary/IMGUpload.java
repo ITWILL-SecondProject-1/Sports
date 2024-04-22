@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class IMGUpload {
@@ -19,7 +20,7 @@ public class IMGUpload {
         this.cloudinary = new Cloudinary(Config.getENV());
     }
 
-    public String uploadImage(Part filePart) throws IOException {
+    public Map<String, String> uploadImage(Part filePart) throws IOException {
         File tempFile = File.createTempFile("upload-", ".tmp"); // 임시 파일 생성
         try (InputStream input = filePart.getInputStream();
              OutputStream output = new FileOutputStream(tempFile)) {
@@ -32,6 +33,12 @@ public class IMGUpload {
 
         Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
         tempFile.delete();
-        return (String) uploadResult.get("url");
+        Map<String, String> result = new HashMap<>();
+        result.put("url", (String) uploadResult.get("url"));
+        result.put("public_id", (String) uploadResult.get("public_id"));
+        
+        return result;
+        
+        
     }
 }
