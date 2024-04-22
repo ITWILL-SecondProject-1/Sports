@@ -1,8 +1,6 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -59,10 +57,12 @@ public class SignupController extends HttpServlet {
             // 파일을 Cloudinary에 업로드
         	Map<String, String> resultMap = imgUpload.uploadImage(filePart);
             imageUrl = resultMap.get("url");
-            imagePI = resultMap.get("PI");
+            imagePI = resultMap.get("public_id");
             req.setAttribute("image", imageUrl);
             user.setImage(imageUrl);
             user.setImage_pi(imagePI);
+            System.out.println(user.getImage());
+            System.out.println(user.getImage_pi());
         }
 
 	    try {

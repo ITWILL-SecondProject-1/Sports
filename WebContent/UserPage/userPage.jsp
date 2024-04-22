@@ -78,7 +78,7 @@
 	if (auth == true) {
 %>
 	<div class="card" id="edit-user-profile-img-button">
-		<button type="button" onclick="showEditProfilePopup();" class="btn btn-primary">프로필 사진 바꾸기</button>
+		<button type="button" onclick="editProfileImg();" class="btn btn-primary">프로필 사진 바꾸기</button>
 	</div>
 	<div class="card" id="edit-user-profile-button">
 		<button type="button" onclick="showEditProfilePopup();" class="btn btn-success">프로필 바꾸기</button>
@@ -230,6 +230,56 @@ function editProfile(nickname, password, phone, callback) {
 			"&nickname=" + encodeURIComponent(nickname) + 
 			"&password=" + encodeURIComponent(password) + 
 			"&phone=" + encodeURIComponent(phone));
+}
+
+// 프로필 이미지 변경코드
+function editProfileImg() {
+    Swal.fire({
+        title: 'User Profile Image Edit',
+        input: "file",
+        inputAttributes: {
+            accept: "image/*",
+            "aria-label": "Select Image",
+		},
+        width: 700,
+        html: false,
+        confirmButtonText: 'Edit',
+        showLoaderOnConfirm: true,
+        focusConfirm: false,
+        didOpen: () => {
+            const popup = Swal.getPopup();
+            const imgInput = popup.querySelector('#swal-file');
+			console.log(imgInput);
+            const handleEnter = (event) => { if (event.key === 'Enter') Swal.clickConfirm(); };
+            imgInput.onkeyup = handleEnter;
+        },
+        preConfirm: () => {
+            const img = document.getElementById('swal-file').value;
+            if (!img) {
+                Swal.showValidationMessage(`Please attach the image file`);
+            }
+            confirmEditProfileImg(img);
+        },
+    })
+}
+
+// 이미지를 POST방식으로 전송
+function confirmEditProfileImg(fileInput, callback) {
+	console.log(fileInput.files[0]);
+    var formData = new FormData();
+    formData.append("img", fileInput.files[0]); // fileInput은 <input type="file"> 요소
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "UserPage/editProfileImg.jsp", true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            var success = this.status == 200 && this.responseText.trim() == 'true';
+            console.log("responseText : " + this.responseText);
+            callback(success);
+        }
+    };
+
+    xhr.send(formData); // FormData를 사용하여 파일을 전송
 }
 </script>
 <%

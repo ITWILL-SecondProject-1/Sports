@@ -7,13 +7,13 @@
 	<!-- 회원 가입 -->
 	<insert id="register" parameterType="UserVO">
 		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image, image_pi)
-		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender}, #{image_pi})
+		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender},
 		<choose>
             <when test="image != null">
-                #{image}
+                #{image}, #{image_pi}
             </when>
             <otherwise>
-                NULL
+                NULL, NULL
             </otherwise>
         </choose>
 		)
@@ -38,6 +38,13 @@
 	<update id="editProfile" parameterType="UserVO">
 		UPDATE SPORT_USER
 			SET nickname = '${nickname}', password = '${password}', phone = '${phone}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 프로필 이미지 수정 -->
+	<update id="editProfileImg" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET image = '${image}', image_pi = '${image_pi}'
 			WHERE email = '${email}'
 	</update>
 	

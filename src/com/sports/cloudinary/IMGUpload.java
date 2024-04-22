@@ -20,6 +20,7 @@ public class IMGUpload {
         this.cloudinary = new Cloudinary(Config.getENV());
     }
 
+    // 이미지 업로드 메소드
     public Map<String, String> uploadImage(Part filePart) throws IOException {
         File tempFile = File.createTempFile("upload-", ".tmp"); // 임시 파일 생성
         try (InputStream input = filePart.getInputStream();
@@ -33,12 +34,19 @@ public class IMGUpload {
 
         Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
         tempFile.delete();
+        System.out.println(uploadResult.toString());
         Map<String, String> result = new HashMap<>();
         result.put("url", (String) uploadResult.get("url"));
         result.put("public_id", (String) uploadResult.get("public_id"));
         
         return result;
-        
-        
+    }
+    
+    // 이미지 삭제 메소드
+    public Map deleteImage(String publicId) throws IOException {
+        // public_id를 사용하여 이미지 삭제
+        Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+        System.out.println(result.toString());
+        return result;
     }
 }
