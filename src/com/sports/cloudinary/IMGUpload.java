@@ -43,10 +43,11 @@ public class IMGUpload {
     }
     
     // 이미지 삭제 메소드
-    public Map deleteImage(String publicId) throws IOException {
+    public boolean deleteImage(String publicId) throws IOException {
         // public_id를 사용하여 이미지 삭제
-        Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-        System.out.println(result.toString());
-        return result;
+        if (cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap()).get("result").equals("ok")) {
+        	return true;
+        }
+        return false;
     }
 }

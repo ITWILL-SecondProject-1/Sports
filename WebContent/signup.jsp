@@ -66,7 +66,8 @@
 function checkIdDuplication() {
 	var email_input = document.getElementById('email_input').value;
 	
-    if (email_input.length === 0) {
+	// 이메일 길이 체크
+    if (email_input.length < 5) {
     	emptyEmailInputAlert();
         return false;
     }

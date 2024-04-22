@@ -44,7 +44,7 @@
 	<!-- 프로필 이미지 수정 -->
 	<update id="editProfileImg" parameterType="UserVO">
 		UPDATE SPORT_USER
-			SET image = '${image}', image_pi = '${image_pi}'
+			SET image = '${image}', image_pi = '${imagePi}'
 			WHERE email = '${email}'
 	</update>
 	
@@ -61,7 +61,7 @@
 	
 	<!-- 유저의 정보를 비밀번호를 빼고 가져옴-->
 	<select id="getUserInfo" parameterType="string" resultType="UserVO">
-		SELECT EMAIL, NICKNAME, PHONE, GENDER, IMAGE FROM SPORT_USER
+		SELECT EMAIL, NICKNAME, PHONE, GENDER, IMAGE, IMAGE_PI FROM SPORT_USER
 		WHERE EMAIL = '${email}'
 	</select>
 	

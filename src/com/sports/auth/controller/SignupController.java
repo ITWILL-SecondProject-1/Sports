@@ -49,9 +49,7 @@ public class SignupController extends HttpServlet {
 //	    	String name = (String) params.nextElement();
 //	    	System.out.println(name + " : " + req.getParameter(name));
 //	    }
-	    
-	    System.out.println();
-	    
+
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
@@ -60,9 +58,9 @@ public class SignupController extends HttpServlet {
             imagePI = resultMap.get("public_id");
             req.setAttribute("image", imageUrl);
             user.setImage(imageUrl);
-            user.setImage_pi(imagePI);
+            user.setImagePi(imagePI);
             System.out.println(user.getImage());
-            System.out.println(user.getImage_pi());
+            System.out.println(user.getImagePi());
         }
 
 	    try {

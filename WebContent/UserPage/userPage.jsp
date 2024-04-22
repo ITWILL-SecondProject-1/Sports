@@ -187,7 +187,11 @@ function confirmEditProfile(nickname, password, phone) {
 						swalWithBootstrapButtons.fire({
 							title: "Edited!",
 							text: "Your profile has been updated!",
-							icon: "success"
+							icon: "success",
+							didClose: () => {
+								// Timer완료 후 페이지 새로고침
+								window.location.reload();
+							}
 						});
 					} else {
 						swalWithBootstrapButtons.fire({
@@ -233,53 +237,63 @@ function editProfile(nickname, password, phone, callback) {
 }
 
 // 프로필 이미지 변경코드
-function editProfileImg() {
-    Swal.fire({
-        title: 'User Profile Image Edit',
-        input: "file",
-        inputAttributes: {
-            accept: "image/*",
-            "aria-label": "Select Image",
+async function editProfileImg() {
+	await Swal.fire({
+		title: "Please Select Image File",
+		input: "file",
+		inputAttributes: {
+		accept: "image/*",
+		"aria-label": "Select Image"
 		},
-        width: 700,
-        html: false,
-        confirmButtonText: 'Edit',
-        showLoaderOnConfirm: true,
-        focusConfirm: false,
-        didOpen: () => {
-            const popup = Swal.getPopup();
-            const imgInput = popup.querySelector('#swal-file');
-			console.log(imgInput);
-            const handleEnter = (event) => { if (event.key === 'Enter') Swal.clickConfirm(); };
-            imgInput.onkeyup = handleEnter;
-        },
-        preConfirm: () => {
-            const img = document.getElementById('swal-file').value;
-            if (!img) {
-                Swal.showValidationMessage(`Please attach the image file`);
-            }
-            confirmEditProfileImg(img);
-        },
-    })
-}
+		showLoaderOnConfirm: true,
+		preConfirm: (file) => {
+			if (!file) {
+				Swal.showValidationMessage("No file selected");
+				return;
+			}
 
-// 이미지를 POST방식으로 전송
-function confirmEditProfileImg(fileInput, callback) {
-	console.log(fileInput.files[0]);
-    var formData = new FormData();
-    formData.append("img", fileInput.files[0]); // fileInput은 <input type="file"> 요소
+			const formData = new FormData();
+			formData.append('img', file, file.name);
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "UserPage/editProfileImg.jsp", true);
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4) {
-            var success = this.status == 200 && this.responseText.trim() == 'true';
-            console.log("responseText : " + this.responseText);
-            callback(success);
-        }
-    };
+			Swal.fire({
+				title: "Uploading...",
+				onBeforeOpen: () => {
+					Swal.showLoading();
+				},
+				willClose: () => {
+					console.log('Closed without errors.');
+				},
+			});
 
-    xhr.send(formData); // FormData를 사용하여 파일을 전송
+			// 서버로 파일 전송
+			return fetch('uploadProfileImg', {
+				method: "POST",
+				body: formData  // FormData를 사용하여 파일을 전송
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Something went wrong on server side');
+				}
+				return response.json();
+			})
+			.then(data => {
+				Swal.update({
+					title: "Success!",
+					text: "File has been uploaded successfully.",
+					icon: "success",
+					timer: 1500,
+					timerProgressBar: true,
+					didClose: () => {
+						// Timer완료 후 페이지 새로고침
+						window.location.reload();
+					}
+				});
+			})
+			.catch(error => {
+				Swal.showValidationMessage(`Request failed: ${error}`);
+			});
+		},
+	});
 }
 </script>
 <%
