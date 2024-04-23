@@ -1,8 +1,7 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -34,13 +33,14 @@ public class SignupController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.getRequestDispatcher("signup.jsp").forward(req, res);
+		req.getRequestDispatcher("JSP/Auth/signup.jsp").forward(req, res);
 	}
 	
 	// BeanUtils를 사용하여 UserVO와 자동적으로 매핑하고, 해당 UserVO로 회원가입 처리.
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	    UserVO user = new UserVO();
 	    String imageUrl = "null";
+	    String imagePI = "null";
 	    boolean result = false;
 	    
 	    // 파라미터 값을 조회하기 위한 코드
@@ -49,17 +49,20 @@ public class SignupController extends HttpServlet {
 //	    	String name = (String) params.nextElement();
 //	    	System.out.println(name + " : " + req.getParameter(name));
 //	    }
-	    
-	    System.out.println();
-	    
+
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
-            imageUrl = imgUpload.uploadImage(filePart);
+        	Map<String, String> resultMap = imgUpload.uploadImage(filePart);
+            imageUrl = resultMap.get("url");
+            imagePI = resultMap.get("public_id");
             req.setAttribute("image", imageUrl);
             user.setImage(imageUrl);
+            user.setImagePi(imagePI);
+            System.out.println(user.getImage());
+            System.out.println(user.getImagePi());
         }
-        
+
 	    try {
 	    	BeanUtils.populate(user, req.getParameterMap());
 	        result = UserDAO.register(user);
@@ -67,9 +70,9 @@ public class SignupController extends HttpServlet {
 	        e.printStackTrace();
 	    }
 	    if (result == false) {
-	    	res.sendRedirect("/STP/signup");
+	    	res.sendRedirect("signup");
 	    } else {
-	    	res.sendRedirect("/STP/login");
+	    	res.sendRedirect("login");
 	    }
 	    
 	}
