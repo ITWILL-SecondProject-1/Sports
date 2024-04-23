@@ -1,17 +1,19 @@
 package com.sports.model.vo;
 
-import java.sql.Date;
-
-public class BoardVO {
-
-	private int bbsIdx;
+public class BoardCommentVO {
+	private int commentIdx;
 	private String useridx;
 	private String nickname;
-	private String subject;
+	private int bbsIdx;
 	private String content;
 	private String writeDate;
-	private String image;
 	
+	public int getCommentIdx() {
+		return commentIdx;
+	}
+	public void setCommentIdx(int commentIdx) {
+		this.commentIdx = commentIdx;
+	}
 	public String getUseridx() {
 		return useridx;
 	}
@@ -30,13 +32,6 @@ public class BoardVO {
 	public void setBbsIdx(int bbsIdx) {
 		this.bbsIdx = bbsIdx;
 	}
-	
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
 	public String getContent() {
 		return content;
 	}
@@ -49,16 +44,10 @@ public class BoardVO {
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
 	
 	@Override
 	public String toString() {
-		return "BoardVO [bbsIdx=" + bbsIdx + ", useridx=" + useridx + ", nickname=" + nickname + ", subject=" + subject
-				+ ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + "]";
+		return "BoardCommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname=" + nickname
+				+ ", bbsIdx=" + bbsIdx + ", content=" + content + ", writeDate=" + writeDate + "]";
 	}
 }
