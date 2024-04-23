@@ -43,6 +43,8 @@
 	<!-- 자유게시판 전체글 건수 조회 -->
 	<select id="totalCount" resultType="int">
 		SELECT COUNT(*) AS CNT FROM FREE_BBS
+	</select>
+	
 	<!-- 프로필 수정 -->
 	<update id="editProfile" parameterType="UserVO">
 		UPDATE SPORT_USER
