@@ -6,15 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
-<script>
-	function all_board(frm) {
-		frm.action = "board";
-		frm.submit();
-	}
-</script>
 </head>
 <body>
-	<button onclick="location.href='board'">자유게시판</button >
-	<button onclick="location.href='boardWrite.jsp'">자유게시판 글작성</button >
+	<button onclick="location.href='board/board.jsp'">자유게시판</button >
+	<button onclick="location.href='board/boardWrite.jsp'">자유게시판 글작성</button >
 </body>
 </html>

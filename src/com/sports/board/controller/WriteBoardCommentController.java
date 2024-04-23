@@ -7,35 +7,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-import javax.websocket.Session;
 
-import com.sports.model.dao.BoardDAO;
-import com.sports.model.vo.BoardVO;
+import com.sports.model.dao.BoardCommentDAO;
+import com.sports.model.vo.BoardCommentVO;
 import com.sports.model.vo.UserVO;
 
-@WebServlet("/writeBoard")
-public class WriteBoardController extends HttpServlet {
+@WebServlet("/writeBoardComment")
+public class WriteBoardCommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String comment = request.getParameter("comment");
+		System.out.println(request.getParameter("bbsIdx"));
+		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
+		
+		//작성자 정보
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO) session.getAttribute("UserVO");
 		String useridx = vo.getUseridx();
 		
-		BoardVO boardVO = new BoardVO();
-		System.out.println(request.getParameter("subject"));
-		System.out.println(request.getParameter("content"));
+		BoardCommentVO commentVO = new BoardCommentVO();
+		commentVO.setContent(comment);
+		commentVO.setUseridx(useridx);
+		commentVO.setBbsIdx(bbsIdx);
 		
-		boardVO.setUseridx(useridx);
-		boardVO.setSubject(request.getParameter("subject"));
-		boardVO.setContent(request.getParameter("content"));
-		
-		int result = BoardDAO.boardInsert(boardVO);
-		
+		int result = BoardCommentDAO.writeBoardComment(commentVO);
 		System.out.println(result);
 		
-		response.sendRedirect("board/board.jsp");
+		response.sendRedirect("board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
 		
 	}
 

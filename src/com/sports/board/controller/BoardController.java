@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sports.board.common.Paging;
 import com.sports.model.dao.BoardDAO;
 import com.sports.model.vo.BoardVO;
 
@@ -20,11 +21,6 @@ public class BoardController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//전체글 데이터 가져오기
-		List<BoardVO> list = BoardDAO.boardAll();
-		System.out.println("list : " + list);
-		
-		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("board.jsp").forward(request, response);
 		
