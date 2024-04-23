@@ -92,7 +92,7 @@
 		   		<a class="page-link" aria-label="Previous">
 		    </c:if>
 		    <c:if test="${p.beginPage != 1 }">
-		     	<a class="page-link" href="board.jsp?cPage=${p.beginPage - 1 }" aria-label="Previous">
+		     	<a class="page-link" href="board?cPage=${p.beginPage - 1 }" aria-label="Previous">
 		    </c:if>
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
@@ -104,12 +104,12 @@
 		    		<li class="page-item"><a class="page-link">${pageNo }</a></li>
 		    	</c:when>
 		    	<c:otherwise>
-		    		<li class="page-item"><a class="page-link" href="board.jsp?cPage=${pageNo }">${pageNo }</a></li>
+		    		<li class="page-item"><a class="page-link" href="board?cPage=${pageNo }">${pageNo }</a></li>
 		    	</c:otherwise>
 		    </c:choose>
 		    </c:forEach>
 		    <c:if test="${p.endPage < p.totalPage }">
-		     	<a class="page-link" href="board.jsp?cPage=${p.endPage + 1 }" aria-label="Next">
+		     	<a class="page-link" href="board?cPage=${p.endPage + 1 }" aria-label="Next">
 		    </c:if>
 		    <c:if test="${p.endPage >= p.totalPage }">
 		     	<a class="page-link" href="#" aria-label="Next">

@@ -22,6 +22,7 @@ tmp/
 .settings/
 .loadpath
 .recommenders
+config.xml
 
 
 # External tool builders
