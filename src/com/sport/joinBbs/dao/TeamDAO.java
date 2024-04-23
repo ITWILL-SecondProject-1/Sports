@@ -1,0 +1,46 @@
+package com.sport.joinBbs.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.sport.joinBbs.mybatis.DBService;
+import com.sport.joinBbs.vo.TeamVO;
+
+public class TeamDAO {
+	public static String getnewTeamIdx(){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectOne("joinBbs.getnewTeamIdx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static List<TeamVO> getMyTeamList(){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectList("joinBbs.myTeamList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static int insertTeam(TeamVO teamVo) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("joinBbs.teamInsert",teamVo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public static int updateTeam(TeamVO teamVo) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("joinBbs.teamUpdate",teamVo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+}

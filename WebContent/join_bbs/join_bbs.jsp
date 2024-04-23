@@ -24,7 +24,7 @@
 
 </style>
 <script>
-	function write() {
+	function goWrite(frm) {
 		location.href = "join_bbs_write";
 	}
 	
@@ -33,7 +33,7 @@
 <body>
 	<h1>팀 모집 게시판[join_bbs.jsp]</h1>
 	<div>
-			<button onclick="write()">모집글쓰기</button>
+			<button onclick="goWrite()">모집글쓰기</button>
 			<form>
 				<button>선택</button>
 				<input type="text" name="search">
