@@ -225,7 +225,7 @@
 		</div>
 		
 		<div>
-			<button class="btn btn-danger" onclick="location.href='board.jsp'">목록으로가기</button>
+			<button class="btn btn-danger">목록으로가기</button>
 		</div>
 	</div>
 	

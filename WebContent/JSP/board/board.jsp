@@ -6,36 +6,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	//페이징 처리
-	Paging p = new Paging();
-
-	p.setTotalRecord(BoardDAO.getTotalCount());
-	p.setTotalPage();
-	
-	System.out.println("전체게시글 수 : " + p.getTotalRecord());
-	System.out.println("전체페이지 수 : " + p.getTotalPage());
-	
-	String cPage = request.getParameter("cPage");
-	if (cPage != null) {
-		p.setNowPage(Integer.parseInt(cPage));
-	}
-	
-	p.setEnd(p.getNowPage() * p.getNumPerPage());
-	p.setBegin(p.getEnd() - p.getNumPerPage() + 1);
-	
-	int nowBlock = (p.getNowPage() - 1) / p.getPagePerBlock() + 1;
-	p.setNowBlock(nowBlock);
-	p.setEndPage(nowBlock * p.getPagePerBlock());
-	p.setBeginPage(p.getEndPage() - p.getPagePerBlock() + 1);
-	
-	if (p.getEndPage() > p.getTotalPage()) {
-		p.setEndPage(p.getTotalPage());
-	}
-	
-	List<BoardVO> list = BoardDAO.boardList(p.getBegin(), p.getEnd());
-	
-	request.setAttribute("list", list);
-	request.setAttribute("p", p);
+	Paging p = (Paging) request.getAttribute("p");
+	List<BoardVO> list = (List<BoardVO>)request.getAttribute("lise");
 
 	pageContext.setAttribute("p", p);
 	pageContext.setAttribute("list", list);
@@ -75,7 +47,7 @@
 					<tr>
 						<td>${vo.bbsIdx }</td>
 						<td>
-							<a href="viewBoardOne.jsp?bbsIdx=${vo.bbsIdx }">${vo.subject }</a>
+							<a href="JSP/board/viewBoardOne.jsp?bbsIdx=${vo.bbsIdx }">${vo.subject }</a>
 						</td>
 						<td>${vo.nickname }</td>
 						<td>${vo.writeDate }</td>
