@@ -5,12 +5,12 @@
 <head>
     <title>Sports</title>
     <!-- 공통 링크 로딩 -->
-	<jsp:include page = 'partials/commonhead.jsp' flush = "false"/>
-	<jsp:include page = 'css/authStyle.jsp' flush = "false"/>
+	<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
+	<jsp:include page = '../../css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
 <!-- 공통 링크 로딩 -->
-<jsp:include page = 'partials/commonbody.jsp' flush = "false"/>
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/signup" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="text-center">

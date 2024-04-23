@@ -33,7 +33,7 @@ public class UserPageController extends HttpServlet {
 	    req.setAttribute("email", email);
 	    req.setAttribute("freeBoardList", list);
 	    req.setAttribute("auth", auth);
-		req.getRequestDispatcher("UserPage/userPage.jsp").forward(req, res);
+		req.getRequestDispatcher("JSP/UserPage/userPage.jsp").forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

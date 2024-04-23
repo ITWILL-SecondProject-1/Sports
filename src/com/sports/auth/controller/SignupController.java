@@ -33,7 +33,7 @@ public class SignupController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.getRequestDispatcher("signup.jsp").forward(req, res);
+		req.getRequestDispatcher("JSP/Auth/signup.jsp").forward(req, res);
 	}
 	
 	// BeanUtils를 사용하여 UserVO와 자동적으로 매핑하고, 해당 UserVO로 회원가입 처리.
@@ -70,9 +70,9 @@ public class SignupController extends HttpServlet {
 	        e.printStackTrace();
 	    }
 	    if (result == false) {
-	    	res.sendRedirect("/STP/signup");
+	    	res.sendRedirect("JSP/STP/signup");
 	    } else {
-	    	res.sendRedirect("/STP/login");
+	    	res.sendRedirect("JSP/STP/login");
 	    }
 	    
 	}

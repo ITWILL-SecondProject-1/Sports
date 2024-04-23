@@ -9,12 +9,12 @@
 <meta charset="UTF-8">
 <title>UserPage</title>
 <!-- 공통 링크 로딩 -->
-<jsp:include page = '../partials/commonhead.jsp' flush = "false"/>
-<jsp:include page = '../css/userPageStyle.jsp' flush = "false"/>
+<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
+<jsp:include page = '../../css/userPageStyle.jsp' flush = "false"/>
 </head>
 <body>
 <!-- 공통 링크 로딩 -->
-<jsp:include page = '../partials/commonbody.jsp' flush = "false"/>
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 <!-- 요청받은 유저의 정보를 가져옴 -->
 <%
 	String reqEmail = ((String) request.getAttribute("email"));
@@ -214,7 +214,7 @@ function confirmEditProfile(nickname, password, phone) {
 // 프로필 변경을 DB에 적용하는 코드
 function editProfile(nickname, password, phone, callback) {
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "UserPage/editProfile.jsp", true)
+	xhr.open("POST", "JSP/UserPage/editProfile.jsp", true)
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() {
 		let result = false;

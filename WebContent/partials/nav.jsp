@@ -22,7 +22,7 @@
 				<a class="nav-link font-weight-bold" href="Gym.jsp">Gym</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
-				<a class="nav-link font-weight-bold" href="main.jsp">
+				<a class="nav-link font-weight-bold" href="main">
 					<img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1713515312/logo/logo_mqkknu.jpg" alt="logo" class="logo-img">
 				</a>
 			</li>
