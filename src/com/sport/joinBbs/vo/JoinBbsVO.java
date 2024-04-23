@@ -17,7 +17,7 @@ public class JoinBbsVO {
 	private String teamName; //팀명
 	
 	private String nickname; //작성자 닉네임
-	private int hit = 0; //조회수
+	private String hit = "0"; //조회수
 	
 	public String getBbsIdx() {
 		return bbsIdx;
@@ -115,11 +115,11 @@ public class JoinBbsVO {
 		this.nickname = nickname;
 	}
 
-	public int getHit() {
+	public String getHit() {
 		return hit;
 	}
 
-	public void setHit(int hit) {
+	public void setHit(String hit) {
 		this.hit = hit;
 	}
 
