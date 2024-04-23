@@ -70,9 +70,9 @@ public class SignupController extends HttpServlet {
 	        e.printStackTrace();
 	    }
 	    if (result == false) {
-	    	res.sendRedirect("JSP/STP/signup");
+	    	res.sendRedirect("signup");
 	    } else {
-	    	res.sendRedirect("JSP/STP/login");
+	    	res.sendRedirect("login");
 	    }
 	    
 	}
