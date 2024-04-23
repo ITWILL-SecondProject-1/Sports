@@ -54,6 +54,15 @@ public class JoinBbsDAO {
 		return null;
 	}
 	
+	public static String getnewBbsIdx(){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectOne("joinBbs.getnewBbsIdx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static List<JoinCommentVO> getCommentsList(String bbxIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectList("joinBbs.joinCommentList",bbxIdx);

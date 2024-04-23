@@ -40,8 +40,7 @@ public class GetJsonJoinBbsController extends HttpServlet {
 		result.append("\"event\": \"" + vo.getEvent() + "\", ");
 		result.append("\"content\": \"" + vo.getContent() + "\", ");
 		result.append("\"writeDate\": \"" + vo.getWriteDate() + "\", ");
-		result.append("\"image\": \"" + vo.getImage() + "\", ");
-		result.append("\"image\": \"" + vo.getImage() + "\", ");
+		result.append("\"image\": \"" + vo.getImageIdx() + "\", ");
 		result.append("\"teamName\": \"" + vo.getTeamName() + "\", ");
 		result.append("\"nickname\": \"" + vo.getNickname() + "\", ");
 		result.append("\"hit\": \"" + vo.getHit() + "\" ");

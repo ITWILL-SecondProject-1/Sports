@@ -22,6 +22,7 @@ public class JoinBbsViewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/**/System.out.println("    >>\"/join_bbs_view\"");
 		String bbsIdx = request.getParameter("bbsIdx");
+		/**/System.out.println("bbsIdx : "+bbsIdx);
 		JoinBbsVO vo = JoinBbsDAO.getOndJoinBbs(bbsIdx);
 		List<JoinCommentVO> commlist = JoinBbsDAO.getCommentsList(bbsIdx);
 		/**/System.out.println("vo : "+vo.toString());
@@ -29,6 +30,7 @@ public class JoinBbsViewController extends HttpServlet {
 		request.setAttribute("bbsIdx", bbsIdx);
 		request.setAttribute("vo", vo);
 		request.setAttribute("commentslist", commlist);
+		request.setAttribute("cPage", request.getParameter("cPage"));
 		request.getRequestDispatcher("join_bbs/join_bbs_view.jsp").forward(request, response);
 	}
 

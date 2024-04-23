@@ -30,9 +30,11 @@
 	
 </style>
 <script>
-	function back(){
-		//location.href="join_bbs?cPage=" + ${cPage };
-		let cPage = <%=request.getParameter("cPage") %>;
+	function back() {
+		let cPage = "${cPage }";
+		if (cPage == null || cPage.length == 0) {
+			cPage = '1';
+		}
 		location.href="join_bbs?cPage=" + cPage;
 	}
 	
@@ -47,59 +49,60 @@
 	<button onclick="update()">수정하기</button>
 	<div id="view">
 	<form action="join_comment_write">
-	<input type="hidden" name="bbsIdx" value="${bbsIdx }" >
-	<input type="hidden" name="useridx" value="${UserVO.useridx }" >
-	<table>
-		<tbody>
-			<tr>
-				<th>제목</th>
-				<td>${vo.subject }</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>${vo.nickname }</td>
-			</tr>
-			<tr>
-				<th>종목</th>
-				<td>${vo.event }</td>
-			</tr>
-			<tr>
-				<th>장소</th>
-				<td>${vo.place }</td>
-			</tr>
-			<tr>
-				<th>모집인원</th>
-				<td>${vo.memberMax }</td>
-			</tr>
-			<tr>
-				<th>조건</th>
-				<td>${vo.limit }</td>
-			</tr>
-			<tr>
-				<c:if test="${empty vo.content }">
-					<td colspan="2" class="center"  id="content">- 작성된 내용이 없습니다 -</td>	
-				</c:if>
-				<c:if test="${!empty vo.content }">
-					<td colspan="2"><p id="content">${vo.content }</p></td>	
-				</c:if>
-			</tr>
-			<tr>
-				<td colspan="2">댓글보기 ${commentslist.size() } ></td>		
-			</tr>
-			<c:forEach var="commVO" items="${commentslist }">
-			<tr>
-				<th>${commVO.nickname }</th>
-				<td>${commVO.content }(${commVO.writeDate })</td>	
-			</tr>
-			</c:forEach>
-			<tr>
-				<td colspan="2">
-					<textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea>
-					<input id="commButton" type="submit" value="댓글작성">
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<input type="hidden" name="bbsIdx" value="${bbsIdx }" >
+		<input type="hidden" name="cPage" value="${cPage }" >
+		<input type="hidden" name="useridx" value="${UserVO.useridx }" >
+		<table>
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<td>${vo.subject }</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>${vo.nickname }</td>
+				</tr>
+				<tr>
+					<th>종목</th>
+					<td>${vo.event }</td>
+				</tr>
+				<tr>
+					<th>장소</th>
+					<td>${vo.place }</td>
+				</tr>
+				<tr>
+					<th>모집인원</th>
+					<td>${vo.memberMax }</td>
+				</tr>
+				<tr>
+					<th>조건</th>
+					<td>${vo.limit }</td>
+				</tr>
+				<tr>
+					<c:if test="${empty vo.content }">
+						<td colspan="2" class="center"  id="content">- 작성된 내용이 없습니다 -</td>	
+					</c:if>
+					<c:if test="${!empty vo.content }">
+						<td colspan="2"><p id="content">${vo.content }</p></td>	
+					</c:if>
+				</tr>
+				<tr>
+					<td colspan="2">댓글보기 ${commentslist.size() } ></td>		
+				</tr>
+				<c:forEach var="commVO" items="${commentslist }">
+				<tr>
+					<th>${commVO.nickname }</th>
+					<td>${commVO.content }(${commVO.writeDate })</td>	
+				</tr>
+				</c:forEach>
+				<tr>
+					<td colspan="2">
+						<textarea name="content" rows="2" cols="50" placeholder="댓글을 입력해 주세요"></textarea>
+						<input id="commButton" type="submit" value="댓글작성">
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</form>
 	</div>
 </body>
