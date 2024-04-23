@@ -21,12 +21,8 @@ public class LogOutController extends HttpServlet {
 		res.sendRedirect("/STP/login");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(req, res);
 	}
-
 }

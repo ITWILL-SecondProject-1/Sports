@@ -1,7 +1,7 @@
 package com.sport.joinBbs.vo;
 
 public class JoinCommentVO {
-	private int commentIdx; //댓글인덱스
+	private String commentIdx; //댓글인덱스
 	private String bbsIdx; //게시글인덱스
 	private String useridx; //유저인덱스
 	private String content; //댓글내용
@@ -10,7 +10,7 @@ public class JoinCommentVO {
 	private String nickname; //작성자닉네임, SPORT_USER 테이블에서 가져옴 
 	
 	//getters
-	public int getCommentIdx() {
+	public String getCommentIdx() {
 		return commentIdx;
 	}
 	public String getBbsIdx() {
@@ -30,7 +30,7 @@ public class JoinCommentVO {
 	}
 	
 	//setters
-	public void setCommentIdx(int commentIdx) {
+	public void setCommentIdx(String commentIdx) {
 		this.commentIdx = commentIdx;
 	}
 	public void setBbsIdx(String bbsIdx) {

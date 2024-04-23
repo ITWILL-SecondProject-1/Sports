@@ -3,17 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sports">
+	<!-- 시설 리스트 -->
+	<select id="list" resultType="FaVO">
+		SELECT * 
+		FROM FACILITY
+		ORDER BY FACILITY_IDX
+	</select>
 	
 	<!-- 회원 가입 -->
 	<insert id="register" parameterType="UserVO">
-		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image)
-		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender}, 
+		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image, image_pi)
+		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender},
 		<choose>
             <when test="image != null">
-                #{image}
+                #{image}, #{image_pi}
             </when>
             <otherwise>
-                NULL
+                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
             </otherwise>
         </choose>
 		)
@@ -37,6 +43,40 @@
 	<!-- 자유게시판 전체글 건수 조회 -->
 	<select id="totalCount" resultType="int">
 		SELECT COUNT(*) AS CNT FROM FREE_BBS
+	<!-- 프로필 수정 -->
+	<update id="editProfile" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET nickname = '${nickname}', password = '${password}', phone = '${phone}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 프로필 이미지 수정 -->
+	<update id="editProfileImg" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET image = '${image}', image_pi = '${imagePi}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 유저페이지에서 유저의 자유게시글 조회 -->
+	<select id="userFreeBoard" parameterType="string" resultType="BoardVO">
+		SELECT * 
+		FROM FREE_BBS 
+		WHERE USERIDX = (
+		    SELECT USERIDX 
+		    FROM SPORT_USER 
+		    WHERE EMAIL = '${email}'
+		)
+	</select>
+	
+	<!-- 유저의 정보를 비밀번호를 빼고 가져옴-->
+	<select id="getUserInfo" parameterType="string" resultType="UserVO">
+		SELECT EMAIL, NICKNAME, PHONE, GENDER, IMAGE, IMAGE_PI FROM SPORT_USER
+		WHERE EMAIL = '${email}'
+	</select>
+	
+	<!--  자유게시판 전체글 조회 -->
+	<select id="boardAll" resultType="BoardVO">
+		SELECT * FROM FREE_BBS
 	</select>
 	
 		<!-- 자유게시판 페이지 글 조회 -->

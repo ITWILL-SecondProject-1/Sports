@@ -4,13 +4,13 @@
 <html>
 <head>
     <title>Sports</title>
-	<jsp:include page = 'partials/commonlink.jsp' flush = "false"/>
-	<jsp:include page = 'css/mouseStyle.jsp' flush = "false"/>
-	<jsp:include page = 'css/authStyle.jsp' flush = "false"/>
+    <!-- 공통 링크 로딩 -->
+	<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
+	<jsp:include page = '../../css/authStyle.jsp' flush = "false"/>
 </head>
 <body>
-<jsp:include page = 'partials/navbar.jsp' flush = "false"/>
-<div class="cursor" id="cursor"></div>
+<!-- 공통 링크 로딩 -->
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 <div class="auth-wrapper">
     <form method="POST" action="/STP/signup" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="text-center">
@@ -65,6 +65,20 @@
 // 이메일 중복 체크 함수
 function checkIdDuplication() {
 	var email_input = document.getElementById('email_input').value;
+	
+	// 이메일 길이 체크
+    if (email_input.length == 0) {
+    	emptyEmailInputAlert();
+        return false;
+    }
+
+    // 이메일 유효성 검사 정규 표현식
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email_input)) {
+    	notEmailFormAlert();
+        return false;
+    }
+    
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "emailDuplicateCheck.jsp", true)
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -72,8 +86,6 @@ function checkIdDuplication() {
         let duplication = document.getElementById('idDuplication');
         if (this.readyState == 4 && this.status == 200) {
             var responseText = this.responseText.trim();
-            console.log('Server response:', this.responseText);
-            console.log(responseText);
             if (responseText == 'duplicate') {
                 duplication.value = 'true';
                 showBootstrapDangerAlert();
@@ -98,14 +110,34 @@ function validateForm() {
     return true;
 };
 
+// 이메일 폼이 비어있을때 나타나는 알림창.
+function emptyEmailInputAlert() {	
+	Swal.fire({
+	  icon: "error",
+	  title: "empty...",
+	  text: "Email input is empty!",
+	  footer: '<span style="color:indianred">이메일을 입력해 주세요.</span>'
+	});
+}
+
+// 이메일 폼이 아닐 때 나타나는 알림창
+function notEmailFormAlert() {	
+	Swal.fire({
+	  icon: "error",
+	  title: "Not email format...",
+	  text: "It's not an appropriate format!",
+	  footer: '<span style="color:indianred">이메일 형식을 입력해 주세요.</span>'
+	});
+}
+
 // 이메일 중복 검사 통과시 나타나는 알림창.
 function showBootstrapSuccessAlert() {
 	Swal.fire({
-		  icon: "success",
-		  title: "Approve!!",
-		  text: '사용 가능한 이메일 이에요!!!',
-		  footer: '<span style="color:green">회원가입을 진행해 주세요.</span>'
-		});
+		icon: "success",
+		title: "Approve!!",
+		text: '사용 가능한 이메일 이에요!!!',
+		footer: '<span style="color:green">회원가입을 진행해 주세요.</span>'
+	});
 }
 
 // 이메일 중복 검사 미통과시 나타나는 알림창
@@ -119,4 +151,5 @@ function showBootstrapDangerAlert() {
 }
 
 </script>
-<jsp:include page = 'partials/footer.jsp' flush = "false"/>
+</body>
+</html>

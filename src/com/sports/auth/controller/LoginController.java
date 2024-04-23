@@ -1,7 +1,6 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +25,7 @@ public class LoginController extends HttpServlet {
     		res.sendRedirect("/STP/signup");
     	} else {
     		// 아니면 로그인 페이지로 포워드 한다.
-    		req.getRequestDispatcher("login.jsp").forward(req, res);
+    		req.getRequestDispatcher("JSP/Auth/login.jsp").forward(req, res);
     	}
 	}
 	
@@ -50,7 +49,7 @@ public class LoginController extends HttpServlet {
 	    } else {
 	    	HttpSession session = req.getSession();
 	    	session.setAttribute("UserVO", resultUser);
-	    	res.sendRedirect("/STP/main.jsp");
+	    	res.sendRedirect("/STP/main");
 	    }
 	   
 	}

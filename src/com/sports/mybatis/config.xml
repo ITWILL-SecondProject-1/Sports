@@ -13,6 +13,7 @@
 		<typeAlias alias="UserVO" type="com.sports.model.vo.UserVO"/>
 		<typeAlias alias="BoardVO" type="com.sports.model.vo.BoardVO"/>
 		<typeAlias alias="BoardCommentVO" type="com.sports.model.vo.BoardCommentVO"/>
+		<typeAlias alias="FaVO" type="com.sports.fa.vo.FaVO"/>
 	</typeAliases>
 
   <environments default="development">
@@ -21,8 +22,8 @@
       <dataSource type="POOLED">
         <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-        <property name="username" value="SPORT"/>
-        <property name="password" value="sport"/>
+        <property name="username" value="SCOTT"/>
+        <property name="password" value="tiger"/>
       </dataSource>
     </environment>
   </environments>

@@ -4,13 +4,14 @@ import java.io.Serializable;
 public class UserVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private String useridx;
 	private String email;
 	private String nickname;
 	private String password;
 	private String phone;
 	private String gender;
 	private String image;
-	private String useridx;
+	private String imagePi;
   
 	public String getUseridx() {
 		return useridx;
@@ -67,12 +68,18 @@ public class UserVO implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	
+	public String getImagePi() {
+		return imagePi;
+	}
+	
+	public void setImagePi(String imagePi) {
+		this.imagePi = imagePi;
+	}
 
 	@Override
 	public String toString() {
 		return "UserVO [email=" + email + ", nickname=" + nickname + ", password=" + password + ", phone=" + phone
-				+ ", gender=" + gender + ", image=" + image + ", useridx=" + useridx + "]";
+				+ ", gender=" + gender + ", image=" + image + ", useridx=" + useridx + ", imagePi=" + imagePi + "]";
 	}
-
-	
 }

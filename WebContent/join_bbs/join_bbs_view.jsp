@@ -24,12 +24,16 @@
 	.center {
 		text-align: center;
 	}
+	#content {
+		height: 300px;
+	}
 	
 </style>
 <script>
 	function back(){
 		//location.href="join_bbs?cPage=" + ${cPage };
-		location.href="join_bbs?cPage=<%=request.getParameter("cPage") %>";
+		let cPage = <%=request.getParameter("cPage") %>;
+		location.href="join_bbs?cPage=" + cPage;
 	}
 	
 	function update() {
@@ -73,10 +77,10 @@
 			</tr>
 			<tr>
 				<c:if test="${empty vo.content }">
-					<td colspan="2" class="center">- 작성된 내용이 없습니다 -</td>	
+					<td colspan="2" class="center"  id="content">- 작성된 내용이 없습니다 -</td>	
 				</c:if>
-				<c:if test="!${empty vo.content }">
-					<td colspan="2" class="center">${vo.content }</td>	
+				<c:if test="${!empty vo.content }">
+					<td colspan="2"><p id="content">${vo.content }</p></td>	
 				</c:if>
 			</tr>
 			<tr>

@@ -1,9 +1,9 @@
 package com.sport.joinBbs.vo;
 
 public class JoinBbsVO {
-	private int bbsIdx; //게시글 고유번호
+	private String bbsIdx; //게시글 고유번호
 	private String useridx; //작성자
-	private int teamIdx; //모집팀id
+	private String teamIdx; //모집팀id
 	private String subject; //제목
 	private String time; //모집시간
 	private String memberMax; //모집인원
@@ -13,16 +13,17 @@ public class JoinBbsVO {
 	private String content; //글내용
 	private String writeDate; //작성일
 	private String image; //이미지 첨부파일
+	private String imagePi;
 	private String teamName; //팀명
 	
 	private String nickname; //작성자 닉네임
-	private int hit = 0; //조회수
+	private String hit = "0"; //조회수
 	
-	public int getBbsIdx() {
+	public String getBbsIdx() {
 		return bbsIdx;
 	}
 
-	public void setBbsIdx(int bbsIdx) {
+	public void setBbsIdx(String bbsIdx) {
 		this.bbsIdx = bbsIdx;
 	}
 
@@ -114,11 +115,11 @@ public class JoinBbsVO {
 		this.nickname = nickname;
 	}
 
-	public int getHit() {
+	public String getHit() {
 		return hit;
 	}
 
-	public void setHit(int hit) {
+	public void setHit(String hit) {
 		this.hit = hit;
 	}
 
@@ -126,7 +127,7 @@ public class JoinBbsVO {
 		return useridx;
 	}
 
-	public int getTeamIdx() {
+	public String getTeamIdx() {
 		return teamIdx;
 	}
 
@@ -134,16 +135,26 @@ public class JoinBbsVO {
 		this.useridx = useridx;
 	}
 
-	public void setTeamIdx(int teamIdx) {
+	public void setTeamIdx(String teamIdx) {
 		this.teamIdx = teamIdx;
+	}
+	
+	public String getImagePi() {
+		return imagePi;
+	}
+
+	public void setImagePi(String imagePi) {
+		this.imagePi = imagePi;
 	}
 
 	@Override
 	public String toString() {
 		return "JoinBbsVO [bbsIdx=" + bbsIdx + ", useridx=" + useridx + ", teamIdx=" + teamIdx + ", subject=" + subject
 				+ ", time=" + time + ", memberMax=" + memberMax + ", limit=" + limit + ", place=" + place + ", event="
-				+ event + ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + ", teamName="
-				+ teamName + ", nickname=" + nickname + ", hit=" + hit + "]";
+				+ event + ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + ", imagePi="
+				+ imagePi + ", teamName=" + teamName + ", nickname=" + nickname + ", hit=" + hit + "]";
 	}
+
+	
 	
 }
