@@ -47,7 +47,7 @@
 					<tr>
 						<td>${vo.bbsIdx }</td>
 						<td>
-							<a href="JSP/board/viewBoardOne.jsp?bbsIdx=${vo.bbsIdx }">${vo.subject }</a>
+							<a href="viewBoardOne?bbsIdx=${vo.bbsIdx }">${vo.subject }</a>
 						</td>
 						<td>${vo.nickname }</td>
 						<td>${vo.writeDate }</td>

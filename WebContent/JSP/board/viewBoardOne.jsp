@@ -12,7 +12,7 @@
 	//파라미터값 추출
 	int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
 
-	BoardVO vo = BoardDAO.boardOne(bbsIdx);
+	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	String writer = vo.getUseridx();
 	
 	//EL, JSTL 사용을 위한 scope상에 데이터 등록
@@ -64,7 +64,7 @@
 				System.out.println("vo : " + vo);
 				String idx = vo.getUseridx();
 		%>
-				frm.action="../writeBoardComment";
+				frm.action="writeBoardComment";
 				frm.submit();
 		<%
 			}
@@ -72,12 +72,12 @@
 	}
 	
 	function go_updateBoardComment(frm) {
-		frm.action="../updateBoardComment";
+		frm.action="updateBoardComment";
 		frm.submit();
 	}
 	function go_deleteBoardComment(frm) {
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-			frm.action="../deleteBoardComment";
+			frm.action="deleteBoardComment";
 			frm.submit();
 		 }else{   //취소
 		     return false;
@@ -91,11 +91,7 @@
 <meta charset="UTF-8">
 <title>게시글 1개 조회</title>
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-<link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <title>Bootstrap Example</title>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
 #contentForm {
@@ -207,12 +203,7 @@
 		                                </td>
 		                            </tr>
 	                            </form>
-	 
-	 
-	 
 	                        </c:if>
-	 
-	                        
 	                    </div>
 	                    <br>
 	                    <br>
@@ -225,7 +216,7 @@
 		</div>
 		
 		<div>
-			<button class="btn btn-danger">목록으로가기</button>
+			<button class="btn btn-danger" onclick="location.href='board'">목록으로가기</button>
 		</div>
 	</div>
 	

@@ -19,7 +19,7 @@ public class DeleteBoardCommentController extends HttpServlet {
 		
 		int result = BoardCommentDAO.deleteBoardComment(commentIdx);
 		
-		response.sendRedirect("JSP/board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
+		response.sendRedirect("viewBoardOne?bbsIdx=" + bbsIdx);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

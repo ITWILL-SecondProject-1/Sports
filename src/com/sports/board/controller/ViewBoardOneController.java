@@ -7,28 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sports.model.dao.BoardCommentDAO;
-import com.sports.model.vo.BoardCommentVO;
+import com.sports.model.dao.BoardDAO;
+import com.sports.model.vo.BoardVO;
 
-@WebServlet("/updateBoardComment")
-public class UpdateBoardCommentController extends HttpServlet {
+@WebServlet("/viewBoardOne")
+public class ViewBoardOneController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("commentIdx"));
-		int commentIdx = Integer.parseInt(request.getParameter("commentIdx"));
+		//파라미터값 추출
 		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
-		String content = request.getParameter("content");
 		
-		BoardCommentVO vo = (BoardCommentVO) BoardCommentDAO.selectBoardCommentOne(commentIdx);
-		vo.setContent(content);
+		BoardVO vo = BoardDAO.boardOne(bbsIdx);
 		
-		System.out.println(vo);
+		request.setAttribute("vo", vo);
 		
-		int result = BoardCommentDAO.updateBoardComment(vo);
-		System.out.println("result : " + result);
-		
-		response.sendRedirect("viewBoardOne?bbsIdx=" + bbsIdx);
+		request.getRequestDispatcher("JSP/board/viewBoardOne.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
