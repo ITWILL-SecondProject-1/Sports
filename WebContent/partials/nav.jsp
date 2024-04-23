@@ -26,7 +26,7 @@
 					<img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1713515312/logo/logo_mqkknu.jpg" alt="logo" class="logo-img">
 				</a>
 			</li>
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board.jsp">Board</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="team.jsp">Team</a></li>
 		</ul>
 	</div>

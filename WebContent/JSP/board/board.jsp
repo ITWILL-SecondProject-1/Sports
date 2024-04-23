@@ -42,15 +42,12 @@
 %>
 <!DOCTYPE html>
 <html>
-<jsp:include page="../menu.jsp"/>
 <head>
 <meta charset="UTF-8">
 <title>자유게시판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <title>Bootstrap Example</title>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 	.right-box {
 	  float: right;
@@ -58,12 +55,12 @@
 </style>
 </head>
 <body>
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 	<div class="container">
 		<h2>자유게시판</h2>
 		<!-- 제목, 내용으로 검색 기능 -->
-		
 	    <div>
-			<button onclick="location.href='boardWrite.jsp'" class="btn btn-danger right-box">글작성하기</button ><br>
+		<button onclick="location.href='boardWrite'" class="btn btn-danger right-box">글작성하기</button ><br>	    	
 			<table class="table table-hover">
 				<thead>
 					<tr>

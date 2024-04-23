@@ -21,10 +21,7 @@ public class BoardController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getRequestDispatcher("board.jsp").forward(request, response);
-		
-		
+		request.getRequestDispatcher("JSP/board/board.jsp").forward(request, response);
 	}
 	
 	@Override

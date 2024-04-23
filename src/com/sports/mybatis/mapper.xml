@@ -16,7 +16,7 @@
 		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender},
 		<choose>
             <when test="image != null">
-                #{image}, #{image_pi}
+                #{image}, #{imagePi}
             </when>
             <otherwise>
                 'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL

@@ -28,7 +28,7 @@ public class UpdateBoardCommentController extends HttpServlet {
 		int result = BoardCommentDAO.updateBoardComment(vo);
 		System.out.println("result : " + result);
 		
-		response.sendRedirect("board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
+		response.sendRedirect("JSP/board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

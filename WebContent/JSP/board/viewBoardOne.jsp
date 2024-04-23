@@ -90,7 +90,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 1개 조회</title>
-<jsp:include page="../menu.jsp"/>
+<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -109,6 +109,7 @@
 }
 </style>
 <body>
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 	<div class="container">
 		<div>
 			<form action="post">
