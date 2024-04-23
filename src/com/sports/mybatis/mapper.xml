@@ -16,7 +16,7 @@
 		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender},
 		<choose>
             <when test="image != null">
-                #{image}, #{image_pi}
+                #{image}, #{imagePi}
             </when>
             <otherwise>
                 'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
@@ -60,14 +60,17 @@
 	</update>
 	
 	<!-- 유저페이지에서 유저의 자유게시글 조회 -->
-	<select id="userFreeBoard" parameterType="string" resultType="BoardVO">
-		SELECT * 
-		FROM FREE_BBS 
-		WHERE USERIDX = (
-		    SELECT USERIDX 
-		    FROM SPORT_USER 
-		    WHERE EMAIL = '${email}'
-		)
+	<select id="userFreeBoard" parameterType="map" resultType="BoardVO">
+	<![CDATA[
+		SELECT *
+		FROM(SELECT ROWNUM R_NUM, F.*
+		     FROM (SELECT B.BBS_IDX, B.USERIDX, B.SUBJECT, B.CONTENT, B.WRITE_DATE, B.IMAGE
+		           FROM FREE_BBS B
+		           WHERE B.USERIDX = #{useridx}
+		           ORDER BY WRITE_DATE DESC) F
+		     WHERE ROWNUM <= #{end})
+		WHERE R_NUM >= #{begin}
+	]]>		
 	</select>
 	
 	<!-- 유저의 정보를 비밀번호를 빼고 가져옴-->

@@ -34,7 +34,7 @@ public class WriteBoardCommentController extends HttpServlet {
 		int result = BoardCommentDAO.writeBoardComment(commentVO);
 		System.out.println(result);
 		
-		response.sendRedirect("board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
+		response.sendRedirect("JSP/board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
 		
 	}
 
