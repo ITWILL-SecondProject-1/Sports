@@ -18,6 +18,16 @@
 		max-height: 540px;
 		overflow-y: scroll;
 	}
+	#reserve-submit-btn-div {
+		position: relative;
+		min-height:40px;
+	}
+	#reserve-submit-btn {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
 </style>
 </head>
 <body>
@@ -64,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
-
+// Json을 받아서, 해당 데이터를 key, value를 얻기위해 iterator한다.
 function receiveDataJson(data) {
 	let timeTable = document.getElementById("reserve-time-table");
 	timeTable.innerHTML = "";
@@ -74,13 +84,21 @@ function receiveDataJson(data) {
 	return;
 };
 
+// 선택한 날짜에 따라, 동적으로 html요소를 추가
 function addRowTimeTableRow(key, value) {
-	return '<tr>' +
+	return '<tr class="reserve-table-row" id=' + key + '>' +
 	'<th scope="row" class="text-center">' + key + ':00' + '</th>' +
 	  '<td>' + value + '</td>' +
 	'</tr>'
 }
 
+// 예약 테이블 클릭시, 이벤트가 발생하는 함수
+$(document).ready(function() {
+    $(document).on('click', '.reserve-table-row', function() {
+    	let bbsreplll = $(this).attr('id');
+    	$(this).toggleClass("table-primary");
+    });
+});
 
 </script>
 <div class="container" id="calender-container">
@@ -101,6 +119,13 @@ function addRowTimeTableRow(key, value) {
 				<tbody id="reserve-time-table">
 				</tbody>
 			</table>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="HeadCount">HeadCount</span>
+				<input type="number" class="form-control" aria-describedby="HeadCount">
+			</div>
+			<div id="reserve-submit-btn-div">
+				<button type="button" class="btn btn-primary" id="reserve-submit-btn">Reserve</button>
+			</div>
 		</div>
 	</div>
 	<div class="row">
