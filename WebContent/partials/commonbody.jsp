@@ -19,9 +19,5 @@ document.addEventListener('mousemove', function (e) {
 <!-- 마우스 div요소 -->
 <div class="cursor" id="cursor"></div>
 
-<%
-	UserVO userVO = (UserVO) session.getAttribute("UserVO");
-%>
-
 <!-- navbar 적용 -->
 <jsp:include page="nav.jsp"/>
