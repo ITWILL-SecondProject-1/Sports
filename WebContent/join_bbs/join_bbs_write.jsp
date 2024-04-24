@@ -83,8 +83,8 @@
 		if (frm.subject == null) {
 			alert("제목이 작성되지 않았습니다");
 		} else {
-/* 			frm.action = "join_bbs_write_ok";
-			frm.submit(); */
+ 			frm.action = "join_bbs_write_ok";
+			frm.submit();
 		}
 	}
 	

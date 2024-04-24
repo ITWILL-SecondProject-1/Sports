@@ -28,9 +28,18 @@
 		height: 300px;
 	}
 	
+	#signup {
+		border: 1px solid black;
+		display: none;	
+  		position: absolute;
+	}
+	
+	.disply-block {
+		display: block;
+	}
 </style>
 <script>
-	function back() {
+	function goLsit() {
 		let cPage = "${cPage }";
 		if (cPage == null || cPage.length == 0) {
 			cPage = '1';
@@ -41,11 +50,20 @@
 	function update() {
 		alert("수정창 구현필요");
 	}
+	
+	function signup(){
+		let element = document.getElementById("signup");
+		if(element.style.display == "none"){
+			element.style.display = "block";
+		} else {
+			element.style.display = "none";
+		}
+	}
 </script>
 </head>
 <body>
 	<h1>팀 모집글 읽기[join_bbs_view]</h1>
-	<button onclick="back()">뒤로가기</button>
+	<button onclick="goLsit()">목록보기</button>
 	<button onclick="update()">수정하기</button>
 	<div id="view">
 	<form action="join_comment_write">
@@ -105,5 +123,27 @@
 		</table>
 	</form>
 	</div>
+	<button onclick="signup()">가입신청</button>
+	
+ 	<div id="signup">
+		<form action="sign_up_ok">
+			<p>가입신청[team_signup.jsp]</p>
+			<p>팀명: ${teamName }
+				<c:if test="${teamName } == null">
+					이름없는팀${teamIdx }
+				</c:if>
+				<c:if test="${teamName } != null">
+					${teamName }
+				</c:if>
+			</p>
+			<div>
+				<textarea name="content" rows="5" cols="30" placeholder="가입신청 내용을 적어보세요"></textarea>
+			</div>
+			<input type="hidden" name="teamIdx" value="${teamIdx }">
+			<input type="hidden" name="userIdx" value="${UserVO.useridx }">
+			가입을 신청합니다 <input type="submit" value="확인"> 
+		</form>
+	</div> 
+	
 </body>
 </html>

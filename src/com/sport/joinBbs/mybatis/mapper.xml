@@ -53,9 +53,9 @@
 	
 	<insert id="joinBbsInsert" parameterType="com.sport.joinBbs.vo.JoinBbsVO">
 		INSERT INTO JOIN_BBS (BBS_IDX, USERIDX, TEAM_IDX, SUBJECT, TIME, MEMBER_MAX, 
-	    	LIMIT, PLACE, EVENT, CONTENT, WRITE_DATE)
+	    	LIMIT, PLACE, EVENT, CONTENT, WRITE_DATE, IMAGE_IDX, TEAM_NAME, HIT)
 		VALUES (#{bbsIdx }, #{useridx}, #{teamIdx}, #{subject}, #{time}, #{memberMax}, #{
-	    	limit}, #{place}, #{event}, #{content}, SYSDATE)
+	    	limit}, #{place}, #{event}, #{content}, SYSDATE, #{imgaeIdx}, #{teamName}, #{hit})
 	</insert>
 	
 	<select id="getnewTeamIdx" resultType="String">
@@ -63,8 +63,8 @@
 	</select>
 	
 	<insert id="teamInsert" parameterType="com.sport.joinBbs.vo.TeamVO">
-		INSERT INTO TEAMS (TEAM_IDX, USERIDX)
-		VALUES (#{teamIdx}, #{useridx})
+		INSERT INTO TEAMS (TEAM_IDX, USERIDX, TEAM_NAME, IMAGE_IDX, START_DATE)
+		VALUES (SEQ_TEAM_IDX.NEXTVAL, #{useridx},#{teamName}, #{imgaeIdx}, SYSDATE)
 	</insert>
 	
 	<select id="myTeamList" resultType="com.sport.joinBbs.vo.TeamVO">
@@ -77,7 +77,10 @@
 		WHERE TEAM_IDX = #{teamIdx }
 	</update>
 	
-	
+	<insert id="signupInsert" parameterType="com.sport.joinBbs.vo.TeamSignupVO">
+		INSERT INTO TEAM_SIGNUP (SIGNUP_IDX, TEAM_IDX, USERIDX, SIGNUP_CHECK, SIGNUP_DATE, CONTENT)
+		VALUES (SEQ_SIGNUP_IDX.NEXTVAL, #{teamIdx}, #{uesridx}, #{signupCheck}, SYSDATE, #{content})
+	</insert>
 			
 </mapper>
 

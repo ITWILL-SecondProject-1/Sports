@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page = '../partials/commonhead.jsp' flush = "false"/>
 <style>
 	#join_bbs table {
 		border-collapse: collapse;
@@ -31,6 +32,7 @@
 </script>
 </head>
 <body>
+<jsp:include page = '../partials/commonbody.jsp' flush = "false"/>
 	<h1>팀 모집 게시판[join_bbs.jsp]</h1>
 	<div>
 			<button onclick="goWrite()">모집글쓰기</button>
