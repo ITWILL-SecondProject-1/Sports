@@ -19,7 +19,7 @@
 				<a class="nav-link font-weight-bold" href="reserve.jsp">Reserve</a>
 			</li>
 			<li class="nav-item col-md-auto">
-				<a class="nav-link font-weight-bold" href="gym.jsp">Gym</a></li>
+				<a class="nav-link font-weight-bold" href="facility?type=list">Gym</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold" href="main">

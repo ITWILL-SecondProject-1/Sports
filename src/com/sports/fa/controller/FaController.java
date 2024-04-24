@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sports.fa.dao.FaDAO;
-import com.sports.fa.vo.FaVO;
+import com.sports.model.dao.FaDAO;
+import com.sports.model.vo.FaVO;
 
 @WebServlet("/list")
 public class FaController extends HttpServlet{

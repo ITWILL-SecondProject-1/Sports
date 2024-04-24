@@ -1,10 +1,10 @@
-package com.sports.fa.dao;
+package com.sports.model.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.sports.fa.vo.FaVO;
+import com.sports.model.vo.FaVO;
 import com.sports.mybatis.DBService;
 
 

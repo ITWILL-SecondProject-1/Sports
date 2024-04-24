@@ -13,7 +13,7 @@
 		<typeAlias alias="UserVO" type="com.sports.model.vo.UserVO"/>
 		<typeAlias alias="BoardVO" type="com.sports.model.vo.BoardVO"/>
 		<typeAlias alias="BoardCommentVO" type="com.sports.model.vo.BoardCommentVO"/>
-		<typeAlias alias="FaVO" type="com.sports.fa.vo.FaVO"/>
+		<typeAlias alias="FaVO" type="com.sports.model.vo.FaVO"/>
 	</typeAliases>
 
   <environments default="development">
