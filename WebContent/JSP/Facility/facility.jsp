@@ -61,10 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         },
         validRange: function(currentDate) {
-            // 선택가능 날짜 조절
+            // 선택가능 날짜 조절(현재 날짜를 기준으로, 7일이란 기간을 잡았다.)
             var startDate = new Date(currentDate.valueOf());
             var endDate = new Date(currentDate.valueOf());
-
             startDate.setDate(startDate.getDate());
             endDate.setDate(endDate.getDate() + 7);
 
@@ -84,21 +83,38 @@ function receiveDataJson(data) {
 	return;
 };
 
+// key는 시간, value는 수용가능 인원을 나타낸다
 // 선택한 날짜에 따라, 동적으로 html요소를 추가
+// 만약 해당 value(수용가능 인원)이 0이면 zero클래스를 추가하여, 해당 시간대는 선택이 불가능하게 만든다.
 function addRowTimeTableRow(key, value) {
-	return '<tr class="reserve-table-row" id=' + key + '>' +
+	let zero = "";
+	if (value == 0) {
+		zero = "zero";
+	}
+	return '<tr class="reserve-table-row ' + zero + '" id=' + key + '>' +
 	'<th scope="row" class="text-center">' + key + ':00' + '</th>' +
 	  '<td>' + value + '</td>' +
-	'</tr>'
+	'</tr>';
 }
 
 // 예약 테이블 클릭시, 이벤트가 발생하는 함수
+// 클래스에 제로(즉, 수용가능 인원이 0이면) 토글 이벤트가 발생하지 않는다.
 $(document).ready(function() {
     $(document).on('click', '.reserve-table-row', function() {
     	let bbsreplll = $(this).attr('id');
+    	if($(this).hasClass("zero") === true) {
+    		return;
+    	}
     	$(this).toggleClass("table-primary");
+    	$(this).toggleClass("selected-time-row");
     });
 });
+
+// 추후 방향성
+// 1. submit 버튼을 누르면, "#selected-time-row" 클래스들을 가져온다. 해당 클래스는 선택된 시간의 열에게만 있는 클래스이다.
+// 2. 해당 클래스의 시간대와 HeadCount(예약할 인원수)를 서버에 보낸다.
+// 3. db에서 유저가 선택한 시간대에 capacity - headcount의 값의 min이, 클라이언트가 보낸 HeadCount보다 크면 db에 예약을 넣는다.
+// 4. 만약 HeadCount > min 의 관계가 될 경우, 데이터베이스에 예약을 넣지 않는다.
 
 </script>
 <div class="container" id="calender-container">
