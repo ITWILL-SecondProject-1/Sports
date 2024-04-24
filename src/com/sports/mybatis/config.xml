@@ -14,6 +14,8 @@
 		<typeAlias alias="BoardVO" type="com.sports.model.vo.BoardVO"/>
 		<typeAlias alias="BoardCommentVO" type="com.sports.model.vo.BoardCommentVO"/>
 		<typeAlias alias="FaVO" type="com.sports.model.vo.FaVO"/>
+		<typeAlias alias="FaReserveVO" type="com.sports.model.vo.FaReserveVO"/>
+		<typeAlias alias="ReservationSummaryVO" type="com.sports.model.vo.ReservationSummaryVO"/>
 	</typeAliases>
 
   <environments default="development">

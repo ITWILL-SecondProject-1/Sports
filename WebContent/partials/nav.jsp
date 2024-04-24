@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 메뉴 바 -->
-<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 
 	<button class="navbar-toggler ml-2" type="button"
 		data-toggle="collapse" data-target="#menuCollapse"
