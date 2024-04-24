@@ -11,8 +11,12 @@
 <title><%=facilityVO.getFacilityName()%></title>
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <style>
-	.calender-card {
+	#calender-card {
 		height: 540px;
+	}
+	#time-card {
+		max-height: 540px;
+		overflow-y: scroll;
 	}
 </style>
 </head>
@@ -25,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        themeSystem: 'bootstrap',
         height: 500,
         selectable: true,
         dateClick: function(info) {
@@ -37,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 type: 'GET'
             })
-            .then(function(response) {
-                receiveDataJson(response);
+            .then(async function(response) {
+                await receiveDataJson(response)   
             })
             .catch(function(xhr) {
                 // 에러 처리 로직
@@ -59,21 +64,48 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
+
 function receiveDataJson(data) {
-    for (const [key, value] of Object.entries(data)) {
-    	console.log(key);
-    	console.log(value);
-   	}
+	let timeTable = document.getElementById("reserve-time-table");
+	timeTable.innerHTML = "";
+	for (const [key, value] of Object.entries(data)) {
+		timeTable.innerHTML += addRowTimeTableRow(key, value);
+	}
+	return;
 };
+
+function addRowTimeTableRow(key, value) {
+	return '<tr>' +
+	'<th scope="row" class="text-center">' + key + ':00' + '</th>' +
+	  '<td>' + value + '</td>' +
+	'</tr>'
+}
 
 
 </script>
 <div class="container" id="calender-container">
+	<div class="row mb-4">
+		<div class="col-6 card" id="calender-card">
+			<div id='calendar' class="card-body"></div>
+		</div>
+	 	<div class="col">
+		</div>
+		<div class="col-5 card p-1" id="time-card">
+			<table class="table table-hover table-bordered">
+				<thead>
+				  <tr>
+				    <th scope="col" class="text-center">Time</th>
+				    <th scope="col">maximum occupancy</th>
+				  </tr>
+				</thead>
+				<tbody id="reserve-time-table">
+				</tbody>
+			</table>
+		</div>
+	</div>
 	<div class="row">
-		<div class="col-7">
-			<div class="card calender-card">
-				<div id='calendar' class="card-body"></div>
-			</div>
+		<div class="col card">
+			asdds
 		</div>
 	</div>
 </div>
