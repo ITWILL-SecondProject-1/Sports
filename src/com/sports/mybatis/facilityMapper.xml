@@ -25,10 +25,10 @@
 		    f.capacity - COALESCE(SUM(fr.head_count), 0) AS remaining_capacity
 		FROM facility f
 		LEFT JOIN facility_reserve fr ON f.facility_idx = fr.facility_idx
-		    AND fr.reserve_date = ${reserveDate}
+		    AND fr.reserve_date = '${reserveDate}'
 		    AND fr.reserve_time = ${reserveTime}
 		WHERE f.facility_idx = ${facilityIdx}
-		GROUP BY f.facility_idx, f.capacity;
+		GROUP BY f.facility_idx, f.capacity
 	</select>
 </mapper>
 
