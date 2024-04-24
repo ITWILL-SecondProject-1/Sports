@@ -22,7 +22,6 @@ tmp/
 .settings/
 .loadpath
 .recommenders
-src/com/sports/mybatis/config.xml
 
 
 # External tool builders
