@@ -23,7 +23,7 @@
         <th>수용량</th>
     </tr>
     <c:forEach var="facilityVO" items="${list}">
-        <tr class="clickable-row" data-href="inquire?index=${facilityVO.facilityIdx}">
+        <tr class="clickable-row" data-href="facility?type=inquire&index=${facilityVO.facilityIdx}">
             <td>${facilityVO.facilityIdx}</td>
             <td>${facilityVO.facilityName}</td>
             <td>${facilityVO.address}</td>
@@ -36,6 +36,7 @@
 </table>
 </body>
 <script>
+// 각 테이블의 행을 누르면, 해당 시설 페이지로 이동하는 함수
 document.addEventListener('DOMContentLoaded', function () {
 	const rows = document.querySelectorAll('tr.clickable-row');
     rows.forEach(row => {

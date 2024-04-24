@@ -30,6 +30,7 @@
   
   <mappers>
     <mapper resource="com/sports/mybatis/mapper.xml" />
+	<mapper resource="com/sports/mybatis/facilityMapper.xml"/>
   </mappers>
   
 </configuration>

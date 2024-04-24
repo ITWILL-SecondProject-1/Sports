@@ -26,13 +26,12 @@ public class SportsFacilityController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		commands = new HashMap<String, Command>();
 		commands.put("list", new ListCommand());
-		commands.put("inquire", new ReserveCommand());
-		commands.put("reserve", new InquireCommand());
+		commands.put("inquire", new InquireCommand());
+		commands.put("reserve", new ReserveCommand());
 	}
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String type = req.getParameter("type");
-		
 		Command command = commands.get(type);
 		String path = command.exec(req, res);
 		req.getRequestDispatcher(path).forward(req, res);
