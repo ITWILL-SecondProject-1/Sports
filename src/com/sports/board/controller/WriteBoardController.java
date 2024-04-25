@@ -14,14 +14,15 @@ import com.sports.model.dao.BoardDAO;
 import com.sports.model.vo.BoardVO;
 import com.sports.model.vo.UserVO;
 
-/**
- * Servlet implementation class BoardWriteController
- */
-@WebServlet("/writeBoard")
+@WebServlet("/boardWrite")
 public class WriteBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("JSP/board/boardWrite.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO) session.getAttribute("UserVO");
 		String useridx = vo.getUseridx();
@@ -39,11 +40,6 @@ public class WriteBoardController extends HttpServlet {
 		System.out.println(result);
 		
 		response.sendRedirect("board");
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

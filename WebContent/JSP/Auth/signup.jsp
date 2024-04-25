@@ -80,7 +80,7 @@ function checkIdDuplication() {
     }
     
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "emailDuplicateCheck.jsp", true)
+	xhr.open("POST", "JSP/Auth/emailDuplicateCheck.jsp", true)
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         let duplication = document.getElementById('idDuplication');

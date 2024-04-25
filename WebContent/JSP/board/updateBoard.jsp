@@ -22,8 +22,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 </head>
 <body>
+<jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 	<h1>글 수정하기</h1>
 	<form action="post">
 		제목 : <input type="text" name="subject" value="${vo.subject }"><br>

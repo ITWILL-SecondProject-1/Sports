@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 메뉴 바 -->
-<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 
 	<button class="navbar-toggler ml-2" type="button"
 		data-toggle="collapse" data-target="#menuCollapse"
@@ -19,14 +19,14 @@
 				<a class="nav-link font-weight-bold" href="reserve.jsp">Reserve</a>
 			</li>
 			<li class="nav-item col-md-auto">
-				<a class="nav-link font-weight-bold" href="gym.jsp">Gym</a></li>
+				<a class="nav-link font-weight-bold" href="facility?type=list">Gym</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold" href="main">
 					<img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1713515312/logo/logo_mqkknu.jpg" alt="logo" class="logo-img">
 				</a>
 			</li>
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board.jsp">Board</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="join_bbs">Team</a></li>
 		</ul>
 	</div>

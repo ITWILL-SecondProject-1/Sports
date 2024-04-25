@@ -8,14 +8,16 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <!-- 마우스 이동 감지 스크립트 -->
-<script src="scripts/cursor.js"></script>
+<script>
+document.addEventListener('mousemove', function (e) {
+    var dot = document.getElementById('cursor');
+    dot.style.left = e.pageX + 'px';
+    dot.style.top = e.pageY + 'px';
+})
+</script>
 
 <!-- 마우스 div요소 -->
 <div class="cursor" id="cursor"></div>
-
-<%
-	UserVO userVO = (UserVO) session.getAttribute("UserVO");
-%>
 
 <!-- navbar 적용 -->
 <jsp:include page="nav.jsp"/>

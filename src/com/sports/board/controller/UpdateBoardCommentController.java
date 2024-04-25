@@ -7,31 +7,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sports.model.dao.BoardDAO;
-import com.sports.model.vo.BoardVO;
+import com.sports.model.dao.BoardCommentDAO;
+import com.sports.model.vo.BoardCommentVO;
 
-@WebServlet("/updateBoard")
-public class UpdateBoardController extends HttpServlet {
+@WebServlet("/updateBoardComment")
+public class UpdateBoardCommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String subject = request.getParameter("subject");
+		System.out.println(request.getParameter("commentIdx"));
+		int commentIdx = Integer.parseInt(request.getParameter("commentIdx"));
+		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
 		String content = request.getParameter("content");
 		
-		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
-
-		//수정할 게시글 조회
-		BoardVO vo = BoardDAO.boardOne(bbsIdx);
-		
-		//vo수정
-		vo.setSubject(subject);
+		BoardCommentVO vo = (BoardCommentVO) BoardCommentDAO.selectBoardCommentOne(commentIdx);
 		vo.setContent(content);
 		
-		//update처리
-		int result = BoardDAO.boardUpdate(vo);
-		System.out.println(result);
+		System.out.println(vo);
 		
-		//수정된 게시글 조회 페이지로 이동
+		int result = BoardCommentDAO.updateBoardComment(vo);
+		System.out.println("result : " + result);
+		
 		response.sendRedirect("JSP/board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
 	}
 

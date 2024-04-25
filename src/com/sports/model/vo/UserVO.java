@@ -12,6 +12,7 @@ public class UserVO implements Serializable {
 	private String gender;
 	private String image;
 	private String imagePi;
+	private String manager;
   
 	public String getUseridx() {
 		return useridx;
@@ -77,9 +78,19 @@ public class UserVO implements Serializable {
 		this.imagePi = imagePi;
 	}
 
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
 	@Override
 	public String toString() {
-		return "UserVO [email=" + email + ", nickname=" + nickname + ", password=" + password + ", phone=" + phone
-				+ ", gender=" + gender + ", image=" + image + ", useridx=" + useridx + ", imagePi=" + imagePi + "]";
+		return "UserVO [useridx=" + useridx + ", email=" + email + ", nickname=" + nickname + ", password=" + password
+				+ ", phone=" + phone + ", gender=" + gender + ", image=" + image + ", imagePi=" + imagePi + ", manager="
+				+ manager + "]";
 	}
+	
 }

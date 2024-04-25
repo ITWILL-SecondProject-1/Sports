@@ -12,7 +12,10 @@
 	<typeAliases>
 		<typeAlias alias="UserVO" type="com.sports.model.vo.UserVO"/>
 		<typeAlias alias="BoardVO" type="com.sports.model.vo.BoardVO"/>
-		<typeAlias alias="FaVO" type="com.sports.fa.vo.FaVO"/>
+		<typeAlias alias="BoardCommentVO" type="com.sports.model.vo.BoardCommentVO"/>
+		<typeAlias alias="FaVO" type="com.sports.model.vo.FaVO"/>
+		<typeAlias alias="FaReserveVO" type="com.sports.model.vo.FaReserveVO"/>
+		<typeAlias alias="ReservationSummaryVO" type="com.sports.model.vo.ReservationSummaryVO"/>
 	</typeAliases>
 
   <environments default="development">
@@ -29,6 +32,7 @@
   
   <mappers>
     <mapper resource="com/sports/mybatis/mapper.xml" />
+	<mapper resource="com/sports/mybatis/facilityMapper.xml"/>
   </mappers>
   
 </configuration>
