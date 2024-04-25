@@ -10,6 +10,7 @@ public class FaVO {
 	private int openTime;
 	private int closeTime;
 	private int capacity;
+	private int DateRangeForReservation;
 	 
 	public int getFacilityIdx() {
 		return facilityIdx;
@@ -65,12 +66,19 @@ public class FaVO {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
-
+	public int getDateRangeForReservation() {
+		return DateRangeForReservation;
+	}
+	public void setDateRangeForReservation(int dateRangeForReservation) {
+		DateRangeForReservation = dateRangeForReservation;
+	}
+	
 	@Override
 	public String toString() {
 		return "FaVO [facilityIdx=" + facilityIdx + ", facilityName=" + facilityName + ", address=" + address
 				+ ", phoneNumber=" + phoneNumber + ", event=" + event + ", imageIdx=" + imageIdx + ", openTime="
-				+ openTime + ", closeTime=" + closeTime + ", capacity=" + capacity + "]";
+				+ openTime + ", closeTime=" + closeTime + ", capacity=" + capacity + ", DateRangeForReservation="
+				+ DateRangeForReservation + "]";
 	}
 	 
 }

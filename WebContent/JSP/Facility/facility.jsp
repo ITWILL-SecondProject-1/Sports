@@ -61,11 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         },
         validRange: function(currentDate) {
-            // 선택가능 날짜 조절(현재 날짜를 기준으로, 7일이란 기간을 잡았다.)
+            // 선택가능 날짜 조절
             var startDate = new Date(currentDate.valueOf());
             var endDate = new Date(currentDate.valueOf());
             startDate.setDate(startDate.getDate());
-            endDate.setDate(endDate.getDate() + 7);
+            endDate.setDate(endDate.getDate() + <%=facilityVO.getDateRangeForReservation()%>);
 
             return { start: startDate, end: endDate };
         }
@@ -115,6 +115,10 @@ $(document).ready(function() {
 // 2. 해당 클래스의 시간대와 HeadCount(예약할 인원수)를 서버에 보낸다.
 // 3. db에서 유저가 선택한 시간대에 capacity - headcount의 값의 min이, 클라이언트가 보낸 HeadCount보다 크면 db에 예약을 넣는다.
 // 4. 만약 HeadCount > min 의 관계가 될 경우, 데이터베이스에 예약을 넣지 않는다.
+// 선택사항
+//		- 달력에 날짜 클릭시 너무 흐리게 표시되서, 선명하게 표시 할 수 있게 만든다.
+// 		- innerHTML로 구현했는데, 너무안좋은 방향 같음.... 다른 방안 있으면 개선
+//		- 한 계정이 신청 가능한 최대 인원수를 정하는게 나을 것 같음 (계정당 인원수가 정해져 있지 않아서, 지금은 백명도 신청이 가능하다.)
 
 </script>
 <div class="container" id="calender-container">
