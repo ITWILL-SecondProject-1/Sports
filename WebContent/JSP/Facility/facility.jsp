@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         },
         validRange: function(currentDate) {
-            // 선택가능 날짜 조절
+            // 선택가능 날짜 조절(현재 날짜를 기준으로, 7일이란 기간을 잡았다.)
             var startDate = new Date(currentDate.valueOf());
             var endDate = new Date(currentDate.valueOf());
             startDate.setDate(startDate.getDate());
@@ -119,6 +119,7 @@ $(document).ready(function() {
 //		- 달력에 날짜 클릭시 너무 흐리게 표시되서, 선명하게 표시 할 수 있게 만든다.
 // 		- innerHTML로 구현했는데, 너무안좋은 방향 같음.... 다른 방안 있으면 개선
 //		- 한 계정이 신청 가능한 최대 인원수를 정하는게 나을 것 같음 (계정당 인원수가 정해져 있지 않아서, 지금은 백명도 신청이 가능하다.)
+
 
 </script>
 <div class="container" id="calender-container">
