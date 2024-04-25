@@ -32,7 +32,7 @@ public class UpdateBoardController extends HttpServlet {
 		System.out.println(result);
 		
 		//수정된 게시글 조회 페이지로 이동
-		response.sendRedirect("JSP/board/viewBoardOne.jsp?bbsIdx=" + bbsIdx);
+		response.sendRedirect("viewBoardOne?bbsIdx=" + bbsIdx);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

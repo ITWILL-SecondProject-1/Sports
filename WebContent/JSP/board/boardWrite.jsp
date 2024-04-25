@@ -41,7 +41,7 @@
 			</div>
 			<div class="mb-3">
 			  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-			  <textarea type="text" name="content" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+			  <textarea type="text" name="content" width="800px" height="800px" class="form-control" id="exampleFormControlTextarea1" required="required"></textarea>
 			</div>
 			<input type="submit" class="btn btn-danger" value="작성하기" onclick="go_boardWrite(this.form)">
 		</form>

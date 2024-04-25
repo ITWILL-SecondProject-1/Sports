@@ -22,10 +22,22 @@ public class BoardDAO {
 		return null;
 	}
 	
+	//전체글 수 조회
 	public static int getTotalCount() {
 		int total = 0;
 		try (SqlSession ss = DBService.getFactory().openSession()) {
 			total = ss.selectOne("sports.totalCount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	//유저 작성 글 수 조회
+	public static int getUserBoardCount(String useridx) {
+		int total = 0;
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			total = ss.selectOne("sports.totalUserFreeBoard", useridx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,6 +52,25 @@ public class BoardDAO {
 			map.put("end", end);
 			
 			return ss.selectList("sports.boardList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//유저페이지 작성글 조회
+	public static List<BoardVO> selectUserFreeBoards(int begin, int end, String stringUseridx) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			Map<String, Integer> map = new HashMap<>();
+			
+			//useridx String -> int 변경
+			int useridx = Integer.parseInt(stringUseridx);
+			
+			map.put("begin", begin);
+			map.put("end", end);
+			map.put("useridx", useridx);
+			
+			return ss.selectList("sports.userFreeBoard", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,16 +123,6 @@ public class BoardDAO {
 		}
 		return result;
 	}
-	
-	// 해당하는 유저의 자유게시글 조회
-	public static List<BoardVO> selectUserFreeBoards(String email) {
-		try(SqlSession ss = DBService.getFactory().openSession()) {
-			List<BoardVO> list = ss.selectList("sports.userFreeBoard", email);
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 	
 }

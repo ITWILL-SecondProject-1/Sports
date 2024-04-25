@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sports.board.common.Paging;
 import com.sports.model.dao.BoardDAO;
 import com.sports.model.vo.BoardVO;
 import com.sports.model.vo.UserVO;
@@ -28,8 +29,38 @@ public class UserPageController extends HttpServlet {
 				auth = userVO.getEmail().equals(email);
 			}
 		}
-	    List<BoardVO> list = BoardDAO.selectUserFreeBoards(email);
+		
+		//유저작성 게시글 목록
+		String useridx = userVO.getUseridx();
+		
+		Paging p = new Paging();
+
+		p.setTotalRecord(BoardDAO.getUserBoardCount(useridx));
+		p.setTotalPage();
+		
+		System.out.println("전체게시글 수 : " + p.getTotalRecord());
+		System.out.println("전체페이지 수 : " + p.getTotalPage());
+		
+		String cPage = req.getParameter("cPage");
+		if (cPage != null) {
+			p.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		p.setEnd(p.getNowPage() * p.getNumPerPage());
+		p.setBegin(p.getEnd() - p.getNumPerPage() + 1);
+		
+		int nowBlock = (p.getNowPage() - 1) / p.getPagePerBlock() + 1;
+		p.setNowBlock(nowBlock);
+		p.setEndPage(nowBlock * p.getPagePerBlock());
+		p.setBeginPage(p.getEndPage() - p.getPagePerBlock() + 1);
+		
+		if (p.getEndPage() > p.getTotalPage()) {
+			p.setEndPage(p.getTotalPage());
+		}
+		
+	    List<BoardVO> list = BoardDAO.selectUserFreeBoards(p.getBegin(), p.getEnd(), useridx);
 	    
+	    req.setAttribute("p", p);
 	    req.setAttribute("email", email);
 	    req.setAttribute("freeBoardList", list);
 	    req.setAttribute("auth", auth);

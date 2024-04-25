@@ -13,7 +13,7 @@
 %>    
 <script>
 	function go_boardUpdate(frm) {
-		frm.action="updateBoard";
+		frm.action="../../updateBoard";
 		frm.submit();
 	}
 </script>
@@ -29,7 +29,8 @@
 	<h1>글 수정하기</h1>
 	<form action="post">
 		제목 : <input type="text" name="subject" value="${vo.subject }"><br>
-		내용 : <input type="text" name="content" value="${vo.content }"><br>
+		내용 <br>
+		<textarea type="text" name="content" class="form-control" id="exampleFormControlTextarea1" rows="5">${vo.content }</textarea>
 		<input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
 		<input type="submit" value="수정하기" onclick="go_boardUpdate(this.form)">
 	</form>
