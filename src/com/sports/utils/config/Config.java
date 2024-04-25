@@ -1,4 +1,4 @@
-package com.sports.utils;
+package com.sports.utils.config;
 
 import java.io.IOException;
 import java.io.InputStream;

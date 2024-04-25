@@ -2,7 +2,7 @@ package com.sports.cloudinary;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.sports.utils.Config;
+import com.sports.utils.config.Config;
 
 import javax.servlet.http.Part;
 import java.io.File;
