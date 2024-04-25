@@ -4,7 +4,7 @@ public class TeamSignupVO {
 	private String signupIdx;
 	private String teamIdx;
 	private String useridx;
-	private String signupCheck = "u";
+	private String signupCheck;
 	private String signupDate;
 	private String content;
 	

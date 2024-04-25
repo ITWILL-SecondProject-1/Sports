@@ -18,16 +18,16 @@ public class JoinBbsWriteOkController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/**/System.out.println("    >join_bbs_write_ok");
+		/**/System.out.println(">join_bbs_write_ok");
 		String selectTeam = request.getParameter("selectTeam");
-		/**/System.out.println("selectTeam : "+selectTeam);
+		/**/System.out.println("    selectTeam : "+selectTeam);
 		if (selectTeam == null) {
 		}
 		
 		String bbsIdx = JoinBbsDAO.getnewBbsIdx();
 		String useridx = request.getParameter("useridx");
-		/**/System.out.println("bbsIdx : "+bbsIdx);
-		/**/System.out.println("useridx : "+useridx);
+		/**/System.out.println("    bbsIdx : "+bbsIdx);
+		/**/System.out.println("    useridx : "+useridx);
 		JoinBbsVO vo = new JoinBbsVO();
 		
 		vo.setBbsIdx(bbsIdx);
@@ -55,10 +55,10 @@ public class JoinBbsWriteOkController extends HttpServlet {
 			TeamVO teamVo = new TeamVO();
 			teamVo.setTeamIdx(request.getParameter("teamIdx"));
 			teamVo.setTeamName(request.getParameter("teamName"));
-			/**/System.out.println("teamVo : "+teamVo);
+			/**/System.out.println("    teamVo : "+teamVo);
 			TeamDAO.updateTeam(teamVo);
 		}
-		/**/System.out.println("vo : "+vo);
+		/**/System.out.println("    vo : "+vo);
 		JoinBbsDAO.insertJoinBbs(vo);
 		
 		

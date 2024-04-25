@@ -5,27 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <jsp:include page = '../partials/commonhead.jsp' flush = "false"/>
+<title>Insert title here</title>
 <style>
-	#join_bbs table {
-		border-collapse: collapse;
+	.right-box {
+	  float: right;
 	}
-	#join_bbs th, #join_bbs td {
-		border: 1px solid black;
-		text-align: center;
-	}
-	#join_bbs .align-left { text-align: left; }
-	.paging { list-style: none; }
-	.paging li {
-		border: 1px solid black;
-		float: left;
-		padding: 3px 7px;
-	}
-
 </style>
 <script>
-	function goWrite(frm) {
+	function goWrite() {
 		location.href = "join_bbs_write";
 	}
 	
@@ -33,86 +22,71 @@
 </head>
 <body>
 <jsp:include page = '../partials/commonbody.jsp' flush = "false"/>
-	<h1>팀 모집 게시판[join_bbs.jsp]</h1>
-	<div>
-			<button onclick="goWrite()">모집글쓰기</button>
-			<form>
-				<button>선택</button>
-				<input type="text" name="search">
-				<input type="submit" value="검색">
-			</form>
-	</div>
-	<hr>
-	<div id="join_bbs">
-	<table>
-		<caption>모집글 목록</caption>
-		<thead>
-			<tr>
-				<th class="no">번호</th>
-				<th class="subject">제목</th>
-				<th class="writer">글쓴이</th>
-				<th class="regdate">날짜</th>
-				<th class="hit">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- <tr>
-				<td>[샘플]1</td>
-				<td>[샘플]사람구함~</td>
-				<td>[샘플]프로틴쿠키</td>
-				<td>[샘플]2024-04-16</td>
-				<td>[샘플]0</td>
-			</tr> -->
-		<c:forEach var="vo" items="${list }">
-			<tr>
-				<td>${vo.bbsIdx }</td>
-				<td class="align-left">
-					<a href="join_bbs_view?bbsIdx=${vo.bbsIdx }&cPage=${paging.nowPage}">${vo.subject }</a>
-				</td>
-				<td>${vo.nickname }</td>
-				<td>${vo.writeDate }</td>
-				<td>${vo.hit }</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="5">
-					<ol class="paging">
-					<%--[이전]에 대한 사용여부 처리 --%>
-					<c:if test="${paging.beginPage == 1 }">
-						<li class="disable">이전</li> 
-					</c:if>
-					<c:if test="${paging.beginPage != 1 }">
-						<li class="able">
-							<a href="join_bbs?cPage=${paging.beginPage - 1 }">이전</a>
-						</li>
-					</c:if>
-					<%--블록내에 표시할 페이지 태그 작성(시작~끝) --%>
-						<c:forEach var="pageNo" begin="${paging.beginPage }" end="${paging.endPage }">
-						<c:choose>
-						<c:when test="${pageNo == paging.nowPage }">
-							<li class="now">${pageNo }</li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="join_bbs?cPage=${pageNo }">${pageNo }</a></li>
-						</c:otherwise>
-					</c:choose>
-						</c:forEach>
-					<%--[다음]에 대한 사용여부 처리 --%>
-					<c:if test="${paging.endPage == paging.totalPage }">
-						<li class="disable">다음</li> 
-					</c:if>
-					<c:if test="${paging.endPage != paging.totalPage }">
-						<li class="able">
-							<a href="join_bbs?cPage=${paging.endPage + 1 }">다음</a>
-						</li>
-					</c:if>
-					</ol>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	</div>
+<div class="container">
+		<h2>팀모집 게시판</h2>
+		<!-- 제목, 내용으로 검색 기능 -->
+	    <div>
+		<button onclick="goWrite()" class="btn btn-danger right-box">모집글작성하기</button ><br>	    	
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>날짜</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+				<c:forEach var="vo" items="${list }">
+					<tr>
+						<td>${vo.bbsIdx }</td>
+						<td>
+							<a href="${viewBbsUrl }?bbsIdx=${vo.bbsIdx }&cPage=${p.nowPage}">${vo.subject }</a>
+						</td>
+						<td>${vo.nickname }</td>
+						<td>${vo.writeDate }</td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		</div>	
+		<nav aria-label="Page navigation example" >
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item">
+		    <%-- [이전]에 대한 사용 여부 처리 --%>
+		    <c:if test="${p.beginPage == 1 }">
+		   		<a class="page-link" aria-label="Previous">
+		    </c:if>
+		    <c:if test="${p.beginPage != 1 }">
+		     	<a class="page-link" href="${bbsUrl }?cPage=${p.beginPage - 1 }" aria-label="Previous">
+		    </c:if>
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <%-- 페이지태그 --%>
+		    <c:forEach var="pageNo" begin="${p.beginPage }" end="${p.endPage }">
+		    <c:choose>
+		    	<c:when test="${pageNo == p.nowPage }">
+		    		<li class="page-item"><a class="page-link">${pageNo }</a></li>
+		    	</c:when>
+		    	<c:otherwise>
+		    		<li class="page-item"><a class="page-link" href="${bbs }?cPage=${pageNo }">${pageNo }</a></li>
+		    	</c:otherwise>
+		    </c:choose>
+		    </c:forEach>
+		    <%-- [다음]에 대한 사용 여부 처리 --%>
+		    <c:if test="${p.endPage < p.totalPage }">
+		     	<a class="page-link" href="${bbsUrl }?cPage=${p.endPage + 1 }" aria-label="Next">
+		    </c:if>
+		    <c:if test="${p.endPage >= p.totalPage }">
+		     	<a class="page-link" href="#" aria-label="Next">
+		    </c:if>
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+		</div>
+	
 </body>
 </html>

@@ -19,8 +19,8 @@ public class GetJsonJoinBbsController extends HttpServlet {
        
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/**/System.out.println("    >>getJsonJoinBbs");
-		/**/System.out.println("teamIdx : "+request.getParameter("teamIdx"));
+		/**/System.out.println(">>getJsonJoinBbs");
+		/**/System.out.println("    teamIdx : "+request.getParameter("teamIdx"));
 		JoinBbsVO vo = JoinBbsDAO.getOndJoinBbsByTeamIdx(request.getParameter("teamIdx"));
 		/**/System.out.println("vo : "+ vo.toString());
 		
@@ -47,7 +47,7 @@ public class GetJsonJoinBbsController extends HttpServlet {
 		result.append("}");
 		
 		//결과출력
-		/**/System.out.println("result : "+result);
+		/**/System.out.println("    result : "+result);
 		PrintWriter out = response.getWriter();
 		out.print(result);
 		
