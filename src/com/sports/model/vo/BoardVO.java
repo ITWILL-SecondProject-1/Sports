@@ -10,7 +10,8 @@ public class BoardVO {
 	private String subject;
 	private String content;
 	private String writeDate;
-	private String image;
+	private int imageIdx;
+	private int hit;
 	
 	public String getUseridx() {
 		return useridx;
@@ -49,16 +50,24 @@ public class BoardVO {
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
-	public String getImage() {
-		return image;
+	public int getImageIdx() {
+		return imageIdx;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageIdx(int imageIdx) {
+		this.imageIdx = imageIdx;
+	}
+	public int getHit() {
+		return hit;
+	}
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 	
 	@Override
 	public String toString() {
 		return "BoardVO [bbsIdx=" + bbsIdx + ", useridx=" + useridx + ", nickname=" + nickname + ", subject=" + subject
-				+ ", content=" + content + ", writeDate=" + writeDate + ", image=" + image + "]";
+				+ ", content=" + content + ", writeDate=" + writeDate + ", imageIdx=" + imageIdx + ", hit=" + hit + "]";
 	}
+	
+	
 }

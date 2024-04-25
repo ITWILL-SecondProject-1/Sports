@@ -1,3 +1,6 @@
+<%@page import="com.sports.model.vo.BoardVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sports.board.common.Paging"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.sports.model.vo.UserVO"%>
@@ -30,6 +33,13 @@
 		userVOEmail = userVO.getEmail();
 	}
 	boolean auth = ((boolean) request.getAttribute("auth"));
+	
+	//글 가져오기
+	Paging p = (Paging) request.getAttribute("p");
+	List<BoardVO> list = (List<BoardVO>)request.getAttribute("lise");
+
+	pageContext.setAttribute("p", p);
+	pageContext.setAttribute("freeBoardList", list);
 %>
 <div class="row user-page-card">
 <div class="flex-column col-3 mr-4">
@@ -101,13 +111,50 @@
 				<tr>
 					<td>${vo.bbsIdx}</td>
 					<td>
-						<a href="viewBoardOne.jsp?bbsIdx=${vo.bbsIdx}">${vo.subject}</a>
+						<a href="viewBoardOne?bbsIdx=${vo.bbsIdx}">${vo.subject}</a>
 					</td>
 					<td>${vo.writeDate}</td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
+		<div>
+			<nav aria-label="Page navigation example" >
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item">
+			    <%-- [이전]에 대한 사용 여부 처리 --%>
+			    <c:if test="${p.beginPage == 1 }">
+			   		<a class="page-link" aria-label="Previous">
+			    </c:if>
+			    <c:if test="${p.beginPage != 1 }">
+			     	<a class="page-link" href="userpage?email=<%= reqEmail %>&cPage=${p.beginPage - 1 }" aria-label="Previous">
+			    </c:if>
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <%-- 페이지태그 --%>
+			    <c:forEach var="pageNo" begin="${p.beginPage }" end="${p.endPage }">
+			    <c:choose>
+			    	<c:when test="${pageNo == p.nowPage }">
+			    		<li class="page-item"><a class="page-link">${pageNo }</a></li>
+			    	</c:when>
+			    	<c:otherwise>
+			    		<li class="page-item"><a class="page-link" href="userpage?email=<%= reqEmail %>&cPage=${pageNo }">${pageNo }</a></li>
+			    	</c:otherwise>
+			    </c:choose>
+			    </c:forEach>
+			    <c:if test="${p.endPage < p.totalPage }">
+			     	<a class="page-link" href="userpage?email=<%= reqEmail %>&cPage=${p.endPage + 1 }" aria-label="Next">
+			    </c:if>
+			    <c:if test="${p.endPage >= p.totalPage }">
+			     	<a class="page-link" href="#" aria-label="Next">
+			    </c:if>
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
 	</div>
 </div>
 <%

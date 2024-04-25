@@ -44,6 +44,10 @@
 
 %>  
 <script>
+	function updateBoard(frm) {
+		frm.action="JSP/board/updateBoard.jsp";
+		frm.submit();
+	}
 	function deleteBoard(frm) {
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 		     frm.submit();
@@ -92,133 +96,122 @@
 <title>게시글 1개 조회</title>
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <title>Bootstrap Example</title>
+<link rel="stylesheet" href="css/viewBoardOne.css" />
 </head>
-<style>
-#contentForm {
-    width: 40%;
-    margin: 0 auto;
-    padding-top: 12%;
-}
-.table>thead>tr>th, .table>tbody>tr>th {
-    background-color: #e6ecff;
-    text-align: center;
-}
-</style>
 <body>
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
-	<div class="container">
-		<div>
-			<form action="post">
-		  	<h3>${vo.subject }</h3>
-			<div class="mb-3">
-			  작성자 : ${vo.nickname }
+	<div class='container' id="mainContainer">
+		<div id="readBoard">
+			<div id="title">
+		  		${vo.subject }
+			</div> <%-- title 끝 --%>
+			<div id="writer">
+				작성자 : ${vo.nickname }&nbsp;&nbsp;&nbsp; ${vo.writeDate }
+			</div> <%--writer 끝 --%>
+			<div id="viewList">
+				<button class="btn btn-secondary" onclick="location.href='board'">목록으로가기</button>
 			</div>
-		  	<textarea type="text" name="content" class="form-control" id="exampleFormControlTextarea1" rows="5" readonly="readonly">${vo.content }</textarea>
-			<div class="mb-3" align="right">
-				<c:if test="${useridx == writer }">
-				<table>
-					<tr align="right">
-						<form action="updateBoard.jsp" method="post">
-							<input type="submit" class="btn btn-danger" value="수정하기">
-							<input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
-						</form>
-						<form action="deleteBoard" method="post">
-							<input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
-							<input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
-						</form>	
-					</tr>
-				</table>
-				</c:if>
+		</div> <%-- readBoard 끝 --%>		
+		<hr>
+		<div id="imagePart">
+			<div id="photo">
+				사진
 			</div>
-		</form>
-		<table>
-			<tr>
-				<td>
-					<form method="post">
+		</div> <%-- imagePart 끝 --%>
+		<pre>${vo.content }</pre>
+		<hr>
+		<div id="updateDelete">
+			<c:if test="${useridx == writer }">
+				<form action="updateBoard.jsp" method="post">
+					<input type="submit" class="btn btn-danger" onclick="updateBoard(this.form)" value="수정하기">
+					<input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
+				</form>
+				<form action="deleteBoard" method="post">
+					<input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
+					<input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
+				</form>	
+			</c:if>
+		</div> <%-- updateDelete 끝 --%>
+		<div class="commentDiv">
+			<p>
+				<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			    	댓글보기
+			    </button>
+			</p>
+			<div class="collapse" id="collapseExample">
+				<div class="card card-body">
+				  	<form method="post">
 				        <label for="exampleFormControlTextarea1" class="form-label">댓글작성하기</label>
 				        <textarea class="form-control" id="r_content" name="comment" rows="4" cols="80"></textarea>
 				        <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
-				        <input type="submit" class="btn btn-danger" value="입력" onclick="go_writeComment(this.form)">
+				        <input id="btnCommentWrite" type="submit" class="btn btn-danger" value="입력" onclick="go_writeComment(this.form)">
 				    </form>
-	   			</td>
-			</tr>
-		</table>
-		<!-- 댓글 목록 띄우기 -->
-		<c:if test="${not empty commentList }">
-			<h3>댓글 리스트</h3>
-			<div class="input-group input-group-sm" role="group"
-				style="text-align: left">
-				<table class="table table-striped table-bordered" border="1"
-	                width="800px" align="left">
-					<c:forEach var="row" items="${commentList }">
-						<tr>
-							<td></td>
-						</tr>
-						<tr>
-							<td>닉네임 : ${row.nickname }</td>
-						</tr>
-						<tr>
-							<td>작성일자 : ${row.writeDate } 댓글번호 : ${row.commentIdx }</td>
-						</tr>
-						<tr>
-							<td>댓글내용 : ${row.content }</td>
-						</tr>
-						
-						<form method="POST" id="form1">
-	 
-	                        <input type="hidden" id="rno" name="rno" value="${row.commentIdx}">
-	                        <input type="hidden" id="useridx" name="useridx"
-	                            value="${row.useridx}">
-	                    </form>
-	                    
-	                    <!-- 본인일 경우에만 댓글 수정버튼과 댓글 삭제 버튼이 출력되도록 설정함 -->
-	                    <div style="width: 700px; text-align: right;">
-	                        <c:if
-	                            test="${useridx == row.useridx}">
-	                            <form method="POST" id="updateCommentForm">
-		                            <tr>
-			                            <td>
-			                                <div style="width: 800px;">
-			                                    <textarea class="form-control" placeholder="수정할 내용을 입력하세요"
-			                                        id="r_content" name="content" rows="4" cols="80"></textarea>
-			                                    <input type="hidden" id="commentIdx" name="commentIdx" value="${row.commentIdx}">
-			                                    <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
-			                                    <input type="hidden" name="row" value="${row }">
-			                                </div>
-			                                <br>
-			                            <br>
-			                            </td>
-			                        </tr>
-		                            <tr>
-		                                <td>
-		                                    <div class="btn-group btn-group-sm" role="group"
-		                                        aria-label="...">
-		                                        <div style="text-align: center;">
-		                                            <button type="button" id="btn_reply_Update" class="btn btn-danger"
-		                                            						onclick="go_updateBoardComment(this.form)">댓글 수정</button>
-		                                            <button type="button" id="btn_reply_Delete" class="btn btn-danger"
-		                                            						onclick="go_deleteBoardComment(this.form)">댓글 삭제</button>
-		                                        </div>
-		                                    </div>
-		                                </td>
-		                            </tr>
-	                            </form>
-	                        </c:if>
-	                    </div>
-	                    <br>
-	                    <br>
-	                    </td>
-	                    </tr>
-					</c:forEach>
-				</table>
-			</div>
-		</c:if>
-		</div>
-		
-		<div>
-			<button class="btn btn-danger" onclick="location.href='board'">목록으로가기</button>
-		</div>
-	</div>
-	
+				    <hr>
+				    <!-- 댓글 목록 띄우기 -->
+				    <c:if test="${not empty commentList }">
+				    	<h3>댓글 리스트</h3>
+				    	<div class="input-group input-group-sm" role="group" style="text-align: left">
+				    		<table class="table table-striped table-bordered" border="1" width="800px" align="left">
+				    			<c:forEach var="row" items="${commentList }">
+				    				<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td>닉네임 : ${row.nickname }</td>
+									</tr>
+									<tr>
+										<td>작성일자 : ${row.writeDate } 댓글번호 : ${row.commentIdx }</td>
+									</tr>
+									<tr>
+										<td>댓글내용 : ${row.content }</td>
+									</tr>
+									
+									<form method="POST" id="form1">
+				                        <input type="hidden" id="rno" name="rno" value="${row.commentIdx}">
+				                        <input type="hidden" id="useridx" name="useridx"
+				                            value="${row.useridx}">
+				                    </form>
+				                    <!-- 본인일 경우에만 댓글 수정버튼과 댓글 삭제 버튼이 출력되도록 설정함 -->
+				                    <div style="width: 700px; text-align: right;">
+				                        <c:if
+				                            test="${useridx == row.useridx}">
+				                            <form method="POST" id="updateCommentForm">
+					                            <tr>
+						                            <td>
+						                                <div style="width: 800px;">
+						                                    <textarea class="form-control" placeholder="수정할 내용을 입력하세요"
+						                                        id="r_content" name="content" rows="4" cols="80"></textarea>
+						                                    <input type="hidden" id="commentIdx" name="commentIdx" value="${row.commentIdx}">
+						                                    <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
+						                                    <input type="hidden" name="row" value="${row }">
+						                                </div>
+						                                <br>
+						                            <br>
+						                            </td>
+						                        </tr>
+					                            <tr>
+					                                <td>
+					                                    <div class="btn-group btn-group-sm" role="group"
+					                                        aria-label="...">
+					                                        <div style="text-align: center;">
+					                                            <button type="button" id="btn_reply_Update" class="btn btn-danger"
+					                                            						onclick="go_updateBoardComment(this.form)">댓글 수정</button>
+					                                            <button type="button" id="btn_reply_Delete" class="btn btn-danger"
+					                                            						onclick="go_deleteBoardComment(this.form)">댓글 삭제</button>
+					                                        </div>
+					                                    </div>
+					                                </td>
+					                            </tr>
+				                            </form>
+				                        </c:if>
+				                    </div>
+				    			</c:forEach>
+				    		</table>
+				    	</div>
+				    </c:if>
+			  	</div>
+			</div> <%-- 댓글보기 토글 끝 --%>
+		</div> <%-- commendDiv 끝 --%>
+	</div> <%-- container 끝 --%>
 </body>
 </html>
