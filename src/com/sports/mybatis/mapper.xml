@@ -103,7 +103,7 @@
 	<!-- 자유게시판 글 작성 -->
 	<insert id="writeBoard" parameterType="BoardVO">
 		INSERT INTO FREE_BBS (BBS_IDX, USERIDX, SUBJECT, CONTENT, WRITE_DATE, IMAGE_IDX, HIT)
-		VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{useridx}, #{subject}, #{content}, SYSDATE, null, null)
+		VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{useridx}, #{subject}, #{content}, SYSDATE, SEQ_IMAGE_IDX.NEXTVAL, null)
 	</insert>
 	
 	<!-- 자유게시판 글 1개 조회 -->
