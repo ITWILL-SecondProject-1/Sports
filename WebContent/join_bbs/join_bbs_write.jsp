@@ -47,6 +47,14 @@
 					console.log("Ajax 처리 성공 - 응답받은데이터 : " + respData);
 					console.log(respData); //JSON 객체 1개
 					console.log(respData.list); //배열데이터
+					document.getElementById("subject").value = "-";
+					document.getElementById("event").value = "-";
+					document.getElementById("place").value = "-";
+					document.getElementById("time").value = "-";
+					document.getElementById("memberMax").value = "-";
+					document.getElementById("limit").value = "-";
+					document.getElementById("content").value = "-";
+					document.getElementById("teamIdx").value = "-";
 					
 					document.getElementById("subject").value = respData.subject;
 					document.getElementById("nickname").value = respData.nickname;
@@ -71,8 +79,13 @@
 	
 	function goWrite(frm){
 		console.log(frm);
-		frm.action = "join_bbs_write_ok";
-		frm.submit();
+		console.log(frm.subject.value);
+		if (frm.subject == null) {
+			alert("제목이 작성되지 않았습니다");
+		} else {
+ 			frm.action = "join_bbs_write_ok";
+			frm.submit();
+		}
 	}
 	
 </script>

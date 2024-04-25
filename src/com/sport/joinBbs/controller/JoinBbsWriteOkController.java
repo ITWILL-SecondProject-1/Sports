@@ -24,11 +24,13 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		if (selectTeam == null) {
 		}
 		
-		
-		
+		String bbsIdx = JoinBbsDAO.getnewBbsIdx();
 		String useridx = request.getParameter("useridx");
+		/**/System.out.println("bbsIdx : "+bbsIdx);
 		/**/System.out.println("useridx : "+useridx);
 		JoinBbsVO vo = new JoinBbsVO();
+		
+		vo.setBbsIdx(bbsIdx);
 		vo.setUseridx(useridx);
 		vo.setTeamIdx(request.getParameter("teamIdx"));
 		vo.setSubject(request.getParameter("subject"));
@@ -59,7 +61,10 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		/**/System.out.println("vo : "+vo);
 		JoinBbsDAO.insertJoinBbs(vo);
 		
-		/* response.sendRedirect("join_bbs"); */
+		
+		/* request.setAttribute("bbsIdx", bbsIdx); */
+		
+		response.sendRedirect("join_bbs_view?bbsIdx="+bbsIdx);
 		//request.getRequestDispatcher("join_bbs_write").forward(request, response);
 	}
 

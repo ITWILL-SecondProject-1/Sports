@@ -10,7 +10,7 @@
 	test.setPassword("example");
 	test.setPhone("example");
 	test.setGender("example");
-	test.setUseridx("2");
+	test.setUseridx("1");
 	session.setAttribute("UserVO", test);
 	/**/System.out.println(test.toString());
 %>

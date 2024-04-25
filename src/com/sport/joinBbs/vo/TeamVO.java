@@ -7,9 +7,9 @@ import com.sports.model.vo.UserVO;
 public class TeamVO {
 	private String teamIdx; //팀인덱스
 	private String useridx; //팀장
-	private String gender; //
+	private String joinCheck; //
 	private String teamName; //팀명
-	private String image; //팀이미지
+	private String imageIdx; //팀이미지
 	private String imagePi; //이미지pi
 	
 	private List<UserVO> memberList = null;
@@ -24,7 +24,7 @@ public class TeamVO {
 	}
 
 	public String getGender() {
-		return gender;
+		return joinCheck;
 	}
 
 	public String getTeamName() {
@@ -32,7 +32,7 @@ public class TeamVO {
 	}
 
 	public String getImage() {
-		return image;
+		return imageIdx;
 	}
 
 	public String getImagePi() {
@@ -53,7 +53,7 @@ public class TeamVO {
 	}
 
 	public void setGender(String gender) {
-		this.gender = gender;
+		this.joinCheck = gender;
 	}
 
 	public void setTeamName(String teamName) {
@@ -61,7 +61,7 @@ public class TeamVO {
 	}
 
 	public void setImage(String image) {
-		this.image = image;
+		this.imageIdx = image;
 	}
 
 	public void setImagePi(String imagePi) {
@@ -74,8 +74,8 @@ public class TeamVO {
 
 	@Override
 	public String toString() {
-		return "TeamVO [teamIdx=" + teamIdx + ", useridx=" + useridx + ", gender=" + gender + ", teamName=" + teamName
-				+ ", image=" + image + ", imagePi=" + imagePi + ", memberList=" + memberList + "]";
+		return "TeamVO [teamIdx=" + teamIdx + ", useridx=" + useridx + ", gender=" + joinCheck + ", teamName=" + teamName
+				+ ", image=" + imageIdx + ", imagePi=" + imagePi + ", memberList=" + memberList + "]";
 	}
 	
 	

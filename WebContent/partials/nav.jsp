@@ -27,7 +27,7 @@
 				</a>
 			</li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="team.jsp">Team</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="join_bbs">Team</a></li>
 		</ul>
 	</div>
 	<!-- 드롭다운 버튼 추가 -->

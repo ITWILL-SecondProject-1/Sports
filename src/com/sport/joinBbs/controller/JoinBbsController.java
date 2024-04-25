@@ -33,9 +33,12 @@ public class JoinBbsController extends HttpServlet {
 		********************************/
 		Paging p = new Paging(10, 5, JoinBbsDAO.getTotalCount());
 		/**/int totalRecorde = JoinBbsDAO.getTotalCount();
-		/**/System.out.println("totalRecorde : "+totalRecorde);
+		/**/System.out.println("totalRecorde : " + totalRecorde);
 		String cPage = request.getParameter("cPage");
-		if (cPage != null) {
+		/**/System.out.println("cPage : " + cPage);
+		if (cPage == null) {
+			p.setNowPage(1);
+		} else {
 			p.setNowPage(Integer.parseInt(cPage));
 		}
 		List<JoinBbsVO> list = JoinBbsDAO.getJoinBbsList(p.getBegin(),p.getEnd());
