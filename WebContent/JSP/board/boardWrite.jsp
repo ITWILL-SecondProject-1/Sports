@@ -52,12 +52,12 @@
 		<h1>글 작성하기</h1>
 		<form method="post" enctype="multipart/form-data">
 			<div class="mb-3">
-				<label for="exampleFormControlInput1" class="form-label">제목</label>
-				<input type="text" name="subject" class="form-control" placeholder = "게시글을 입력해주세요!!" id="exampleFormControlInput1">
+				<label for="subject" class="form-label">제목</label>
+				<input type="text" name="subject" class="form-control" placeholder = "제목을 입력해주세요!!" id="subject">
 			</div>
 			<div class="mb-3">
-				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea name="content" width="800px" height="800px" class="form-control" id="exampleFormControlTextarea1" placeholder = "게시글을 입력해주세요!!" required="required"></textarea>
+				<label for="content" class="form-label">내용</label>
+				<textarea name="content" width="800px" height="800px" class="form-control" id="content" placeholder = "게시글을 입력해주세요!!" required="required"></textarea>
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">

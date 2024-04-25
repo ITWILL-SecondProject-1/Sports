@@ -2,6 +2,7 @@ package com.sports.board.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,12 @@ import com.sports.model.dao.BoardDAO;
 import com.sports.model.vo.BoardVO;
 import com.sports.model.vo.UserVO;
 
+
+@MultipartConfig(
+	    fileSizeThreshold = 1024 * 1024 * 2,
+	    maxFileSize = 1024 * 1024 * 10, 
+	    maxRequestSize = 1024 * 1024 * 50
+	)
 @WebServlet("/boardWrite")
 public class WriteBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

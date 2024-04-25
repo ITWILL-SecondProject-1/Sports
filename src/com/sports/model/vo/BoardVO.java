@@ -1,6 +1,5 @@
 package com.sports.model.vo;
 
-import java.sql.Date;
 
 public class BoardVO {
 
