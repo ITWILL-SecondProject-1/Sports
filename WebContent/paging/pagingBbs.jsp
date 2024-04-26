@@ -26,7 +26,7 @@
 </style>
 <script>
 	function goWrite(frm) {
-		location.href = "${bbs_write }";
+		location.href = "${wrightBbsUrl }";
 	}
 	
 </script>

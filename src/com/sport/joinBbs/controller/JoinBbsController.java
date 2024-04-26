@@ -36,7 +36,8 @@ public class JoinBbsController extends HttpServlet {
 		*/
 		//게시글VO : JoinBbsVO, 게시글DAO : JoinBbsDAO
 		String bbsUrl = "join_bbs"; //게시판 서블릿 url매핑
-		String viewBbsUrl = "join_bbs_view"; //게시글작성 서블릿 url매핑
+		String viewBbsUrl = "join_bbs_view"; //게시글보기 서블릿 url매핑
+		String wrightBbsUrl = "join_bbs_wright"; //게시글보기 서블릿 url매핑
 		String responseUrl = "join_bbs/join_bbs.jsp"; //응답url
 		int numPerPage = 10; //페이지당 게시글수
 		int pagePerBlock = 5; //블럭당 페이지수
@@ -58,7 +59,7 @@ public class JoinBbsController extends HttpServlet {
 		/**/System.out.println("    totalRecorde : " + totalRecorde);
 		String cPage = request.getParameter("cPage");
 		/**/System.out.println("    cPage : " + cPage);
-		if (cPage == null) {
+		if (cPage == null || cPage.length() == 0) {
 			p.setNowPage(1);
 		} else {
 			p.setNowPage(Integer.parseInt(cPage));
@@ -67,6 +68,7 @@ public class JoinBbsController extends HttpServlet {
 		/**/System.out.println("    Paging  p : "+ p.toString());
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
+		request.setAttribute("wrightBbsUrl", wrightBbsUrl);
 		request.setAttribute("p", p);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher(responseUrl).forward(request, response);

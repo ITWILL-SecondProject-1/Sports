@@ -163,6 +163,13 @@
  	   			<input type="text" disabled readonly class="form-control-plaintext" id="memberMax" value="${vo.memberMax }">
    			</div>
   		</div>
+  		<%-- 시간 --%>
+		<div class="mb-3 row">
+    		<label for="time" class="col-sm-2 col-form-label">시간</label>
+  			<div class="col-sm-10">
+ 	   			<input type="text" disabled readonly class="form-control-plaintext" id="time" value="${vo.time }">
+   			</div>
+  		</div>
 		<%-- 조건 --%>
 		<div class="mb-3 row">
     		<label for="limit" class="col-sm-2 col-form-label">조건</label>

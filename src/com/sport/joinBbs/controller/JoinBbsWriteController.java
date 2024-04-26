@@ -14,10 +14,21 @@ public class JoinBbsWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*****************************
+		- 요청 파라메터
+		
+		- 응답 파라메터
+		teams : 로그인 유저가 가입한 팀 목록
+		
+		*/
+		String responseUrl = "join_bbs/join_bbs_write.jsp";
+		//************************
+		
 		/**/System.out.println(">>join_bbs_write");
+		//가입한 팀 목록 띄우기
 		request.setAttribute("teams", TeamDAO.getMyTeamList());
 		
-		request.getRequestDispatcher("join_bbs/join_bbs_write.jsp").forward(request, response);
+		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
