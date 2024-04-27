@@ -61,11 +61,11 @@
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
-					<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+					<span class="input-group-text" id="images">Upload</span>
 				</div>
 				<div class="custom-file">
-					<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" multiple>
-					<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+					<input type="file" class="custom-file-input" id="images" name="images" aria-describedby="images" multiple>
+					<label class="custom-file-label" for="images">Choose file</label>
 				</div>
 			</div>
 			<input type="submit" class="btn btn-danger" value="작성하기" onclick="go_boardWrite(this.form)">
