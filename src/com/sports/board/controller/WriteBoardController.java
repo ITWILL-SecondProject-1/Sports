@@ -42,16 +42,15 @@ public class WriteBoardController extends HttpServlet {
 		boardVO.setSubject(request.getParameter("subject"));
 		boardVO.setContent(request.getParameter("content"));
 		int result = BoardDAO.boardInsert(boardVO);
-		
+		System.out.println(result);
 		
 		// 파일들을 가져와서 이미지일 경우에만 업로드 (jpeg, png)
-		for (Part part : parts) {
-			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
-				
-			}
-		}
+//		for (Part part : parts) {
+//			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
+//				
+//			}
+//		}
 		
-		System.out.println(result);
 		
 		response.sendRedirect("board");
 	}
