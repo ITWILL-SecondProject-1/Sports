@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.sports.cloudinary.IMGUpload;
 import com.sports.model.dao.BoardDAO;
 import com.sports.model.vo.BoardVO;
 import com.sports.model.vo.UserVO;
@@ -24,8 +25,15 @@ import com.sports.model.vo.UserVO;
 	)
 @WebServlet("/boardWrite")
 public class WriteBoardController extends HttpServlet {
+	private IMGUpload imgUpload;
 	private static final long serialVersionUID = 1L;
 
+    @Override
+    public void init() {
+        this.imgUpload = new IMGUpload();
+    }
+
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("JSP/board/boardWrite.jsp").forward(request, response);
 	}
@@ -41,16 +49,16 @@ public class WriteBoardController extends HttpServlet {
 		boardVO.setUseridx(useridx);
 		boardVO.setSubject(request.getParameter("subject"));
 		boardVO.setContent(request.getParameter("content"));
-		int result = BoardDAO.boardInsert(boardVO);
-		System.out.println(result);
+		
+		// 해당 게시물의 imageIdx를 반환한다.
+		int imageIdx = BoardDAO.boardInsert(boardVO);
 		
 		// 파일들을 가져와서 이미지일 경우에만 업로드 (jpeg, png)
-//		for (Part part : parts) {
-//			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
-//				
-//			}
-//		}
-		
+		try {
+			imgUpload.uploadImages(parts, imageIdx);			
+		} catch(NullPointerException e) {
+			System.out.println("이미지를 입력하지 않음.");
+		}
 		
 		response.sendRedirect("board");
 	}
