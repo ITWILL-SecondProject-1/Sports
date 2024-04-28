@@ -35,4 +35,12 @@ public class Config {
     public static String getENV() {
     	return prop.getProperty("cloudinary.api_env");
     }
+    
+    public static String getEditButton() {
+    	return prop.getProperty("button.edit");
+    }
+    
+    public static String getDeleteButton() {
+    	return prop.getProperty("button.delete");
+    }
 }

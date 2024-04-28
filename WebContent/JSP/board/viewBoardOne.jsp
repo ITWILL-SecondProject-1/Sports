@@ -34,7 +34,7 @@
 		}
 	} else {
 		System.out.println("로그인 안함");
-	}
+	};
 	
 	//댓글목록 가져오기
 	List<BoardCommentVO> list = BoardCommentDAO.selectBoardComment(bbsIdx);
@@ -50,12 +50,12 @@
 <meta charset="UTF-8">
 <title>자유게시판-${boardVo.subject}</title>
 <jsp:include page='../../partials/commonhead.jsp' flush="false" />
-<title>Bootstrap Example</title>
-<link rel="stylesheet" href="css/viewBoardOne.css" />
+<jsp:include page='../../css/viewBoardOneStyle.jsp' flush="false" />
 </head>
 <body>
-	<jsp:include page='../../partials/commonbody.jsp' flush="false" />
-	<div class='container' id="mainContainer">
+<jsp:include page='../../partials/commonbody.jsp' flush="false" />
+<div class='row'>
+	<div class='col-5 card'>
 		<div id="readBoard">
 			<div id="title">${boardVo.subject }</div>
 			<%-- title 끝 --%>
@@ -70,7 +70,7 @@
 		<hr>
 		<pre>${boardVo.content }</pre>
 		<c:if test="${imagesList != null}">
-			<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+			<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
 				<div class="carousel-inner">
 					<c:forEach var="image" items="${imagesList}" varStatus="status">
 						<div class="carousel-item ${status.index == 0 ? 'active' : ''}" data-interval="10000">
@@ -78,11 +78,11 @@
 						</div>
 					</c:forEach>
 				</div>
-				<button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
+				<button class="carousel-control-prev" type="button" data-target="#ImagesListCarousel" data-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 					<span class="sr-only">Previous</span>
 				</button>
-				<button class="carousel-control-next" type="button" data-target="#carouselExampleInterval" data-slide="next">
+				<button class="carousel-control-next" type="button" data-target="#ImagesListCarousel" data-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="sr-only">Next</span>
 				</button>
@@ -92,41 +92,55 @@
 		<div id="updateDelete">
 			<c:if test="${useridx == writer }">
 				<form action="updateBoard.jsp" method="post">
-					<input type="submit" class="btn btn-danger"
-						onclick="updateBoard(this.form)" value="수정하기"> <input
-						type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
+					<input type="submit" class="btn btn-danger" onclick="updateBoard(this.form)" value="수정하기">
+					<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
 				</form>
 				<form action="deleteBoard" method="post">
-					<input type="button" class="btn btn-danger"
-						onclick="deleteBoard(this.form)" value="삭제하기"> <input
-						type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
+					<input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
+					<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
 				</form>
 			</c:if>
 		</div>
 		<%-- updateDelete 끝 --%>
-		<div class="commentDiv">
+		<%-- commendDiv 끝 --%>
+	</div>
+	<%-- container 끝 --%>
+	<div class='col-5'>
+			<div class="commentDiv">
 			<p>
-				<button class="btn btn-danger" type="button" data-toggle="collapse"
+				<button class="btn btn-info" type="button" data-toggle="collapse"
 					data-target="#collapseExample" aria-expanded="false"
 					aria-controls="collapseExample">댓글보기</button>
 			</p>
 			<div class="collapse" id="collapseExample">
 				<div class="card card-body">
 					<form method="post">
-						<label for="exampleFormControlTextarea1" class="form-label">댓글작성하기</label>
-						<textarea class="form-control" id="r_content" name="comment"
-							rows="4" cols="80"></textarea>
+						<label for="comment" class="form-label">댓글작성하기</label>
+						<textarea class="form-control" id="r_content" name="comment" rows="4"></textarea>
 						<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						<input id="btnCommentWrite" type="submit" class="btn btn-danger"
+						<input id="btnCommentWrite" type="submit" class="btn btn-info"
 							value="입력" onclick="go_writeComment(this.form)">
 					</form>
 					<hr>
 					<!-- 댓글 목록 띄우기 -->
 					<c:if test="${not empty commentList }">
-						<h3>댓글 리스트</h3>
-						<div class="input-group input-group-sm" role="group"
-							style="text-align: left">
-							<table class="table table-striped table-bordered" border="1" width="800px" align="left">
+					<c:forEach var="row" items="${commentList}">
+					    <div class="card comment-row">
+					        <div class="d-flex justify-content-between align-items-center comment-name">
+					            <span>닉네임: ${row.nickname}</span>
+					            <c:if test="${useridx == row.useridx}">
+					                <div>
+					                    <button type="button" class="btn btn-primary btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx}, '${row.content}')">수정</button>
+					                    <button type="button" class="btn btn-danger btn-sm comment-delete" onclick="editComment(${useridx}, ${row.commentIdx})">삭제</button>
+					                </div>
+					            </c:if>
+					        </div>
+					        <hr>
+					        <div class="comment-content card">${row.content}</div>
+					    </div>
+					</c:forEach>
+						<div class="input-group input-group-sm" role="group" style="text-align: left">
+							<table class="table table-striped table-bordered" border="1" align="left">
 								<c:forEach var="row" items="${commentList }">
 									<tr>
 										<td></td>
@@ -142,9 +156,8 @@
 									</tr>
 
 									<form method="POST" id="form1">
-										<input type="hidden" id="rno" name="rno"
-											value="${row.commentIdx}"> <input type="hidden"
-											id="useridx" name="useridx" value="${row.useridx}">
+										<input type="hidden" id="rno" name="rno" value="${row.commentIdx}">
+										<input type="hidden" id="useridx" name="useridx" value="${row.useridx}">
 									</form>
 									<!-- 본인일 경우에만 댓글 수정버튼과 댓글 삭제 버튼이 출력되도록 설정함 -->
 									<div style="width: 700px; text-align: right;">
@@ -153,13 +166,10 @@
 												<tr>
 													<td>
 														<div style="width: 800px;">
-															<textarea class="form-control"
-																placeholder="수정할 내용을 입력하세요" id="r_content"
-																name="content" rows="4" cols="80"></textarea>
-															<input type="hidden" id="commentIdx" name="commentIdx"
-																value="${row.commentIdx}"> <input type="hidden"
-																name="bbsIdx" value="${boardVo.bbsIdx }"> <input
-																type="hidden" name="row" value="${row }">
+															<textarea class="form-control" placeholder="수정할 내용을 입력하세요" id="r_content" name="content" rows="4"></textarea>
+															<input type="hidden" id="commentIdx" name="commentIdx" value="${row.commentIdx}">
+															<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
+															<input type="hidden" name="row" value="${row }">
 														</div> <br> <br>
 													</td>
 												</tr>
@@ -168,14 +178,10 @@
 														<div class="btn-group btn-group-sm" role="group"
 															aria-label="...">
 															<div style="text-align: center;">
-																<button type="button" id="btn_reply_Update"
-																	class="btn btn-danger"
-																	onclick="go_updateBoardComment(this.form)">댓글
-																	수정</button>
-																<button type="button" id="btn_reply_Delete"
-																	class="btn btn-danger"
-																	onclick="go_deleteBoardComment(this.form)">댓글
-																	삭제</button>
+																<button type="button" id="btn_reply_Update" class="btn btn-danger" 
+																onclick="go_updateBoardComment(this.form)">댓글 수정</button>
+																<button type="button" id="btn_reply_Delete" class="btn btn-danger"
+																	onclick="go_deleteBoardComment(this.form)">댓글 삭제</button>
 															</div>
 														</div>
 													</td>
@@ -191,9 +197,8 @@
 			</div>
 			<%-- 댓글보기 토글 끝 --%>
 		</div>
-		<%-- commendDiv 끝 --%>
 	</div>
-	<%-- container 끝 --%>
+</div>
 </body>
 <script>
 	function updateBoard(frm) {
@@ -207,7 +212,6 @@
 		     return false;
 		 }
 	}
-	
 	function go_writeComment(frm) {
 		
 		<%
@@ -239,5 +243,65 @@
 		 }
 		
 	}
+	
+	async function editComment(userIdx, commentIdx, previousContent) {
+		Swal.fire({
+			title: 'Comment Edit',
+			width: 800,
+			html: `
+			<div class="mb-3 edit-div">
+				<input type="text" id="content" class="swal2-edit-comment" value="${previousContent}">
+			</div>
+			`,
+			confirmButtonText: 'Edit',
+			focusConfirm: false,
+			didOpen: () => {
+				const popup = Swal.getPopup();
+				const contentInput = popup.querySelector('#content');
+				const handleEnter = (event) => { if (event.key === 'Enter') Swal.clickConfirm(); };
+				contentInput.onkeyup = handleEnter;
+			}, preConfirm: () => {
+				const newContent = document.getElementById('content').value;
+				if (!newContent) {
+					Swal.showValidationMessage(`Please enter content`);
+				}
+				confirmEditComment(userIdx, commentIdx, newContent);
+			}
+		})
+	}
+	
+	async function confirmEditComment(userIdx, commentIdx, newContent) {
+	    const response = await fetch('/updateBoardComment', {
+	        method: 'POST', // HTTP 메소드 지정
+	        headers: {
+	            'Content-Type': 'application/json' // 컨텐츠 타입 헤더 설정
+	        },
+	        body: JSON.stringify({
+	            userIdx: userIdx,
+	            bbsIdx: ;
+	            commentIdx: commentIdx,
+	            content: newContent
+	        }) // 전송할 데이터
+	    });
+
+	    if (response.ok) { // 응답 성공 체크
+	        const jsonResponse = await response.json();
+	        Swal.fire({
+	            title: 'Success',
+	            text: 'Your comment has been updated successfully.',
+	            icon: 'success'
+	        });
+	    } else {
+	        Swal.fire({
+	            title: 'Error',
+	            text: 'There was a problem updating your comment.',
+	            icon: 'error'
+	        });
+	    }
+	}
+	
+	$(document).ready(function(){
+	    $('#carouselExampleInterval').carousel();
+	});
 </script>
 </html>
