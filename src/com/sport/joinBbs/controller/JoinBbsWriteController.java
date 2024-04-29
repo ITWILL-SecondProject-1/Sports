@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sport.joinBbs.dao.TeamDAO;
+import com.sports.model.vo.UserVO;
 
 @WebServlet("/join_bbs_write")
 public class JoinBbsWriteController extends HttpServlet {
@@ -25,8 +26,9 @@ public class JoinBbsWriteController extends HttpServlet {
 		//************************
 		
 		/**/System.out.println(">>join_bbs_write");
+		UserVO loginUser = (UserVO) request.getSession().getAttribute("UserVO");
 		//가입한 팀 목록 띄우기
-		request.setAttribute("teams", TeamDAO.getMyTeamList());
+		request.setAttribute("teams", TeamDAO.getMyTeamList(loginUser.getUseridx()));
 		
 		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}

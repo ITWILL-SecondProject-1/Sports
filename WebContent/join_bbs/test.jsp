@@ -13,7 +13,7 @@
 	test.setGender("example");
 	test.setUseridx("1");
 	session.setAttribute("UserVO", test);
-	/**/System.out.println(test.toString());
+	/**/System.out.println("    "+test.toString());
 %>
 <!DOCTYPE html>
 <html>
@@ -25,10 +25,16 @@
 </head>
 <body>
 
-	<form action="../join_bbs">
+<form action="../join_bbs">
 		<input type="submit" value="[join_bbs]">
 	</form>
 	
 	<a href="../join_bbs">[join_bbs]</a>
+	<form action="../teamBbs" method="post">
+		<input type="submit" value="[teamBbs?teamIdx=1]">
+		<input type="hidden" name="teamIdx" value="1">
+	</form>
+
+	<a href="../teamBbs?teamIdx=1">[teamBbs?teamIdx=1]</a>
 </body>
 </html>

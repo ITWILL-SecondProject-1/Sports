@@ -12,7 +12,6 @@
 <title>Insert title here</title>
 <jsp:include page='../partials/commonhead.jsp' flush="false" />
 <style>
-
 .writeBbs {
 	width: 500px;
 	position: absolute;
@@ -104,27 +103,102 @@
 <body>
 	<jsp:include page='../partials/commonbody.jsp' flush="false" />
 
+
+			<button class="btn btn-secondary me-md-2" onclick="goLsit()">작성취소</button>
+			<button class="btn btn-primary" onclick="writeBbs(this.form)">등록</button>
+	
 	<div class="row writeBbs">
-		
+
 		<div class="col card px-3 py-3">
+		<form>
+			<div class="mb-3 row">
+					<select class="form-select" id="selectTeam" name="selectTeam" onchange="selectBbs(this.value)">
+						<option value="-">팀 선택하기..</option>
+						<c:forEach var="vo" items="${teams }">
+							<c:if test="${empty vo.teamName }">
+								<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
+							</c:if>
+							<c:if test="${not empty vo.teamName }">
+								<option value="${vo.teamIdx }">${vo.teamName }</option>
+							</c:if>
+						</c:forEach>
+						<option value="newTeam">새팀 만들기</option>
+					</select>
+			</div>
+			<div class="mb-3 row">
+				<label for="nickname" class="col-sm-2 col-form-label">작성자</label>
+				<div class="col-sm-10">
+					<input type="text" readonly class="form-control-plaintext" id="nickname" value="email@example.com">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">제목</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">종목</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">장소</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">인원수</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">시간</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">조건</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<div class="col-sm-10">
+					<textarea class="form-control" id="inputPassword"></textarea>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">팀이름</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+</form>
+
+<%-- 
 
 			<form method="post">
 				<button class="btn btn-secondary me-md-2" onclick="goLsit()">작성취소</button>
 				<button class="btn btn-primary" onclick="writeBbs(this.form)">등록</button>
 				<div>
-				팀선택 <select class="form-select" id="selectTeam" name="selectTeam"
-					onchange="selectBbs(this.value)">
-					<option value="-">팀 선택하기..</option>
-					<c:forEach var="vo" items="${teams }">
-						<c:if test="${empty vo.teamName }">
-							<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
-						</c:if>
-						<c:if test="${not empty vo.teamName }">
-							<option value="${vo.teamIdx }">${vo.teamName }</option>
-						</c:if>
-					</c:forEach>
-					<option value="newTeam">새팀 만들기</option>
-				</select>
+					팀선택 <select class="form-select" id="selectTeam" name="selectTeam"
+						onchange="selectBbs(this.value)">
+						<option value="-">팀 선택하기..</option>
+						<c:forEach var="vo" items="${teams }">
+							<c:if test="${empty vo.teamName }">
+								<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
+							</c:if>
+							<c:if test="${not empty vo.teamName }">
+								<option value="${vo.teamIdx }">${vo.teamName }</option>
+							</c:if>
+						</c:forEach>
+						<option value="newTeam">새팀 만들기</option>
+					</select>
 				</div>
 				<div class="my-2">
 					작성자 : <input type="text" disabled readonly
@@ -163,7 +237,7 @@
 						onclick="writeBbs(this.form)">등록</button>
 				</div>
 			</form>
-
+ --%>
 
 
 
@@ -175,7 +249,7 @@
 
 
 		</div>
-	
+
 	</div>
 </body>
 </html>
