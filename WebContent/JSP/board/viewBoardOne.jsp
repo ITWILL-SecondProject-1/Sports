@@ -205,6 +205,7 @@
 		frm.action="JSP/board/updateBoard.jsp";
 		frm.submit();
 	}
+	
 	function deleteBoard(frm) {
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 		     frm.submit();
@@ -212,6 +213,7 @@
 		     return false;
 		 }
 	}
+	
 	function go_writeComment(frm) {
 		
 		<%
@@ -234,6 +236,7 @@
 		frm.action="updateBoardComment";
 		frm.submit();
 	}
+	
 	function go_deleteBoardComment(frm) {
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 			frm.action="deleteBoardComment";
@@ -247,7 +250,7 @@
 	async function editComment(userIdx, commentIdx, previousContent) {
 		Swal.fire({
 			title: 'Comment Edit',
-			width: 800,
+			width: 700,
 			html: `
 			<div class="mb-3 edit-div">
 				<input type="text" id="content" class="swal2-edit-comment" value="${previousContent}">
@@ -271,14 +274,14 @@
 	}
 	
 	async function confirmEditComment(userIdx, commentIdx, newContent) {
-	    const response = await fetch('/updateBoardComment', {
+	    const response = await fetch('/STP/updateBoardComment', {
 	        method: 'POST', // HTTP 메소드 지정
 	        headers: {
 	            'Content-Type': 'application/json' // 컨텐츠 타입 헤더 설정
 	        },
 	        body: JSON.stringify({
 	            userIdx: userIdx,
-	            bbsIdx: ;
+	            bbsIdx: <%=bbsIdx%>,
 	            commentIdx: commentIdx,
 	            content: newContent
 	        }) // 전송할 데이터
@@ -289,7 +292,10 @@
 	        Swal.fire({
 	            title: 'Success',
 	            text: 'Your comment has been updated successfully.',
-	            icon: 'success'
+	            icon: 'success',
+	            didClose:() => {
+	            	window.location.reload();
+	            }
 	        });
 	    } else {
 	        Swal.fire({
