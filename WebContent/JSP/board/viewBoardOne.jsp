@@ -89,18 +89,12 @@
 							<span class="sr-only">Next</span>
 						</button>
 					</div>
-				</c:if>
 				<hr>
+				</c:if>
 				<div id="updateDelete ml-auto">
 					<c:if test="${useridx == writer }">
-						<form action="updateBoard.jsp" method="post" class="m-1">
-							<input type="submit" class="btn btn-danger" onclick="updateBoard(this.form)" value="수정하기">
-							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						</form>
-						<form action="deleteBoard" method="post" class="m-1">
-							<input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
-							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						</form>
+						<button type="button" class="btn btn-primary btn-sm" onclick="editBoard()">수정</button>
+						<button type="button" class="btn btn-danger btn-sm" onclick="deleteBoard()">삭제</button>
 					</c:if>
 				</div>
 			</div>
@@ -149,17 +143,7 @@
 	</div>
 </div>
 </body>
-<script>
-	function updateBoard(frm) {
-		frm.action="JSP/board/updateBoard.jsp";
-		frm.submit();
-	}
-	
-	function deleteBoard(frm) {
-		frm.action="JSP/board/deleteBoard.jsp";
-		frm.submit();
-	}
-	
+<script>	
 	function go_writeComment(frm) {
 		
 		<%
@@ -176,6 +160,18 @@
 		<%
 			}
 		%>
+	}
+	
+	function editBoard() {
+	    let bbsIdx = <%=bbsIdx%>;
+	    let url = '/STP/editBoard?bbsIdx=' + encodeURIComponent(bbsIdx);
+	    window.location.href = url;
+	}
+	
+	function deleteBoard() {
+	    let bbsIdx = <%=bbsIdx%>;
+	    let url = '/deleteBoard2?bbsIdx=' + encodeURIComponent(bbsIdx);
+	    window.location.href = url;
 	}
 	
 	async function editComment(userIdx, commentIdx, previousContent) {

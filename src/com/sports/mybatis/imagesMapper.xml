@@ -14,6 +14,13 @@
 		INSERT INTO IMAGES (IMAGE_IDX, IMAGE, IMAGE_PI)
 		VALUES (#{imageIdx}, #{image}, #{imagePi})
 	</insert>
+	
+	<!-- 이미지 삭제 -->
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM IMAGES
+		WHERE IMAGE_PI = #{imagePi}
+	</delete>
 </mapper>
 
 
