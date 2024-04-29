@@ -31,10 +31,11 @@ public class IMGUpload {
 				ImagesVO imagesVO = new ImagesVO();
 				imagesVO.setImageIdx(imageIdx);
 				imagesVO.setImage(resultMap.get("url"));
-				imagesVO.setImagePi("public_id");
+				imagesVO.setImagePi(resultMap.get("public_id"));
 				ImagesDAO.insertImage(imagesVO);
 			}
 		}
+		return;
     }
     
     // 이미지 업로드 메소드
