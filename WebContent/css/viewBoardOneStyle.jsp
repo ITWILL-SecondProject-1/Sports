@@ -27,6 +27,18 @@
     	height: 50px;
     	width: 80%;
 	}
+	
+	.carousel-item {
+    height: 500px; /* 원하는 높이로 설정 */
+    overflow: hidden; /* 컨테이너를 벗어나는 부분은 숨깁니다 */
+	}
+
+	.carousel-item img {
+	    width: 100%; /* 너비를 컨테이너에 맞춤 */
+	    height: 500px; /* 높이를 고정 */
+	    object-fit: contain; /* 이미지를 컨테이너 내에 맞추어 전체가 보이게 함 */
+	    margin: auto; /* 중앙 정렬을 위해 사용 */
+	}
  	
  	#title {
  		text-align: center;
