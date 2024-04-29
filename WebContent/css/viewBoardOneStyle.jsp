@@ -15,7 +15,6 @@
 		margin:10px;
 	}
 	.comment-row {
-		padding:10px;
 		margin:5px;
 	}
 	

@@ -128,7 +128,7 @@
 						<c:if test="${not empty commentList }">
 						<c:forEach var="row" items="${commentList}">
 						    <div class="card comment-row">
-						        <div class="d-flex justify-content-between align-items-center comment-name">
+						        <div class="card-header d-flex justify-content-between align-items-center comment-name">
 						            <span>닉네임: ${row.nickname}</span>
 						            <c:if test="${useridx == row.useridx}">
 						                <div class="ml-auto"> <!-- 오른쪽 정렬을 위해 ml-auto 추가 -->
@@ -137,8 +137,7 @@
 						                </div>
 						            </c:if>
 						        </div>
-						        <hr>
-						        <div class="comment-content">${row.content}</div>
+					        	<div class="comment-content">${row.content}</div>
 						    </div>
 						</c:forEach>
 						</c:if>
