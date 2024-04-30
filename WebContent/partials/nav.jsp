@@ -1,6 +1,7 @@
 <%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!-- 메뉴 바 -->
 <nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 
@@ -49,6 +50,9 @@
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
+			<c:if test="">
+			
+			</c:if>
 <%
 	}
 %>

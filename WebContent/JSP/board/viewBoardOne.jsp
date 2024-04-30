@@ -1,3 +1,4 @@
+<%@page import="com.sports.model.dao.UserDAO"%>
 <%@page import="com.sports.model.vo.BoardCommentVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sports.model.dao.BoardCommentDAO"%>
@@ -12,9 +13,14 @@
 <%
 	//파라미터값 추출
 	int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
+	int nowPage = Integer.parseInt(request.getParameter("cPage"));
 
 	BoardVO boardVo = (BoardVO)request.getAttribute("boardVo");
-	String writer = boardVo.getUseridx();
+	String writerIdx = boardVo.getUseridx();
+	UserVO writerVO = UserDAO.indexToUserInfo(writerIdx);
+	
+	//작성자 email
+	String writerEmail = writerVO.getEmail();
 	
 	//EL, JSTL 사용을 위한 scope상에 데이터 등록
 	pageContext.setAttribute("boardVo", boardVo);
@@ -26,7 +32,6 @@
 		System.out.println("로그인 정보 : " + userVO);
 		//작성자와 로그인 정보 일치 확인
 		useridx = userVO.getUseridx();
-		
 		if (userVO.getUseridx().equals(boardVo.getUseridx())) {
 			//일치하면 수정하기, 삭제하기 버튼
 		} else {
@@ -39,9 +44,11 @@
 	//댓글목록 가져오기
 	List<BoardCommentVO> list = BoardCommentDAO.selectBoardComment(bbsIdx);
 
+	pageContext.setAttribute("nowPage", nowPage);
 	pageContext.setAttribute("commentList", list);
-	pageContext.setAttribute("writer", writer);
+	pageContext.setAttribute("writerIdx", writerIdx);
 	pageContext.setAttribute("useridx", useridx);
+	pageContext.setAttribute("writerEmail", writerEmail);
 
 %>
 <!DOCTYPE html>
@@ -61,11 +68,13 @@
 				<div id="readBoard">
 					<div id="title">${boardVo.subject }</div>
 					<%-- title 끝 --%>
-					<div id="writer">작성자 : ${boardVo.nickname }&nbsp;&nbsp;&nbsp;
+					<div id="writer">
+					<img src="<%= writerVO.getImage() %>" alt="profile-image" id="writer-info-profile-img">
+					<a href="userpage?email=${writerEmail }" }>${boardVo.nickname }</a>&nbsp;&nbsp;&nbsp;
 						${boardVo.writeDate }</div>
 					<%--writer 끝 --%>
 					<div id="viewList">
-						<button class="btn btn-secondary" onclick="location.href='board'">목록으로가기</button>
+						<button class="btn btn-secondary" onclick="location.href='board?cPage=${nowPage}'">목록으로가기</button>
 					</div>
 				</div>
 				<%-- readBoard 끝 --%>
@@ -92,9 +101,12 @@
 				<hr>
 				</c:if>
 				<div id="updateDelete ml-auto">
-					<c:if test="${useridx == writer }">
+					<c:if test="${not empty useridx && useridx == writer }">
 						<button type="button" class="btn btn-primary btn-sm" onclick="editBoard()">수정</button>
-						<button type="button" class="btn btn-danger btn-sm" onclick="deleteBoard()">삭제</button>
+            <form action="deleteBoard" method="post" class="m-1">
+              <input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
+							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
+						</form>
 					</c:if>
 				</div>
 			</div>
@@ -105,7 +117,7 @@
 		<div class='col-5'>
 			<div class="commentDiv">
 				<div class="align-items-center">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+					<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
 						aria-controls="collapseExample">댓글보기</button>
 				</div>
 				<div class="collapse show">
@@ -114,7 +126,8 @@
 							<label for="comment" class="form-label">댓글작성하기</label>
 							<textarea class="form-control" id="r_content" name="comment" rows="4"></textarea>
 							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-							<input id="btnCommentWrite" type="submit" class="btn btn-info"
+							<input type="hidden" name="nowPage" value="${nowPage }">
+							<input id="btnCommentWrite" type="submit" class="btn btn-secondary"
 								value="입력" onclick="go_writeComment(this.form)">
 						</form>
 						<hr>
@@ -123,10 +136,15 @@
 						<c:forEach var="row" items="${commentList}">
 						    <div class="card comment-row">
 						        <div class="card-header d-flex justify-content-between align-items-center comment-name">
-						            <span>닉네임: ${row.nickname}</span>
-						            <c:if test="${useridx == row.useridx}">
+						            <span>
+						            	<img src="${UserDAO.indexToUserInfo(row.useridx).getImage() }" alt="profile-image" id="writer-info-profile-img">
+						            	<a href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }" }>${row.nickname}</a>
+						            	<br>
+						            	${row.writeDate }
+						            </span>
+						            <c:if test="${not empty useridx && useridx == row.useridx}">
 						                <div class="ml-auto"> <!-- 오른쪽 정렬을 위해 ml-auto 추가 -->
-						                    <button type="button" class="btn btn-primary btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx}, '${row.content}')">수정</button>
+						                    <button type="button" class="btn btn-danger btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx}, '${row.content}')">수정</button>
 						                    <button type="button" class="btn btn-danger btn-sm comment-delete" onclick="confirmDeleteComment(${useridx}, ${row.commentIdx})">삭제</button>
 						                </div>
 						            </c:if>
@@ -142,8 +160,15 @@
 		</div>
 	</div>
 </div>
-</body>
-<script>	
+  </body>
+<script>
+	
+	function deleteBoard(frm) {
+		confirm("삭제하시겠습니까?");
+		frm.action="deleteBoard";
+		frm.submit();
+	}
+
 	function go_writeComment(frm) {
 		
 		<%
