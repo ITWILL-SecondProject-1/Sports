@@ -36,6 +36,7 @@ public class JoinBbsWriteController extends HttpServlet {
 		}
 		
 		//가입한 팀 목록 띄우기
+		/**/System.out.println("    useridx : "+loginUser.getUseridx());
 		request.setAttribute("teams", TeamDAO.getMyTeamList(loginUser.getUseridx()));
 		
 		request.getRequestDispatcher(responseUrl).forward(request, response);

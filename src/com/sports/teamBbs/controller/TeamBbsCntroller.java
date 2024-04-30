@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import com.sports.model.vo.UserVO;
 import Paging.BbsVO;
 import Paging.Paging;
 
-//
+
 @WebServlet("/teamBbs")
 public class TeamBbsCntroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -79,8 +80,13 @@ public class TeamBbsCntroller extends HttpServlet {
 			p.setNowPage(Integer.parseInt(cPage));
 		}
 		
-		//게시글 리스트 응답
+		//팀 맴버 리스트
+		
+		
+		//게시글 리스트 
 		List<BbsVO> list = TeamBbsDAO.getBbsList(p.getBegin(),p.getEnd(), Integer.parseInt(teamIdx));
+		
+		//응답
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);

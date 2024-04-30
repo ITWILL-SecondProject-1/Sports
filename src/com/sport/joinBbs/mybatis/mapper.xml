@@ -70,7 +70,7 @@
 	<select id="myTeamList" parameterType="String" resultType="com.sport.joinBbs.vo.TeamVO">
 		SELECT T.* FROM TEAMS T, TEAM_MEMBER M
 		WHERE T.TEAM_IDX = M.TEAM_IDX
-		AND M.USERIDX = #{useridx };
+		AND M.USERIDX = #{useridx }
 	</select>
 	
 	<update id="teamUpdate" parameterType="com.sport.joinBbs.vo.TeamVO">

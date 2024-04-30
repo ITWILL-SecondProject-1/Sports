@@ -42,9 +42,22 @@
 		<div class="row" id="a">
 			<!-- 화면왼쪽 -->
 			<div class="col-2">
-				<div>온라인맴버</div>
+				<div class="row">온라인맴버</div>
+
+				<c:forEach var="row" items="${commentList}">
+					<div class="card comment-row">
+						<div
+							class="card-header d-flex justify-content-between align-items-center comment-name">
+							<span> <img
+								src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+								alt="profile-image" id="writer-info-profile-img"> <a
+								href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+							</span>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-				
+
 			<%-- 화면중앙 --%>
 			<div class="col-8" id="b">
 				<%-- 팀사진 --%>
