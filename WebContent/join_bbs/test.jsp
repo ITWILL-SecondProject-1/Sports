@@ -6,11 +6,9 @@
 <%
 	//테스트 유저
 	UserVO test = new UserVO();
-	test.setEmail("example@example.com");
-	test.setNickname("[샘플]홍길동");
-	test.setPassword("example");
-	test.setPhone("example");
-	test.setGender("example");
+	test.setEmail("123@123");
+	test.setNickname("마이구미");
+	test.setPassword("1234");
 	test.setUseridx("1");
 	session.setAttribute("UserVO", test);
 	/**/System.out.println("    "+test.toString());
