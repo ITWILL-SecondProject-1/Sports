@@ -1,6 +1,7 @@
 package com.sports.auth.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -43,12 +44,12 @@ public class SignupController extends HttpServlet {
 	    String imagePI = "null";
 	    boolean result = false;
 	    
-	    // 파라미터 값을 조회하기 위한 코드
-//	    Enumeration params = req.getParameterNames();
-//	    while(params.hasMoreElements()) {
-//	    	String name = (String) params.nextElement();
-//	    	System.out.println(name + " : " + req.getParameter(name));
-//	    }
+//	     파라미터 값을 조회하기 위한 코드
+	    Enumeration params = req.getParameterNames();
+	    while(params.hasMoreElements()) {
+	    	String name = (String) params.nextElement();
+	    	System.out.println(name + " : " + req.getParameter(name));
+	    }
 
 	    Part filePart = req.getPart("image");
         if (filePart.getSize() != 0) {

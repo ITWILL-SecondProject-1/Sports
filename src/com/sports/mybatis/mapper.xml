@@ -52,6 +52,21 @@
 			WHERE email = '${email}'
 	</update>
 	
+	<!-- 이메일로 유저인덱스 가져오기 -->
+	<select id="emailToIndex" parameterType="String" resultType="String">
+		SELECT USERIDX
+		FROM SPORT_USER
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 인덱스로 유저 정보 가져오기 -->
+	<select id="indexUserInfo" parameterType="String" resultType="UserVO">
+		SELECT USERIDX, EMAIL, NICKNAME, PHONE, GENDER, IMAGE, IMAGE_PI
+		FROM SPORT_USER
+		WHERE USERIDX = #{useridx}
+	</select>
+	
+	
 	<!-- 유저 작성 자유게시글 건수 -->
 	<select id="totalUserFreeBoard" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS CNT
@@ -100,11 +115,14 @@
 	]]>	   
 	</select>
 	
-	<!-- 자유게시판 글 작성 -->
-	<insert id="writeBoard" parameterType="BoardVO">
-		INSERT INTO FREE_BBS (BBS_IDX, USERIDX, SUBJECT, CONTENT, WRITE_DATE, IMAGE_IDX, HIT)
-		VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{useridx}, #{subject}, #{content}, SYSDATE, null, null)
-	</insert>
+    <insert id="writeBoard" parameterType="BoardVO">
+        <!-- 시퀀스 값 미리 할당 -->
+        <selectKey keyProperty="imageIdx" resultType="int" order="BEFORE" statementType="STATEMENT">
+            SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO FREE_BBS (BBS_IDX, USERIDX, SUBJECT, CONTENT, WRITE_DATE, IMAGE_IDX, HIT)
+        VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{useridx}, #{subject}, #{content}, SYSDATE, #{imageIdx}, null)
+    </insert>
 	
 	<!-- 자유게시판 글 1개 조회 -->
 	<select id="boardOne" parameterType="int" resultType="BoardVO">
