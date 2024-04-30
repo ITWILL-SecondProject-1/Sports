@@ -1,10 +1,18 @@
 package com.sports.model.vo;
 
 public class FaReserveVO {
+	private int reserveIdx;
 	private int facilityIdx;
 	private int useridx;
 	private String reserveDate;
 	private int reserveTime;
+	
+	public int getReserveIdx() {
+		return reserveIdx;
+	}
+	public void setReserveIdx(int reserveIdx) {
+		this.reserveIdx = reserveIdx;
+	}
 	public int getFacilityIdx() {
 		return facilityIdx;
 	}
@@ -31,7 +39,7 @@ public class FaReserveVO {
 	}
 	@Override
 	public String toString() {
-		return "FaReserveVO [facilityIdx=" + facilityIdx + ", useridx=" + useridx + ", reserveDate=" + reserveDate
-				+ ", reserveTime=" + reserveTime + "]";
+		return "FaReserveVO [reserveIdx=" + reserveIdx + ", facilityIdx=" + facilityIdx + ", useridx=" + useridx
+				+ ", reserveDate=" + reserveDate + ", reserveTime=" + reserveTime + "]";
 	}
 }

@@ -90,14 +90,13 @@ public class BoardDAO {
 	
 	//게시글작성
 	public static int boardInsert(BoardVO vo) {
-		int result = 0;
-		try (SqlSession ss = DBService.getFactory().openSession(true)) {
-			result = ss.insert("sports.writeBoard", vo);
-			return result;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	    try (SqlSession ss = DBService.getFactory().openSession(true)) {
+	        ss.insert("sports.writeBoard", vo);
+	        return vo.getImageIdx(); // BoardVO 객체에서 imageIdx 값 반환
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
 	}
 	
 	//게시글수정

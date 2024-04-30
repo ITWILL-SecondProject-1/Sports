@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sports.board.common.Paging;
 import com.sports.model.dao.BoardDAO;
+import com.sports.model.dao.UserDAO;
 import com.sports.model.vo.BoardVO;
 import com.sports.model.vo.UserVO;
 
@@ -23,15 +24,15 @@ public class UserPageController extends HttpServlet {
 		HttpSession session = req.getSession();
 		boolean auth = false;
 		String email = req.getParameter("email");
-	    UserVO userVO = ((UserVO) session.getAttribute("UserVO"));
-		if (userVO != null & email != null) {
-			if (userVO.getEmail() != null) {
-				auth = userVO.getEmail().equals(email);
-			}
+		UserVO user = (UserVO) session.getAttribute("UserVO");
+		if(user != null) {
+			if(user.getEmail().equals(email)) {
+				auth = true;
+			}			
 		}
 		
 		//유저작성 게시글 목록
-		String useridx = userVO.getUseridx();
+		String useridx = UserDAO.emailToIndex(email);
 		
 		Paging p = new Paging();
 
@@ -59,6 +60,8 @@ public class UserPageController extends HttpServlet {
 		}
 		
 	    List<BoardVO> list = BoardDAO.selectUserFreeBoards(p.getBegin(), p.getEnd(), useridx);
+	    
+	    System.out.println(auth);
 	    
 	    req.setAttribute("p", p);
 	    req.setAttribute("email", email);

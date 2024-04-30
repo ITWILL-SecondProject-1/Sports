@@ -1,4 +1,4 @@
-package com.sports.filter;
+package com.sports.utils.filter;
 
 import java.io.IOException;
 
