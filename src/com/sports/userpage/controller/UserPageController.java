@@ -24,6 +24,11 @@ public class UserPageController extends HttpServlet {
 		HttpSession session = req.getSession();
 		boolean auth = false;
 		String email = req.getParameter("email");
+		UserVO user = (UserVO) session.getAttribute("UserVO");
+		
+		if(user.getEmail().equals(email)) {
+			auth = true;
+		}
 		
 		//유저작성 게시글 목록
 		String useridx = UserDAO.emailToIndex(email);
@@ -54,6 +59,8 @@ public class UserPageController extends HttpServlet {
 		}
 		
 	    List<BoardVO> list = BoardDAO.selectUserFreeBoards(p.getBegin(), p.getEnd(), useridx);
+	    
+	    System.out.println(auth);
 	    
 	    req.setAttribute("p", p);
 	    req.setAttribute("email", email);

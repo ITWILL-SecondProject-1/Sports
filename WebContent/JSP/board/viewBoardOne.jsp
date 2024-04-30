@@ -70,7 +70,7 @@
 					<%-- title 끝 --%>
 					<div id="writer">
 					<img src="<%= writerVO.getImage() %>" alt="profile-image" id="writer-info-profile-img">
-					<a href="userpage?email=${writerEmail }" }>${boardVo.nickname }</a>&nbsp;&nbsp;&nbsp;
+					<a href="userpage?email=${writerEmail }">${boardVo.nickname }</a>&nbsp;&nbsp;&nbsp;
 						${boardVo.writeDate }</div>
 					<%--writer 끝 --%>
 					<div id="viewList">
@@ -101,10 +101,10 @@
 				<hr>
 				</c:if>
 				<div id="updateDelete ml-auto">
-					<c:if test="${not empty useridx && useridx == writer }">
+					<c:if test="${not empty useridx && useridx == writerIdx }">
 						<button type="button" class="btn btn-primary btn-sm" onclick="editBoard()">수정</button>
-            <form action="deleteBoard" method="post" class="m-1">
-              <input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
+			            <form action="deleteBoard" method="post" class="m-1">
+			              <input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
 							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
 						</form>
 					</c:if>
