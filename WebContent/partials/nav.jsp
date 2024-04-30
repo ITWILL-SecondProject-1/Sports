@@ -39,19 +39,22 @@
 		<div class="dropdown-menu" aria-labelledby="DropdownButton">
 <%
 	UserVO userVO = (UserVO) session.getAttribute("UserVO");
+	
 	if (userVO == null) {
 %>
 			<a class="dropdown-item" href="/STP/signup">회원가입</a>
 			<a class="dropdown-item" href="/STP/login">로그인</a>
 <%
 	} else {
+			String useridx = userVO.getUseridx();
+			pageContext.setAttribute("useridx", useridx);
 %>
 			<a class="dropdown-item" href="/STP/userpage?email=<%=userVO.getEmail()%>">마이페이지</a>
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
-			<c:if test="">
-			
+			<c:if test="${useridx == '777' }">
+				<a class="dropdown-item" href="/STP/admin">관리자페이지</a>
 			</c:if>
 <%
 	}

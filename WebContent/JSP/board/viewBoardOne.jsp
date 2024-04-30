@@ -13,8 +13,14 @@
 <%
 	//파라미터값 추출
 	int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
-	int nowPage = Integer.parseInt(request.getParameter("cPage"));
-
+	int nowPage = 0;
+	
+	try {
+		nowPage = Integer.parseInt(request.getParameter("cPage"));
+	} catch (Exception e) {
+		nowPage = 1;		
+	} 	
+	
 	BoardVO boardVo = (BoardVO)request.getAttribute("boardVo");
 	String writerIdx = boardVo.getUseridx();
 	UserVO writerVO = UserDAO.indexToUserInfo(writerIdx);
