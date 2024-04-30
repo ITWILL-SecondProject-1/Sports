@@ -144,7 +144,7 @@
 						            </span>
 						            <c:if test="${not empty useridx && useridx == row.useridx}">
 						                <div class="ml-auto"> <!-- 오른쪽 정렬을 위해 ml-auto 추가 -->
-						                    <button type="button" class="btn btn-danger btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx}, '${row.content}')">수정</button>
+						                    <button type="button" class="btn btn-danger btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx})">수정</button>
 						                    <button type="button" class="btn btn-danger btn-sm comment-delete" onclick="confirmDeleteComment(${useridx}, ${row.commentIdx})">삭제</button>
 						                </div>
 						            </c:if>
@@ -189,7 +189,8 @@
 	
 	function editBoard() {
 	    let bbsIdx = <%=bbsIdx%>;
-	    let url = '/STP/editBoard?bbsIdx=' + encodeURIComponent(bbsIdx);
+	    let cPage = <%=nowPage%>;
+	    let url = '/STP/editBoard?cPage=' + encodeURIComponent(cPage) + '&bbsIdx=' + encodeURIComponent(bbsIdx);
 	    window.location.href = url;
 	}
 	
@@ -199,13 +200,13 @@
 	    window.location.href = url;
 	}
 	
-	async function editComment(userIdx, commentIdx, previousContent) {
+	async function editComment(userIdx, commentIdx) {
 		Swal.fire({
 			title: 'Comment Edit',
 			width: 700,
 			html: `
 			<div class="mb-3 edit-div">
-				<input type="text" id="content" class="swal2-edit-comment" value="${previousContent}">
+				<input type="text" id="content" class="swal2-edit-comment">
 			</div>
 			`,
 			confirmButtonText: 'Edit',

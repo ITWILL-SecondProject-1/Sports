@@ -35,6 +35,7 @@
 		</div>
 		<form method="post" class="p-3" enctype="multipart/form-data">
 		<input type="hidden" name="bbsIdx" value="${boardVO.bbsIdx }">
+		<input type="hidden" name="cPage" value="${cPage }">
 		<div class="mb-3">
 			<label for="subject" class="form-label">제목</label>
 			<input type="text" name="subject" class="form-control form-control-lg" type="text" id="subject" name="subject" placeholder="제목을 입력해주세요!!" value="${boardVO.subject }" required>

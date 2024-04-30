@@ -33,11 +33,13 @@ public class EditBoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		UserVO userVO = (UserVO)session.getAttribute("UserVO");
+		
 		int bbsIdx = 0;
-		req.getParameter("bbsIdx");
+		int cPage = 0;
 		
 		try {
 			bbsIdx = Integer.parseInt(req.getParameter("bbsIdx"));
+			cPage = Integer.parseInt(req.getParameter("cPage"));
 		} catch(Exception e) {
 			// 잘못된 요청! 보드 메인으로 돌아간다!
 			e.printStackTrace();
@@ -55,6 +57,7 @@ public class EditBoardController extends HttpServlet {
 			req.setAttribute("boardVO", boardVO);
 			List<ImagesVO> imageList = ImagesDAO.imageList(boardVO.getImageIdx());
 			req.setAttribute("imagesList", imageList);
+			req.setAttribute("cPage", cPage);
 			req.getRequestDispatcher("JSP/board/editBoard.jsp").forward(req, res);
 		} else {
 			// 요청 유저의 유저 인덱스와, 요청한 보드의 유저 인덱스가 다를경우!
@@ -71,10 +74,12 @@ public class EditBoardController extends HttpServlet {
 		IMGUpload imageUpload = new IMGUpload();
 		Collection<Part>parts = req.getParts();
 		int bbsIdx = 0;
+		int cPage = 0;
 		UserVO userVO = (UserVO)session.getAttribute("UserVO");
 		
 		try {
 			bbsIdx = Integer.parseInt(req.getParameter("bbsIdx"));
+			cPage = Integer.parseInt(req.getParameter("cPage"));
 		} catch(Exception e) {
 			// 잘못된 요청! 보드 메인으로 돌아간다!
 			e.printStackTrace();
@@ -99,7 +104,7 @@ public class EditBoardController extends HttpServlet {
 			boardVO.setSubject(req.getParameter("subject"));
 			boardVO.setContent(req.getParameter("content"));
 			if(BoardDAO.boardUpdate(boardVO) > 0) {
-				res.sendRedirect("viewBoardOne?bbsIdx=" + bbsIdx);
+				res.sendRedirect("viewBoardOne?cPage=" + cPage + "&bbsIdx=" + bbsIdx);
 				return;
 			}
 		} else {
