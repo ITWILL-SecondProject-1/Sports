@@ -256,7 +256,6 @@
 						onclick="writeBbs(this.form)">등록</button>
 				</div>
 				
-				
 			</form>
 
 
