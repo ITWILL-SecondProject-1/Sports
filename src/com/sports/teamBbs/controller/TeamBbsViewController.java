@@ -75,7 +75,6 @@ public class TeamBbsViewController extends HttpServlet {
 		request.setAttribute("writeCommentUrl", writeCommentUrl);
 		request.setAttribute("deleteCommentUrl", updateCommentUrl);
 		request.setAttribute("deleteCommentUrl", deleteCommentUrl);
-		
 		request.setAttribute("vo", vo);
 		request.setAttribute("commentList", commlist);
 		request.setAttribute("cPage", request.getParameter("cPage"));

@@ -15,7 +15,7 @@ public class TeamBbsDAO {
 	static String mapperNamespace = "teamMapper";
 	//****************************
 	
-	public static String isMyTeam(String teamIdx, String useridx){
+	public static boolean isMyTeam(String teamIdx, String useridx){
 		/**/System.out.println("  >>dao");
 		/**/System.out.println("    teamIdx : " + teamIdx);
 		/**/System.out.println("    useridx : " + useridx);
@@ -28,7 +28,7 @@ public class TeamBbsDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 	
 	public static String isMyTeam2(String teamIdx, String useridx) {

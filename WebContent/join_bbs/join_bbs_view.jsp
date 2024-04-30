@@ -190,9 +190,18 @@
 				<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#showComment" aria-expanded="false" aria-controls="collapseExample">
 			    	댓글보기
 			    </button>
-				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp" aria-expanded="false" aria-controls="collapseExample">
-			    	가입신청
-			    </button>
+
+				<c:if test="${empty UserVO}">
+					<button class="btn btn-secondary" type="button"	data-toggle="collapse" data-target="#showSignUp"
+						aria-expanded="false" aria-controls="collapseExample">가입신청
+					</button>
+				</c:if>
+				<c:if test="${not empty UserVO}">
+					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp"
+						aria-expanded="false" aria-controls="collapseExample">가입신청
+					</button>
+				</c:if>
+
 			</p>
 			<div class="collapse" id="showSignUp">
 				<div class="card card-body">

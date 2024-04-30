@@ -14,7 +14,13 @@
 	}
 </style>
 <script>
+
 	function goWrite() {
+		//로그인 유저가 아니면 쓰기창 못감
+		if(${empty UserVO}){
+			alert("로그인 후 이용가능 합니다");
+			retrun;
+		}
 		location.href = "${writeBbsUrl }";
 	}
 	
@@ -25,8 +31,15 @@
 <div class="container">
 		<h2>팀모집 게시판</h2>
 		<!-- 제목, 내용으로 검색 기능 -->
+		<%-- 로그인 여부로 버튼 활성화 --%>
 	    <div>
-		<button onclick="goWrite()" class="btn btn-danger right-box">모집글작성하기</button ><br>	    	
+	    <c:if test="${empty UserVO}" >
+			<button onclick="goWrite()" class="btn btn-secondary right-box">모집글작성하기</button ><br>	    	
+	    </c:if>
+	    <c:if test="${not empty UserVO}" >
+			<button onclick="goWrite()" class="btn btn-danger right-box">모집글작성하기</button ><br>	    	
+	    </c:if>
+	    
 			<table class="table table-hover">
 				<thead>
 					<tr>

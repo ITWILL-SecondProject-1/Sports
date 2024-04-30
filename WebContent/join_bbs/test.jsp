@@ -27,7 +27,7 @@
 
 <form action="../join_bbs">
 		<input type="submit" value="[join_bbs]">
-	</form>
+</form>
 	
 	<a href="../join_bbs">[join_bbs]</a>
 	<form action="../teamBbs" method="post">

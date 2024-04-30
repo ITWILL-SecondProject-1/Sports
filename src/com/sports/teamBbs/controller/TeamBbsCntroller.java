@@ -14,7 +14,7 @@ import com.sports.model.vo.UserVO;
 import Paging.BbsVO;
 import Paging.Paging;
 
-
+//
 @WebServlet("/teamBbs")
 public class TeamBbsCntroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -48,10 +48,26 @@ public class TeamBbsCntroller extends HttpServlet {
 		/**/System.out.println(">>teamBbs");
 		/**/System.out.println("    teamIdx : " + teamIdx);
 		//********************
-		/**/String num = TeamBbsDAO.isMyTeam(teamIdx, loginUser.getUseridx());
-		/**/System.out.println("    str : "+ num);
-		/**/String num2 = TeamBbsDAO.isMyTeam2(teamIdx, loginUser.getUseridx());
-		/**/System.out.println("    str : "+ num2);
+		
+		//각각 처리 구현
+		if(teamIdx == null) {
+			System.out.println("    팀정보 없음");
+			request.getRequestDispatcher(responseUrl).forward(request, response);
+			return;
+		}
+		
+		if(loginUser == null) {
+			System.out.println("    로그인유저 아님");
+			request.getRequestDispatcher(responseUrl).forward(request, response);
+			return;
+		}
+		
+		if(!TeamBbsDAO.isMyTeam(teamIdx, loginUser.getUseridx())) {
+			System.out.println("    가입팀 아님");
+			request.getRequestDispatcher(responseUrl).forward(request, response);
+			return;
+		}
+		
 		
 		//페이징
 		int totalRecord = TeamBbsDAO.getTotalCount(teamIdx); //DB의 총 게시글 개수
@@ -72,7 +88,6 @@ public class TeamBbsCntroller extends HttpServlet {
 		request.setAttribute("p", p);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
-		
 	}
 
 
