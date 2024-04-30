@@ -25,9 +25,10 @@ public class UserPageController extends HttpServlet {
 		boolean auth = false;
 		String email = req.getParameter("email");
 		UserVO user = (UserVO) session.getAttribute("UserVO");
-		
-		if(user.getEmail().equals(email)) {
-			auth = true;
+		if(user != null) {
+			if(user.getEmail().equals(email)) {
+				auth = true;
+			}			
 		}
 		
 		//유저작성 게시글 목록
