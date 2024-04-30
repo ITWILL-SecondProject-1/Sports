@@ -52,7 +52,8 @@
 				<label class="custom-file-label" for="images">Choose file</label>
 			</div>
 		</div>
-		<c:if test="${imagesList != null}">
+		<c:if test="${imagesList.isEmpty() == false}">
+		삭제할 이미지를 체크해주세요!
 		    <c:forEach var="image" items="${imagesList}">
 		        <div class="form-check card mb-1">
 		            <input class="form-check-input imagesCheckList" type="checkbox" value="${image.imagePi}" id="${image.imagePi}" name="imagesCheckList">

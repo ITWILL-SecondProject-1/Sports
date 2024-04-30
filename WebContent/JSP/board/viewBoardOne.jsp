@@ -71,7 +71,7 @@
 				<%-- readBoard 끝 --%>
 				<hr>
 				<pre>${boardVo.content }</pre>
-				<c:if test="${imagesList != null}">
+				<c:if test="${imagesList.isEmpty() == false}">
 					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
 						<div class="carousel-inner">
 							<c:forEach var="image" items="${imagesList}" varStatus="status">
