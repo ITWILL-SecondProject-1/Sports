@@ -50,7 +50,9 @@
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
+			<c:if test="">
 			
+			</c:if>
 <%
 	}
 %>
