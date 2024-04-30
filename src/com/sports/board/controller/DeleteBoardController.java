@@ -15,6 +15,7 @@ public class DeleteBoardController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
+		System.out.println("bbsIdx : " + bbsIdx);
 		
 		int result = BoardDAO.boardDelete(bbsIdx);
 		System.out.println(result);

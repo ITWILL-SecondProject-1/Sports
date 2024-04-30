@@ -74,4 +74,24 @@ public class UserDAO {
 		}
 		return false;
 	}
+	
+	//유저인덱스 가져오기
+	public static String emailToIndex(String email) {
+		try (SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectOne("sports.emailToIndex", email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//인덱스로 유저 정보 가져오기
+	public static UserVO indexToUserInfo(String index) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			return ss.selectOne("sports.indexUserInfo", index);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

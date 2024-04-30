@@ -48,9 +48,15 @@
 		line-height: 3em;
 	}
 	
-	#commentDiv {
-		border: 1px solid pink;
+	#updateDelete {
+		display: inline-block;
+ 		float: right;
 	}
+	
+	#updateForm, #deleteForm {
+		display: inline-block;
+	}
+	
 	#btnCommentWrite {
 		margin-top: 5px;
  		display: inline-block;

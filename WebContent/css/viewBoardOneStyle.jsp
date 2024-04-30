@@ -10,7 +10,20 @@
 	    background-color: #e6ecff;
 	    text-align: center;
  	}
-
+ 	
+	#writer-info-profile-img {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
+	
+	#updateDelete ml-auto {
+		display: inline-block;
+		float: right;
+	}
+	
 	.comment-content {
 		margin:10px;
 	}
@@ -65,7 +78,6 @@
  	}
  	
  	pre {
-		width : 800px;
 		white-space: pre-wrap;
 		word-break: break-all;
 		overflow: auto;
@@ -77,6 +89,10 @@
 	
 	#commentDiv {
 		border: 1px solid pink;
+	}
+	
+	.align-items-center {
+		margin-bottom: 10px;
 	}
 	#btnCommentWrite {
 		margin-top: 5px;

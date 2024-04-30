@@ -18,6 +18,7 @@ public class WriteBoardCommentController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String comment = request.getParameter("comment");
+		int nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		System.out.println(request.getParameter("bbsIdx"));
 		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
 		
@@ -34,7 +35,7 @@ public class WriteBoardCommentController extends HttpServlet {
 		int result = BoardCommentDAO.writeBoardComment(commentVO);
 		System.out.println(result);
 		
-		response.sendRedirect("viewBoardOne?bbsIdx=" + bbsIdx);
+		response.sendRedirect("viewBoardOne?cPage=" + nowPage + "&bbsIdx=" + bbsIdx);
 		
 	}
 
