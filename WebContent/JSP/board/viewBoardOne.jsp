@@ -80,7 +80,7 @@
 				<%-- readBoard 끝 --%>
 				<hr>
 				<pre>${boardVo.content }</pre>
-				<c:if test="${imagesList != null}">
+				<c:if test="${imagesList.isEmpty() == false}">
 					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
 						<div class="carousel-inner">
 							<c:forEach var="image" items="${imagesList}" varStatus="status">
@@ -98,20 +98,17 @@
 							<span class="sr-only">Next</span>
 						</button>
 					</div>
-				</c:if>
 				<hr>
-				<c:if test="${not empty useridx && useridx == writerIdx}">
-					<div id="updateDelete" class="ml-auto">
-						<form action="updateBoard.jsp" method="post" class="m-1">
-							<input type="submit" class="btn btn-danger" onclick="updateBoard(this.form)" value="수정하기">
-							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						</form>
-						<form action="deleteBoard" method="post" class="m-1">
-							<input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
-							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						</form>
-					</div>
 				</c:if>
+				<div id="updateDelete ml-auto">
+					<c:if test="${not empty useridx && useridx == writer }">
+						<button type="button" class="btn btn-primary btn-sm" onclick="editBoard()">수정</button>
+            <form action="deleteBoard" method="post" class="m-1">
+              <input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
+							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
+						</form>
+					</c:if>
+				</div>
 			</div>
 			<div><%-- 카드 움직임 방지용 div --%>
 			</div>
@@ -163,19 +160,15 @@
 		</div>
 	</div>
 </div>
-</body>
+  </body>
 <script>
-	function updateBoard(frm) {
-		frm.action="JSP/board/updateBoard.jsp";
-		frm.submit();
-	}
 	
 	function deleteBoard(frm) {
 		confirm("삭제하시겠습니까?");
 		frm.action="deleteBoard";
 		frm.submit();
 	}
-	
+
 	function go_writeComment(frm) {
 		
 		<%
@@ -192,6 +185,18 @@
 		<%
 			}
 		%>
+	}
+	
+	function editBoard() {
+	    let bbsIdx = <%=bbsIdx%>;
+	    let url = '/STP/editBoard?bbsIdx=' + encodeURIComponent(bbsIdx);
+	    window.location.href = url;
+	}
+	
+	function deleteBoard() {
+	    let bbsIdx = <%=bbsIdx%>;
+	    let url = '/deleteBoard2?bbsIdx=' + encodeURIComponent(bbsIdx);
+	    window.location.href = url;
 	}
 	
 	async function editComment(userIdx, commentIdx, previousContent) {

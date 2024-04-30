@@ -36,7 +36,10 @@
 <body>
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 	<div class="container">
-		<h2>자유게시판</h2>
+	<div class="card">
+		<div class="card-header">
+			<h2>자유게시판</h2>
+		</div>
 		<!-- 제목, 내용으로 검색 기능 -->
 	    <div>
 		<button onclick="location.href='boardWrite'" class="btn btn-secondary right-box" id="writeButton">글작성하기</button ><br>	    	
@@ -100,6 +103,7 @@
 		    </li>
 		  </ul>
 		</nav>
+	</div>
 		</div>
 	
 </body>

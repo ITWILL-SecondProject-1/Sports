@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.sports.cloudinary.IMGUpload;
 import com.sports.model.vo.ImagesVO;
 import com.sports.mybatis.DBService;
 
@@ -28,6 +29,21 @@ public class ImagesDAO {
 			e.printStackTrace();
 		} 
 		return null;
+	}
+	
+	public static boolean deleteImage(String imagePi) {
+		IMGUpload imgUpload = new IMGUpload();
+		try (SqlSession ss= DBService.getFactory().openSession()) {
+			if (ss.delete("images.delete", imagePi) > 0) {
+				if (imgUpload.deleteImage(imagePi)) {
+					ss.commit();
+					return true;
+				};
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }

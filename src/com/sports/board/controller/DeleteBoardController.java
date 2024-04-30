@@ -17,6 +17,8 @@ public class DeleteBoardController extends HttpServlet {
 		int bbsIdx = Integer.parseInt(request.getParameter("bbsIdx"));
 		System.out.println("bbsIdx : " + bbsIdx);
 		
+		
+		
 		int result = BoardDAO.boardDelete(bbsIdx);
 		System.out.println(result);
 		response.sendRedirect("board");

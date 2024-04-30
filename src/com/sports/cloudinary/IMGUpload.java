@@ -63,7 +63,8 @@ public class IMGUpload {
     // 이미지 삭제 메소드
     public boolean deleteImage(String publicId) throws IOException {
         // public_id를 사용하여 이미지 삭제
-        if (cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap()).get("result").equals("ok")) {
+    	System.out.println(publicId.trim());
+        if (cloudinary.uploader().destroy(publicId.trim(), ObjectUtils.emptyMap()).get("result").equals("ok")) {
         	return true;
         }
         return false;
