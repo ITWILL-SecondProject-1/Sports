@@ -54,7 +54,7 @@
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
 			<c:if test="${useridx == '777' }">
-				<a class="dropdown-item" href="/STP/admin">관리자페이지</a>
+				<a class="dropdown-item" href="/STP/adminFacility">관리자페이지</a>
 			</c:if>
 <%
 	}
