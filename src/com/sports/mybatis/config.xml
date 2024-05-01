@@ -17,6 +17,7 @@
 		<typeAlias alias="FaReserveVO" type="com.sports.model.vo.FaReserveVO"/>
 		<typeAlias alias="ReservationSummaryVO" type="com.sports.model.vo.ReservationSummaryVO"/>
 		<typeAlias alias="ImagesVO" type="com.sports.model.vo.ImagesVO"/>
+		<typeAlias alias="ResVO" type="com.sports.model.vo.ResVO"/>
 	</typeAliases>
 
   <environments default="development">
@@ -36,6 +37,7 @@
     <mapper resource="com/sports/mybatis/teamMapper.xml" />
 	<mapper resource="com/sports/mybatis/facilityMapper.xml"/>
 	<mapper resource="com/sports/mybatis/imagesMapper.xml"/>
+	<mapper resource="com/sports/mybatis/resMapper.xml"/>
   </mappers>
   
 </configuration>

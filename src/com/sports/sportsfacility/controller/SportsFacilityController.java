@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sports.model.command.Command;
+import com.sports.model.vo.UserVO;
 
 /**
  * Servlet implementation class SportsFacilityController
@@ -34,11 +36,13 @@ public class SportsFacilityController extends HttpServlet {
 		String type = req.getParameter("type");
 		Command command = commands.get(type);
 		String path = command.exec(req, res);
+		HttpSession session = req.getSession();
+		UserVO vo = (UserVO) session.getAttribute("UserVO");
+		req.setAttribute("UserVO", vo);
 		req.getRequestDispatcher(path).forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

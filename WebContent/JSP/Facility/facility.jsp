@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.sports.model.vo.FaVO"%>
+<%@page import="com.sports.model.vo.ResVO"%>
+<%@page import="com.sports.model.vo.UserVO"%>
 <%
 	FaVO facilityVO = (FaVO) request.getAttribute("FaVO");
+  	UserVO userVO = (UserVO) request.getAttribute("UserVO");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +31,12 @@
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
+	}
+	.reserve-table-row.zero {
+    background-color: #ccc; /* 어두운 회색으로 설정 */
+    color: #666; /* 텍스트 색상도 조금 어둡게 */
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    cursor: not-allowed; /* 마우스 커서를 변경 */
 	}
 </style>
 </head>
@@ -53,7 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: 'GET'
             })
             .then(async function(response) {
-                await receiveDataJson(response)   
+                await receiveDataJson(response);
+                selectedDate = info.dateStr;
+                
             })
             .catch(function(xhr) {
                 // 에러 처리 로직
@@ -75,12 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Json을 받아서, 해당 데이터를 key, value를 얻기위해 iterator한다.
 function receiveDataJson(data) {
-	let timeTable = document.getElementById("reserve-time-table");
-	timeTable.innerHTML = "";
-	for (const [key, value] of Object.entries(data)) {
-		timeTable.innerHTML += addRowTimeTableRow(key, value);
-	}
-	return;
+    let timeTable = document.getElementById("reserve-time-table");
+    timeTable.innerHTML = "";
+    for (const [key, value] of Object.entries(data)) {
+        let adjustedValue = Math.max(0, value); // 수용 가능 인원이 음수가 되지 않도록 조정
+        timeTable.innerHTML += addRowTimeTableRow(key, adjustedValue);
+    }
+    return;
 };
 
 // key는 시간, value는 수용가능 인원을 나타낸다
@@ -107,6 +120,7 @@ $(document).ready(function() {
     	}
     	$(this).toggleClass("table-primary");
     	$(this).toggleClass("selected-time-row");
+    	selectedTime = $(this).attr('id');
     });
 });
 
@@ -121,35 +135,75 @@ $(document).ready(function() {
 //		- 한 계정이 신청 가능한 최대 인원수를 정하는게 나을 것 같음 (계정당 인원수가 정해져 있지 않아서, 지금은 백명도 신청이 가능하다.)
 
 
+$(document).ready(function() {
+    // 예약 버튼에 이벤트 핸들러 바인딩
+    $('#reserve-submit-btn').click(function() {
+        // 인원수 입력 값 가져오기
+        var headCount = $('#headCount').val();
+        var selectedTimes = $('.selected-time-row').map(function() {
+            return this.id; 
+        }).get();
+        
+        // 예약 확인 창 표시
+        if (confirm("예약하시겠습니까?")) {
+            // AJAX 요청 전송
+            $.ajax({
+                url: 'submitReservation',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    facilityIdx: <%=facilityVO.getFacilityIdx()%>,
+                    userIdx: <%=userVO.getUseridx()%>,
+                    reserveDate: selectedDate,  
+                    reserveTime: selectedTime,
+                    headCount: headCount
+                }),
+                success: function(response) {
+                    alert("예약 성공");
+                    window.location.reload();
+                },
+                error: function(xhr) {
+                    alert('예약 실패: 수용인원을 초과하였습니다'  );
+                }
+            });
+        } else {
+            // 사용자가 '아니요'를 선택했을 때
+            alert("예약이 취소되었습니다.");
+        }
+    });
+});
+
 </script>
 <div class="container" id="calender-container">
-	<div class="row mb-4">
-		<div class="col-6 card" id="calender-card">
-			<div id='calendar' class="card-body"></div>
-		</div>
-	 	<div class="col">
-		</div>
-		<div class="col-5 card p-1" id="time-card">
-			<table class="table table-hover table-bordered">
-				<thead>
-				  <tr>
-				    <th scope="col" class="text-center">Time</th>
-				    <th scope="col">maximum occupancy</th>
-				  </tr>
-				</thead>
-				<tbody id="reserve-time-table">
-				</tbody>
-			</table>
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="HeadCount">HeadCount</span>
-				<input type="number" class="form-control" aria-describedby="HeadCount">
+		<div class="row mb-4">
+			<div class="col-6 card" id="calender-card">
+				<div id='calendar' class="card-body"></div>
 			</div>
-			<div id="reserve-submit-btn-div">
-				<button type="button" class="btn btn-primary" id="reserve-submit-btn">Reserve</button>
+			<div class="col"></div>
+			<div class="col-5 card p-1" id="time-card">
+				<table class="table table-hover table-bordered">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center">Time</th>
+							<th scope="col">maximum occupancy</th>
+						</tr>
+					</thead>
+					<tbody id="reserve-time-table">
+					</tbody>
+				</table>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="HeadCount-label">HeadCount</span>
+					<input type="number" class="form-control" id="headCount"
+						aria-describedby="HeadCount-label">
+				</div>
+
+				<div id="reserve-submit-btn-div">
+					<button type="button" class="btn btn-primary"
+						id="reserve-submit-btn">Reserve</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
+		<div class="row">
 		<div class="col card">
 			asdds
 		</div>
