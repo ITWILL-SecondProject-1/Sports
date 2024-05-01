@@ -21,26 +21,12 @@
 		<c:forEach var="facilityVO" items="${list}">
 			<div>
 				<div class="card m-3 facility-card shadow" style="width: 15rem;">
-					<img src="https://picsum.photos/id/1/100/100" class="card-img-top">
+					<img src="https://picsum.photos/id/1/100/100" class="card-img-top img-thumbnail">
 					<div class="card-body">
 						<h5 class="card-text">${facilityVO.facilityIdx}. ${facilityVO.facilityName}</h5>
 					</div>
 					<div class="card-footer">
 						<small class="text=muted text-secondary">${facilityVO.address}</small>
-					</div>
-					<a class="stretched-link" href="facility?type=inquire&index=${facilityVO.facilityIdx}"></a>
-				</div>
-			</div>
-		</c:forEach>
-		<c:forEach var="facilityVO" items="${list}">
-			<div>
-				<div class="card m-3 facility-card" style="width: 15rem;">
-					<img src="https://picsum.photos/id/1/100/100" class="card-img-top">
-					<div class="card-body">
-						<h5 class="card-text">${facilityVO.facilityIdx}. ${facilityVO.facilityName}</h5>
-					</div>
-					<div class="card-footer">
-						<small class="text=muted">${facilityVO.address}</small>
 					</div>
 					<a class="stretched-link" href="facility?type=inquire&index=${facilityVO.facilityIdx}"></a>
 				</div>
