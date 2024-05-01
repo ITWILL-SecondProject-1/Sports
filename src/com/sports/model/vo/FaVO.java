@@ -6,6 +6,8 @@ public class FaVO {
 	private String address;
 	private String phoneNumber;
 	private String event;
+	private String thumb;
+	private String thumbPi;
 	private int imageIdx;
 	private int openTime;
 	private int closeTime;
@@ -42,6 +44,18 @@ public class FaVO {
 	public void setEvent(String event) {
 		this.event = event;
 	}
+	public String getThumbPi() {
+		return thumbPi;
+	}
+	public void setThumbPi(String thumbPi) {
+		this.thumbPi = thumbPi;
+	}
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
 	public int getImageIdx() {
 		return imageIdx;
 	}
@@ -72,13 +86,12 @@ public class FaVO {
 	public void setDateRangeForReservation(int dateRangeForReservation) {
 		DateRangeForReservation = dateRangeForReservation;
 	}
-	
 	@Override
 	public String toString() {
 		return "FaVO [facilityIdx=" + facilityIdx + ", facilityName=" + facilityName + ", address=" + address
-				+ ", phoneNumber=" + phoneNumber + ", event=" + event + ", imageIdx=" + imageIdx + ", openTime="
-				+ openTime + ", closeTime=" + closeTime + ", capacity=" + capacity + ", DateRangeForReservation="
-				+ DateRangeForReservation + "]";
+				+ ", phoneNumber=" + phoneNumber + ", event=" + event + ", thumb=" + thumb + ", thumbPi=" + thumbPi
+				+ ", imageIdx=" + imageIdx + ", openTime=" + openTime + ", closeTime=" + closeTime + ", capacity="
+				+ capacity + ", DateRangeForReservation=" + DateRangeForReservation + "]";
 	}
 	 
 }

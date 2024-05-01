@@ -50,9 +50,15 @@ public class IMGUpload {
             }
         }
         
-        // 업로드 결과를 보려면 uploadResult.toString(}을 sysout해보기
-        Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
-        tempFile.delete();
+        // 업로드 옵션에 ITWILL_STP 폴더 경로 지정
+        Map options = ObjectUtils.asMap(
+            "folder", "ITWILL_STP"
+        );
+
+        // 이미지를 클라우디너리에 업로드
+        Map uploadResult = cloudinary.uploader().upload(tempFile, options);
+        tempFile.delete(); // 임시 파일 삭제
+
         Map<String, String> result = new HashMap<>();
         result.put("url", (String) uploadResult.get("url"));
         result.put("public_id", (String) uploadResult.get("public_id"));

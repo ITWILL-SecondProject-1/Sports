@@ -24,21 +24,8 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
-
         <div class="d-flex flex-column align-items-center">
-            <div class="mb-2">
-                <button type="submit" class="btn btn-primary">로그인</button>
-            </div>
-            <div class="mb-2">
-                <a href="/auth/google">
-                    <img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1697744118/Noritur/web_neutral_sq_SU2x_k7etbi.png" alt="구글 로그인" />
-                </a>
-            </div>
-            <div class="mb-2">
-                <a href="/auth/kakao">
-                    <img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1697744118/Noritur/kakao_login_large_narrow_n6oxnr.png" alt="카카오 로그인" />
-                </a>
-            </div>
+	        	<button type="submit" class="btn btn-primary">로그인</button> 
         </div>
         <div class="text-end mt-2">
             <a role="button" class="btn btn-info" href="/STP/signup">회원 가입</a>

@@ -9,8 +9,8 @@ public class TeamVO {
 	private String useridx; //팀장
 	private String joinCheck; //
 	private String teamName; //팀명
-	private String logo; //팀로고
-	private String logoPi; //팀로고
+	private String logo;
+	private String logoPi;
 	private String startDate;
 	private String endDate;
 	
@@ -46,6 +46,18 @@ public class TeamVO {
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	public String getLogoPi() {
+		return logoPi;
+	}
+	public void setLogoPi(String logoPi) {
+		this.logoPi = logoPi;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -57,18 +69,6 @@ public class TeamVO {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-	public String getLogo() {
-		return logo;
-	}
-	public String getLogoPi() {
-		return logoPi;
-	}
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-	public void setLogoPi(String logoPi) {
-		this.logoPi = logoPi;
 	}
 	@Override
 	public String toString() {
