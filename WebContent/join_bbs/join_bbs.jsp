@@ -31,8 +31,8 @@
 			alert("제목이 작성되지 않았습니다");
 		} else {
 			alert("글작성 버튼 클릭");
-/*  			frm.action = "join_bbs_write_ok";
-			frm.submit(); */
+  			frm.action = "join_bbs_write_ok";
+			frm.submit(); 
 		}
 	}
 </script>

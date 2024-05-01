@@ -74,6 +74,7 @@
 <!-- 타겟모달 -->
 <div class="modal-dialog">
     <div class="modal-content">
+      <form method="post">
       <div class="modal-header">
         <h5 class="modal-title col" id="staticBackdropLabel">모집글 작성</h5>
 		<div class="form-group col">
@@ -95,15 +96,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      
       <!-- 글작성폼 -->
-      <form method="post">
       <div class="modal-body">
-		
-		<%-- <div class="form-group">
-			<label for="writer">작성자</label>
-				<input type="text" class="form-control" disabled readonly id="writer" value="${UserVO.nickname }">
-		</div> --%>
+		<span>선택옵션 : </span>
+			<button type="button" class="btn btn-outline-secondary">종목</button>
+			<button type="button" class="btn btn-outline-secondary">장소</button>
+			<button type="button" class="btn btn-outline-secondary">인원수</button>
+			<button type="button" class="btn btn-outline-secondary">시간</button>
+			<button type="button" class="btn btn-outline-secondary">조건</button>
+		<hr>
 		<div class="form-group">
 			<label for="subject">제목</label>
 				<input type="text" id="subject" class="form-control inputForm" name="subject" placeholder="제목을 적어주세요">

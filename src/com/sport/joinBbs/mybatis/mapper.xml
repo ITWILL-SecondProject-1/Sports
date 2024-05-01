@@ -63,8 +63,17 @@
 	</select>
 	
 	<insert id="teamInsert" parameterType="com.sport.joinBbs.vo.TeamVO">
-		INSERT INTO TEAMS (TEAM_IDX, USERIDX, TEAM_NAME, IMAGE_IDX, JOIN_CHECK, START_DATE)
-		VALUES (#{teamIdx}, #{useridx},#{teamName}, #{imageIdx}, #{joinCheck}, SYSDATE)
+		INSERT INTO TEAMS (TEAM_IDX, USERIDX, TEAM_NAME, LOGO, LOGO_PI, JOIN_CHECK, START_DATE)
+		VALUES (#{teamIdx}, #{useridx},#{teamName},
+		<choose>
+            <when test="logo != null">
+                #{logo}, #{logoPi}
+            </when>
+            <otherwise>
+                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
+            </otherwise>
+        </choose>
+		, 1, SYSDATE)
 	</insert>
 	
 	<select id="myTeamList" parameterType="String" resultType="com.sport.joinBbs.vo.TeamVO">
