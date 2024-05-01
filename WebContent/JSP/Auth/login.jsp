@@ -24,6 +24,9 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
+        <div class="d-flex flex-column align-items-center">
+	        	<button type="submit" class="btn btn-primary">로그인</button> 
+        </div>
         <div class="text-end mt-2">
             <a role="button" class="btn btn-info" href="/STP/signup">회원 가입</a>
         </div>
