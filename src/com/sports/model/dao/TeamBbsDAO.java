@@ -1,11 +1,14 @@
 package com.sports.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.sports.model.vo.TeamSignupVO;
+import com.sports.model.vo.UserVO;
 import com.sports.mybatis.DBService;
 
 import Paging.BbsVO;
@@ -14,16 +17,12 @@ import Paging.CommentVO;
 public class TeamBbsDAO {
 	static String mapperNamespace = "teamMapper";
 	//****************************
-	
+	//로그인유저의 해당팀 가입여부 확인
 	public static boolean isMyTeam(String teamIdx, String useridx){
-		/**/System.out.println("  >>dao");
-		/**/System.out.println("    teamIdx : " + teamIdx);
-		/**/System.out.println("    useridx : " + useridx);
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			Map<String, Integer> map = new HashMap<>();
 			map.put("teamIdx", Integer.parseInt(teamIdx));
 			map.put("useridx", Integer.parseInt(useridx));
-			/**/System.out.println("    str : " + ss.selectOne(mapperNamespace + ".isMyTeam", map));
 			return ss.selectOne(mapperNamespace + ".isMyTeam", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,19 +30,34 @@ public class TeamBbsDAO {
 		return false;
 	}
 	
-	public static String isMyTeam2(String teamIdx, String useridx) {
+	//팀맴버 리스트 - 가입맴버 목록 출력용
+	public static List<UserVO> getTeamMembers(String teamIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
-			Map<String, Integer> map = new HashMap<>();
-			map.put("teamIdx", Integer.parseInt(teamIdx));
-			map.put("useridx", Integer.parseInt(useridx));
-			System.out.println("    "+ ss.selectOne("teamMapper.isMyTeam2", map));
-			return ss.selectOne("teamMapper.isMyTeam2", map);
+			List<String> useridxList = ss.selectList(mapperNamespace + ".getTeamMembers", teamIdx);
+
+			/**/System.out.println("  >>TeamBbsDAO useridxList : "+ useridxList);
+			List<UserVO> list = new ArrayList<UserVO>();
+			for(String a : useridxList) {
+				list.add(ss.selectOne("sports.indexUserInfo", a));
+			}
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	//가입신청서 리스트 - 신청서목록 출력용
+	public static List<TeamSignupVO> getSignupList(String teamIdx){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectList(mapperNamespace + ".getSignupList",teamIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//페이징용 총 게시글수
 	public static int getTotalCount(String teamIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectOne(mapperNamespace + ".getTotalCount", teamIdx);
@@ -53,6 +67,7 @@ public class TeamBbsDAO {
 		return -1;
 	}
 	
+	//게시글리스트
 	public static List<BbsVO> getBbsList(int begin, int end, int teamIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			Map<String, Integer> map = new HashMap<>();
@@ -66,6 +81,7 @@ public class TeamBbsDAO {
 		return null;
 	}
 	
+	//글보기용 1글
 	public static BbsVO getOndBbs(String bbxIdx) {
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			BbsVO vo = ss.selectOne(mapperNamespace + ".getOndBbs", bbxIdx);
@@ -76,6 +92,7 @@ public class TeamBbsDAO {
 		return null;
 	}
 	
+	//작성할 글 인덱스(뷰페이지 리턴용)
 	public static String getnewBbsIdx(){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectOne(mapperNamespace + ".getnewBbsIdx");
@@ -85,6 +102,7 @@ public class TeamBbsDAO {
 		return null;
 	}
 	
+	//글작성
 	public static int insertBbs(BbsVO vo) {
 		try(SqlSession ss = DBService.getFactory().openSession(true)){
 			return ss.insert(mapperNamespace + ".insertBbs",vo);
@@ -94,6 +112,7 @@ public class TeamBbsDAO {
 		return -1;
 	}
 	
+	//댓글리스트
 	public static List<CommentVO> getCommentsList(String bbxIdx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectList(mapperNamespace + ".getCommentsList",bbxIdx);
@@ -103,6 +122,7 @@ public class TeamBbsDAO {
 		return null;
 	}
 
+	//댓글입력
 	public static int insertComment(CommentVO commVO) {
 		try(SqlSession ss = DBService.getFactory().openSession(true)){
 			return ss.insert(mapperNamespace + ".insertComment",commVO);

@@ -1,3 +1,6 @@
+<%@page import="com.sport.joinBbs.dao.TeamDAO"%>
+<%@page import="com.sport.joinBbs.vo.TeamVO"%>
+<%@page import="java.util.List"%>
 <%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -15,22 +18,42 @@
 	<div class="collapse navbar-collapse" id="menuCollapse">
 		<ul class="navbar-nav mx-auto mt-2 mt-lg-0 row justify-content-center">
 			<!-- 중앙 정렬 및 그리드 시스템 활용(부트스트랩) -->
-			<li class="nav-item col-md-auto">
 				<!-- 중앙 정렬 --> 
-				<a class="nav-link font-weight-bold" href="reserve.jsp">Reserve</a>
-			</li>
-			<li class="nav-item col-md-auto">
-				<a class="nav-link font-weight-bold" href="facility?type=list">Gym</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="facility?type=list">Gym</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 
 				<a class="nav-link font-weight-bold" href="main">
 					<img src="https://res.cloudinary.com/djlee4yl2/image/upload/v1713515312/logo/logo_mqkknu.jpg" alt="logo" class="logo-img">
 				</a>
 			</li>
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="join_bbs">Team</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="join_bbs">모집</a></li>
+			
+			<c:if test="${empty UserVO }">
+				<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="">Team</a></li>
+			</c:if>
+			<c:if test="${not empty UserVO }">
+				<li class="nav-item col-md-auto dropdown">
+					<a class="nav-link font-weight-bold dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" href="#">Team</a>
+					<%
+						UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
+			    		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
+			    		pageContext.setAttribute("teamList", teamList);
+					%>
+					
+					<ul class="dropdown-menu">
+						<c:forEach var="team" items="${teamList }">
+							<li><a class="dropdown-item text-secondary" href="../STP/teamBbs?teamIdx=${team.teamIdx }">${team.teamName }</a></li>
+						</c:forEach>
+						<c:if test="${teamList.size() } == 0">
+							<li><a class="dropdown-item text-secondary" href="#">가입한 팀이 없습니다</a></li>
+						</c:if>
+					</ul>
+				</li>
+			</c:if>
+			
 		</ul>
-	</div>
+	</div><!-- reserve.jsp -->
 	<!-- 드롭다운 버튼 추가 -->
 	<div class="dropdown">
 		<button class="btn btn-secondary dropdown-toggle" type="button" id="DropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

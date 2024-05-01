@@ -1,3 +1,5 @@
+<%@page import="com.sport.joinBbs.dao.TeamDAO"%>
+<%@page import="com.sport.joinBbs.vo.TeamVO"%>
 <%@page import="com.sports.model.vo.BoardVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sports.board.common.Paging"%>
@@ -79,7 +81,17 @@
 				</li>
 				<li class="list-group-item">
 					<i class="fa-solid fa-warehouse"></i>
-					<span class="ms-2"><%= reqUserVO.getImage() %></span>
+					<%
+						UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
+			    		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
+			    		pageContext.setAttribute("teamList", teamList);
+					%>
+						<c:forEach var="team" items="${teamList }">
+							<div class="row border">${team.teamName }</div>
+						</c:forEach>
+						<c:if test="${teamList.size() } == 0">
+							<div class="row border">가입한 팀이 없습니다</div>
+						</c:if>
 				</li>
 			</ul>
 		</div>

@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.sports.model.dao.UserDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <jsp:include page='../../partials/commonhead.jsp' flush="false" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -28,10 +30,23 @@
 	height: 500px;
 	border: 1px solid blue;
 }
+#writer-info-profile-img {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
 </style>
 <script>
+
 	function goWrite() {
 		location.href = "${writeBbsUrl }";
+	}
+	
+	function accept(val){
+		console.log("val : " + val);
+		location.href = "${signupAccept }";
 	}
 </script>
 </head>
@@ -42,9 +57,24 @@
 		<div class="row" id="a">
 			<!-- 화면왼쪽 -->
 			<div class="col-2">
-				<div>온라인맴버</div>
+				<%-- 가입맴버 표시 --%>
+				<div class="position-fixed">
+					<div class="row">가입맴버</div>
+					<c:forEach var="row" items="${memberList}">
+						<div class="card comment-row">
+							<div
+								class="card-header d-flex justify-content-between align-items-center comment-name">
+								<span> <img
+									src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+									alt="profile-image" id="writer-info-profile-img"> <a
+									href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+								</span>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
-				
+
 			<%-- 화면중앙 --%>
 			<div class="col-8" id="b">
 				<%-- 팀사진 --%>
@@ -124,7 +154,32 @@
 			<%-- 화면오른쪽 --%>
 			<div class="col-2">
 				<div class="row">진행중인 모집글</div>
-				<div class="row" id="d">신청자 목록</div>
+				<div class="row">신청자 목록
+					<c:forEach var="row" items="${signupList}">
+						<c:if test="${row.signupCheck == 'u'}"><%-- 신청서 확인 안한 경우만 출력 --%>
+							<div class="card comment-row">
+								<div class="card-header d-flex justify-content-between align-items-center comment-name">
+									<span> <img
+										src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+										alt="profile-image" id="writer-info-profile-img"> <a
+										href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+
+									</span>
+								</div>
+								<div class="comment-content bg-light">${row.content}</div>
+								<div>
+									<form>
+										<input type="hidden" name="signupIdx" value="{row.signupIdx }">
+										<input type="button" onclick="accept(this.form)"
+											class="btn btn-primary right-box" value="수락"> <input
+											type="button" onclick="decline(this.form)"
+											class="btn btn-danger right-box" value="거절">
+									</form>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>

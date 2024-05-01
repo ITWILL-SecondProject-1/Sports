@@ -4,17 +4,19 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sports.model.dao.TeamBbsDAO;
+import com.sports.model.vo.TeamSignupVO;
 import com.sports.model.vo.UserVO;
 
 import Paging.BbsVO;
 import Paging.Paging;
 
-//
+
 @WebServlet("/teamBbs")
 public class TeamBbsCntroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +34,8 @@ public class TeamBbsCntroller extends HttpServlet {
 		bbsUrl : 게시판 서블릿 url매핑
 		viewBbsUrl : 게시글작성 서블릿 url매핑
 		p : 페이징 객체 Paging
+		memberList : 팀가입맴버 리스트
+		signupList : 팀신청서 리스트
 		list : 현재페이지 게시글 목록
 		
 		*/
@@ -79,13 +83,24 @@ public class TeamBbsCntroller extends HttpServlet {
 			p.setNowPage(Integer.parseInt(cPage));
 		}
 		
-		//게시글 리스트 응답
+		//팀 맴버 리스트
+		List<UserVO> memberList = TeamBbsDAO.getTeamMembers(teamIdx);
+		/**/System.out.println("    memberList : "+ memberList);
+		
+		//신청서&신청자 목록
+		List<TeamSignupVO> signupList = TeamBbsDAO.getSignupList(teamIdx);
+		
+		//게시글 리스트 
 		List<BbsVO> list = TeamBbsDAO.getBbsList(p.getBegin(),p.getEnd(), Integer.parseInt(teamIdx));
+		
+		//응답
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);
 		request.setAttribute("teamIdx", teamIdx);
 		request.setAttribute("p", p);
+		request.setAttribute("memberList", memberList);
+		request.setAttribute("signupList", signupList);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}

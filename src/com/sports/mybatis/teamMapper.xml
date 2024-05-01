@@ -5,17 +5,10 @@
 <mapper namespace="teamMapper">	
 	<!-- 가입팀 여부 확인 -->
 	<select id="isMyTeam" parameterType="map" resultType="boolean">
-		SELECT DECODE(
-        	#{teamIdx }, (SELECT TEAM_IDX FROM TEAM_MEMBER
+		SELECT DECODE(1, (SELECT 1 FROM TEAM_MEMBER
        		WHERE TEAM_IDX = #{teamIdx }
         	AND USERIDX = #{useridx } ), 1, 0) AS TF 
 		FROM DUAL
-	</select>
-	
-	<select id="isMyTeam2" parameterType="map" resultType="String">
-		SELECT TEAM_IDX FROM TEAM_MEMBER
-       	WHERE TEAM_IDX = #{teamIdx }
-        AND USERIDX = #{useridx } 
 	</select>
 
 	<select id="getTotalCount" parameterType="String" resultType="int">
@@ -44,6 +37,7 @@
 		AND T.BBS_IDX = #{bbsIdx }
 	</select>
 	
+	<!-- 글작성 -->
 	<select id="getnewBbsIdx" resultType="String">
 		SELECT SEQ_TEAM_BBS_IDX.NEXTVAL FROM DUAL
 	</select>
@@ -53,6 +47,7 @@
 		VALUES (#{bbsIdx }, #{useridx}, #{teamIdx}, #{subject}, #{content}, SYSDATE, #{imageIdx}, #{hit})
 	</insert>
 	
+	<!-- 댓글 -->
 	<select id="getCommentsList" parameterType="String" resultType="Paging.CommentVO">
 		SELECT T.*, S.NICKNAME FROM TEAM_COMMENTS T, SPORT_USER S
 		WHERE S.USERIDX = T.USERIDX
@@ -65,8 +60,16 @@
 		VALUES (SEQ_TEAM_COMMENTS.NEXTVAL, #{bbsIdx }, #{useridx }, #{content },SYSDATE)
 	</insert>
 	
+	<!-- 팀게시판-팀맴버 출력용 -->
+	<!-- 맴버 IDX리스트 얻기 -->
+	<select id="getTeamMembers" parameterType="String" resultType="String">
+		SELECT USERIDX FROM TEAM_MEMBER WHERE TEAM_IDX = #{teamIdx}
+	</select>
 	
-	
+	<!-- 팀신청서 리스트 -->
+	<select id="getSignupList" parameterType="String" resultType="com.sports.model.vo.TeamSignupVO">
+		SELECT T.*, S.* FROM TEAM_SIGNUP T,SPORT_USER S  WHERE T.USERIDX = S.USERIDX AND TEAM_IDX = #{teamIdx}
+	</select>
 </mapper>
 
 

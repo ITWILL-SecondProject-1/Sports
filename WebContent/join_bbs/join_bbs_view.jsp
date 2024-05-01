@@ -221,6 +221,7 @@
 				        <label for="exampleFormControlTextarea1" class="form-label">댓글작성하기</label>
 				        <textarea class="form-control" id="r_content" name="content" rows="4" cols="80"></textarea>
 				        <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
+				        <input type="hidden" name="teamIdx" value="${vo.teamIdx }">
 				        <input type="hidden" name="cPage" value="${cPage }" >
 				        <input id="btnCommentWrite" type="submit" class="btn btn-danger" value="입력" onclick="writeComment(this.form)">
 				    </form>

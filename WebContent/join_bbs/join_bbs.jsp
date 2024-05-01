@@ -15,15 +15,26 @@
 </style>
 <script>
 
-	function goWrite() {
+/* 	function goWrite() {
 		//로그인 유저가 아니면 쓰기창 못감
 		if(${empty UserVO}){
 			alert("로그인 후 이용가능 합니다");
 			retrun;
 		}
 		location.href = "${writeBbsUrl }";
-	}
+	} */
 	
+	function writeBbs(frm){
+		console.log(frm);
+		console.log(frm.subject.value);
+		if (frm.subject == null) {
+			alert("제목이 작성되지 않았습니다");
+		} else {
+			alert("글작성 버튼 클릭");
+/*  			frm.action = "join_bbs_write_ok";
+			frm.submit(); */
+		}
+	}
 </script>
 </head>
 <body>
@@ -37,8 +48,18 @@
 			<button onclick="goWrite()" class="btn btn-secondary right-box">모집글작성하기</button ><br>	    	
 	    </c:if>
 	    <c:if test="${not empty UserVO}" >
-			<button onclick="goWrite()" class="btn btn-danger right-box">모집글작성하기</button ><br>	    	
-	    </c:if>
+			<!-- <button onclick="goWrite()" class="btn btn-danger right-box">모집글작성하기</button ><br> -->
+			<!-- 모집글 작성 modal -->
+				<button type="button" class="btn btn-primary right-box" data-toggle="modal" data-target="#staticBackdrop">
+					모집글 작성하기
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				       	  <%@include file="../../join_bbs/joinBbsWrite-include.jsp" %>
+				  
+				</div>
+			</c:if>
 	    
 			<table class="table table-hover">
 				<thead>
