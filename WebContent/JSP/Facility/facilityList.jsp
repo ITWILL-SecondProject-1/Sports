@@ -11,29 +11,53 @@
 </head>
 <body>
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
-<h1>풋살장 전체 목록</h1>
-<table border="1">
-    <tr>
-        <th>시설 번호</th>
-        <th>풋살장 이름</th>
-        <th>풋살장 주소</th>
-        <th>풋살장 번호</th>
-        <th>이벤트</th>
-        <th>운영시간</th>
-        <th>수용량</th>
-    </tr>
-    <c:forEach var="facilityVO" items="${list}">
-        <tr class="clickable-row" data-href="facility?type=inquire&index=${facilityVO.facilityIdx}">
-            <td>${facilityVO.facilityIdx}</td>
-            <td>${facilityVO.facilityName}</td>
-            <td>${facilityVO.address}</td>
-            <td>${facilityVO.phoneNumber}</td>
-            <td>${facilityVO.event}</td>
-            <td>${facilityVO.openTime} ~ ${facilityVO.closeTime}</td>
-            <td>${facilityVO.capacity}</td>
-        </tr>
-    </c:forEach>
-</table>
+<div class="container">
+	<div class="card bg-dark text-white border-dark">
+		<div class="card-header d-flex justify-content-center">
+			<h1>운동 시설 모음</h1>
+		</div>
+	</div>
+	<div class="card-deck d-flex justify-content-center my-3 position-relative">
+		<c:forEach var="facilityVO" items="${list}">
+			<div>
+				<div class="card m-3 facility-card shadow" style="width: 15rem;">
+					<img src="https://picsum.photos/id/1/100/100" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-text">${facilityVO.facilityIdx}. ${facilityVO.facilityName}</h5>
+					</div>
+					<div class="card-footer">
+						<small class="text=muted text-secondary">${facilityVO.address}</small>
+					</div>
+					<a class="stretched-link" href="facility?type=inquire&index=${facilityVO.facilityIdx}"></a>
+				</div>
+			</div>
+		</c:forEach>
+		<c:forEach var="facilityVO" items="${list}">
+			<div>
+				<div class="card m-3 facility-card" style="width: 15rem;">
+					<img src="https://picsum.photos/id/1/100/100" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-text">${facilityVO.facilityIdx}. ${facilityVO.facilityName}</h5>
+					</div>
+					<div class="card-footer">
+						<small class="text=muted">${facilityVO.address}</small>
+					</div>
+					<a class="stretched-link" href="facility?type=inquire&index=${facilityVO.facilityIdx}"></a>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+	<nav aria-label="Page navigation example" class="my-3">
+		<ul class="pagination justify-content-center">
+			<li class="page-item disabled"><a class="page-link">Previous</a>
+			</li>
+			<li class="page-item"><a class="page-link" href="#">1</a></li>
+			<li class="page-item"><a class="page-link" href="#">2</a></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+		</ul>
+	</nav>
+</div>
 </body>
 <script>
 // 각 테이블의 행을 누르면, 해당 시설 페이지로 이동하는 함수
