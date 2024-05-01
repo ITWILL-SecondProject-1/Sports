@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.sports.model.dao.UserDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,13 @@
 	height: 500px;
 	border: 1px solid blue;
 }
+#writer-info-profile-img {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
 </style>
 <script>
 
@@ -51,19 +59,19 @@
 			<div class="col-2">
 				<%-- 가입맴버 표시 --%>
 				<div class="position-fixed">
-				<div class="row">가입맴버</div>
-				<c:forEach var="row" items="${memberList}">
-					<div class="card comment-row">
-						<div
-							class="card-header d-flex justify-content-between align-items-center comment-name">
-							<span> <img
-								src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
-								alt="profile-image" id="writer-info-profile-img"> <a
-								href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
-							</span>
+					<div class="row">가입맴버</div>
+					<c:forEach var="row" items="${memberList}">
+						<div class="card comment-row">
+							<div
+								class="card-header d-flex justify-content-between align-items-center comment-name">
+								<span> <img
+									src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+									alt="profile-image" id="writer-info-profile-img"> <a
+									href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+								</span>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
 
