@@ -26,6 +26,7 @@
   </environments>
   
   <mappers>
+    <mapper resource="com/sports/mybatis/teamMapper.xml" />
     <mapper resource="com/sport/joinBbs/mybatis/mapper.xml" />
   </mappers>
   

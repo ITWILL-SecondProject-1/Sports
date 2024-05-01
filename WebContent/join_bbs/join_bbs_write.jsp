@@ -1,83 +1,89 @@
 <%@page import="com.sport.joinBbs.vo.TeamVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>	
+<title>Insert title here</title>
+<jsp:include page='../partials/commonhead.jsp' flush="false" />
 <style>
-	th {
-	text-align: left;
-	}
-	#writeForm {
-		opacity: 50%;
-	}
-	.enable {
-		opacity: 100%;
-	}
-
+.writeBbs {
+	width: 500px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-	function writeBbs(val) {
-		console.log("vo.teamIdx : "+ val);
-		if (val == 0){
-			document.getElementById("writeForm").style.opacity = "50%";
-		} else if(val == "newTeam"){
-			document.getElementById("writeForm").style.opacity = "100%";
-			document.getElementById("subject").value = "";
-			document.getElementById("event").value = "";
-			document.getElementById("place").value = "";
-			document.getElementById("time").value = "";
-			document.getElementById("memberMax").value = "";
-			document.getElementById("limit").value = "";
-			document.getElementById("content").value = "";
-			document.getElementById("teamIdx").value = "";
-		} else {
-			document.getElementById("writeForm").style.opacity = "100%";
-			$.ajax("getJsonJoinBbs?teamIdx=" + val, {
-				method : "get",
-				dataType : "json", //응답받을 데이터 타입(서버쪽으로부터)
-				success : function(respData){
-					console.log("Ajax 처리 성공 - 응답받은데이터 : " + respData);
-					console.log(respData); //JSON 객체 1개
-					console.log(respData.list); //배열데이터
-					document.getElementById("subject").value = "-";
-					document.getElementById("event").value = "-";
-					document.getElementById("place").value = "-";
-					document.getElementById("time").value = "-";
-					document.getElementById("memberMax").value = "-";
-					document.getElementById("limit").value = "-";
-					document.getElementById("content").value = "-";
-					document.getElementById("teamIdx").value = "-";
-					
-					document.getElementById("subject").value = respData.subject;
-					document.getElementById("nickname").value = respData.nickname;
-					document.getElementById("event").value = respData.event;
-					document.getElementById("place").value = respData.place;
-					document.getElementById("time").value = respData.time;
-					document.getElementById("memberMax").value = respData.memberMax;
-					document.getElementById("limit").value = respData.limit;
-					document.getElementById("content").value = respData.content;
-					document.getElementById("teamIdx").value = respData.teamIdx;
-				},
-				error : function(jqXHR, textStatus, errorThrown){
-					console.log("Ajax 처리 실패 : \n"
-							+ "jqXHR.readyState : " + jqXHR.readyState + "\n"
-							+ "textStatus : " + textStatus + "\n"
-							+ "errorThrown : " + errorThrown);
-				}
-			});
+	let elements = document.getElementsByClassName("inputForm");
+	window.onload = function(){
+		console.log(elements);
+		
+		for (ele of elements){
+			ele.disabled = true;
+			ele.value = "-";
 		}
+		
+	};
+
+	function selectBbs(val){
+		console.log("vo.teamIdx : "+ val);
+		switch (val) {
+		case "-" : 
+			for (ele of elements){
+				ele.disabled = true;
+				ele.value = "-";
+			}
+			break;
+		case "newTeam" : 
+			for (ele of elements){
+				ele.disabled = false;
+				ele.value = null;
+			}
+			break;
+		default : 
+			for (ele of elements){
+				ele.disabled = false;
+				ele.value = "-";
+			}
+			printForm(val);
+			break;
+		}
+	}
 	
+
+	function printForm(val) {
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open('Post','getJsonJoinBbs?teamIdx=' + val,true);
+		xhr.send('');
+		xhr.onreadystatechange = function(){
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log(xhr.responseXML);
+				let json = JSON.parse(xhr.responseText);
+				/* let jsonArr = json.products; //배열 */
+				for (e of elements){
+					for (let j of json) { //of : 객체의 속성값 뽑기
+			           if(e.getAttribute("name") == j.key){
+			        	   e.value = j['value'];
+			           }
+			         }
+				}
+			} else {
+				
+			}
+		};
+		
 	} 
 	
-	function goWrite(frm){
+	function writeBbs(frm){
 		console.log(frm);
 		console.log(frm.subject.value);
 		if (frm.subject == null) {
@@ -88,85 +94,162 @@
 		}
 	}
 	
+	function goLsit() {
+		location.href="${bbsUrl }";
+	}
+	
 </script>
 </head>
 <body>
-	<h1>팀원모집글 작성[join_bbs_write]</h1>
-	<form>
-	<select id="selectTeam" name="selectTeam" onchange="writeBbs(this.value)">
-		<option value="0">팀을 선택해 주세요</option>
-		<c:forEach var="vo" items="${teams }">
-			<c:if test="${empty vo.teamName }" >
-				<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
-			</c:if>
-			<c:if test="${not empty vo.teamName }" >
-				<option value="${vo.teamIdx }">${vo.teamName }</option>
-			</c:if>
-		</c:forEach>
-		<option value="newTeam">새팀 만들기</option>
-	</select>
-		<div id="writeForm" class="disable">
-			<table>
-				<tbody>
-					<tr>
-						<th>제목</th>
-						<td>
-							<input id="subject" type="text" name="subject" value="-" placeholder="ex) 동료 모집합니다">
-						</td>
-					</tr>
-					<tr>
-						<th>작성자</th>
-						<td>
-							<input id="nickname" type="text" name="nickname" value="${UserVO.nickname }" readonly >
-						</td>
-					</tr>
-					<tr>
-						<th>종목</th>
-						<td>
-							<input id="event" type="text" name="event" value="-" placeholder="ex) 풋볼">
-						</td>
-					</tr>
-					<tr>
-						<th>장소</th>
-						<td>
-							<input id="place" type="text" name="place" value="-" placeholder="ex) 동네 공원">
-						</td>
-					</tr>
-					<tr>
-						<th>시간</th>
-						<td>
-							<input id="time" type="text" name="time" value="-" placeholder="ex) 주말 오후2시">
-						</td>
-					</tr>
-					<tr>
-						<th>모집인원</th>
-						<td>
-							<input id="memberMax" type="text" name="memberMax" value="-" placeholder="ex) 제한없음">
-						</td>
-					</tr>
-					<tr>
-						<th>조건</th>
-						<td>
-							<input id="limit" type="text" name="limit" value="-" placeholder="ex) 누구나 환영합니다">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<textarea id="content" name="content" rows="20" cols="60" placeholder="내용을 입력해 주세요"></textarea>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<input type="hidden" name="useridx" value="${UserVO.useridx }" >
-			<input id="teamIdx" type="hidden" name="teamIdx" value="${vo.teamIdx }" >
-			<c:if test="${empty vo.teamName }" >
-				<input type="text" name="teamName" value="" placeholder="팀이름을 정해주세요">
-			</c:if>
-			<c:if test="${not empty vo.teamName }" >
-				<input type="text" name="teamName" value="${vo.teamName }">
-			</c:if>
-			<input type="button" value="모집글 등록" onclick="goWrite(this.form)">
+	<jsp:include page='../partials/commonbody.jsp' flush="false" />
+
+
+			<button class="btn btn-secondary me-md-2" onclick="goLsit()">작성취소</button>
+			<button class="btn btn-primary" onclick="writeBbs(this.form)">등록</button>
+	
+	<div class="row writeBbs">
+
+		<div class="col card px-3 py-3">
+		<form>
+			<div class="mb-3 row">
+					<select class="form-select" id="selectTeam" name="selectTeam" onchange="selectBbs(this.value)">
+						<option value="-">팀 선택하기..</option>
+						<c:forEach var="vo" items="${teams }">
+							<c:if test="${empty vo.teamName }">
+								<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
+							</c:if>
+							<c:if test="${not empty vo.teamName }">
+								<option value="${vo.teamIdx }">${vo.teamName }</option>
+							</c:if>
+						</c:forEach>
+						<option value="newTeam">새팀 만들기</option>
+					</select>
+			</div>
+			<div class="mb-3 row">
+				<label for="nickname" class="col-sm-2 col-form-label">작성자</label>
+				<div class="col-sm-10">
+					<input type="text" readonly class="form-control-plaintext" id="nickname" value="email@example.com">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">제목</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">종목</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">장소</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">인원수</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">시간</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">조건</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<div class="col-sm-10">
+					<textarea class="form-control" id="inputPassword"></textarea>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">팀이름</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="inputPassword">
+				</div>
+			</div>
+</form>
+
+<%-- 
+
+			<form method="post">
+				<button class="btn btn-secondary me-md-2" onclick="goLsit()">작성취소</button>
+				<button class="btn btn-primary" onclick="writeBbs(this.form)">등록</button>
+				<div>
+					팀선택 <select class="form-select" id="selectTeam" name="selectTeam"
+						onchange="selectBbs(this.value)">
+						<option value="-">팀 선택하기..</option>
+						<c:forEach var="vo" items="${teams }">
+							<c:if test="${empty vo.teamName }">
+								<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
+							</c:if>
+							<c:if test="${not empty vo.teamName }">
+								<option value="${vo.teamIdx }">${vo.teamName }</option>
+							</c:if>
+						</c:forEach>
+						<option value="newTeam">새팀 만들기</option>
+					</select>
+				</div>
+				<div class="my-2">
+					작성자 : <input type="text" disabled readonly
+						value="${UserVO.nickname }">
+				</div>
+				<div>
+					제목 : <input type="text" id="subject" name="subject"
+						placeholder="제목을 적어주세요">
+				</div>
+				<div>
+					종목 : <input type="text" id="event" name="event"
+						value="${vo.event }" placeholder="운동 종목을 적어주세요">
+				</div>
+				<div>
+					장소 : <input type="text" id="place" name="place"
+						value="${vo.place }" placeholder="장소을 적어주세요">
+				</div>
+				<div>
+					인원수 : <input type="text" id="memberMax" name="memberMax"
+						value="${vo.memberMax }" placeholder="모집할 인원수를 적어주세요">
+				</div>
+				<div>
+					시간 : <input type="text" id="time" name="time" value="${vo.time }"
+						placeholder="시간을 적어주세요">
+				</div>
+				<div>
+					조건 : <input type="text" id="limit" name="limit"
+						value="${vo.limit }" placeholder="모집 대상을 적어주세요">
+				</div>
+				<div>
+					팀이름 : <input type="text" id="teamName" name="teamName"
+						value="${vo.teamName }">
+				</div>
+				<div>
+					<button class="btn btn-primary" type="button"
+						onclick="writeBbs(this.form)">등록</button>
+				</div>
+			</form>
+ --%>
+
+
+
+
+
+
+
+
+
+
 		</div>
-	</form>
+
+	</div>
 </body>
 </html>

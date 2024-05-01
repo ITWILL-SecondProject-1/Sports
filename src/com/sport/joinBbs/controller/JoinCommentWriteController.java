@@ -20,17 +20,29 @@ public class JoinCommentWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/**/System.out.println("    >>\"/join_comment_write\"");
+		/*********************
+		- 요청 파라메터 
+		content : 댓글 내용
+		bbsIdx : 모집글
+		cPage : 모집글의 페이지
+		
+		- 응답파라메터 
+		bbsIdx : 모집글
+		cPage : 모집글의 페이지
+		*/
+		
+		
+		/**/System.out.println(">>join_comment_write");
 		JoinCommentVO commVO = new JoinCommentVO();
 		UserVO writerVO = (UserVO) request.getSession().getAttribute("UserVO");
-		/**/System.out.println("writerVO : " + writerVO.toString());
-		/**/System.out.println("cPage : "+ request.getParameter("cPage"));
+		/**/System.out.println("    writerVO : " + writerVO.toString());
+		/**/System.out.println("    cPage : "+ request.getParameter("cPage"));
 		commVO.setNickname(writerVO.getNickname());
 		commVO.setUseridx(writerVO.getUseridx());
 		commVO.setBbsIdx(request.getParameter("bbsIdx"));
 		commVO.setContent(request.getParameter("content"));
 		//join_bbs_view?bbsIdx=${vo.bbsIdx }&cPage=${paging.nowPage}
-		
+		/**/System.out.println("    commVO : "+ commVO.toString());
 		if (JoinBbsDAO.insertComment(commVO) == 1) {
 			request.setAttribute("bbsIdx", request.getParameter("bbsIdx"));
 			request.setAttribute("cPage", request.getParameter("cPage"));

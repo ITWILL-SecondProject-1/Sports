@@ -1,4 +1,4 @@
-package com.sport.joinBbs.controller;
+package com.sports.teamBbs.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,10 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.sport.joinBbs.dao.JoinBbsDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sport.joinBbs.vo.JoinCommentVO;
+import com.sports.model.dao.TeamBbsDAO;
+import com.sports.model.vo.TeamBbsVO;
+
+import Paging.BbsVO;
+import Paging.CommentVO;
 
 
-@WebServlet("/join_bbs_view")
-public class JoinBbsViewController extends HttpServlet {
+@WebServlet("/teamBbsview")
+public class TeamBbsViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
@@ -34,18 +39,17 @@ public class JoinBbsViewController extends HttpServlet {
 		deleteBbsUrl : 게시글 삭제 url
 		updateCommentUrl : 댓글수정 url
 		deleteCommentUrl : 댓글삭제 url
-		teamSignupUrl : 팀 가입신청 url
 		*/
-		//게시글VO : JoinBbsVO, 게시글DAO : JoinBbsDAO
+		//게시글VO : JoinBbsVO
+		//게시글DAO : JoinBbsDAO
 		//댓글VO : JoinBbsDAO
-		String bbsUrl = "join_bbs";
+		String bbsUrl = "teamBbs";
 		String updateBbsUrl = "";
 		String deleteBbsUrl = "";
-		String writeCommentUrl = "join_comment_write";
+		String writeCommentUrl = "";
 		String updateCommentUrl = "";
 		String deleteCommentUrl = "";
-		String teamSignupUrl = "sign_up_ok";
-		String responseUrl = "join_bbs/join_bbs_view.jsp";
+		String responseUrl = "JSP/TeamBoard/teamBbsView.jsp";
 		//*****************
 		
 		/**/System.out.println(">>join_bbs_view");
@@ -53,10 +57,10 @@ public class JoinBbsViewController extends HttpServlet {
 		/**/System.out.println("    bbsIdx : "+bbsIdx);
 		
 		//게시글
-		JoinBbsVO vo = JoinBbsDAO.getOndJoinBbs(bbsIdx);
+		TeamBbsVO vo = (TeamBbsVO)TeamBbsDAO.getOndBbs(bbsIdx);
 		
 		//댓글
-		List<JoinCommentVO> commlist = JoinBbsDAO.getCommentsList(bbsIdx);
+		List<CommentVO> commlist = TeamBbsDAO.getCommentsList(bbsIdx);
 		/**/System.out.println("    vo : "+vo.toString());
 		/**/System.out.println("    commlist : "+commlist.toString());
 		
@@ -71,8 +75,6 @@ public class JoinBbsViewController extends HttpServlet {
 		request.setAttribute("writeCommentUrl", writeCommentUrl);
 		request.setAttribute("deleteCommentUrl", updateCommentUrl);
 		request.setAttribute("deleteCommentUrl", deleteCommentUrl);
-		request.setAttribute("teamSignupUrl", teamSignupUrl);
-		
 		request.setAttribute("vo", vo);
 		request.setAttribute("commentList", commlist);
 		request.setAttribute("cPage", request.getParameter("cPage"));

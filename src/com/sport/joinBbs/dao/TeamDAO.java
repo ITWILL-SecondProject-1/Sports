@@ -18,9 +18,9 @@ public class TeamDAO {
 		return null;
 	}
 	
-	public static List<TeamVO> getMyTeamList(){
+	public static List<TeamVO> getMyTeamList(String useridx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
-			return ss.selectList("joinBbs.myTeamList");
+			return ss.selectList("joinBbs.myTeamList", useridx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

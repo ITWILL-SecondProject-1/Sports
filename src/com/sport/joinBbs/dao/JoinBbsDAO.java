@@ -46,8 +46,7 @@ public class JoinBbsDAO {
 	
 	public static JoinBbsVO getOndJoinBbsByTeamIdx(String teamIdx) {
 		try(SqlSession ss = DBService.getFactory().openSession()){
-			JoinBbsVO vo = ss.selectOne("joinBbs.joinBbsByTeamIdx", teamIdx);
-			return vo;
+			return ss.selectOne("joinBbs.joinBbsByTeamIdx", teamIdx);
 		}catch (Exception e) {
 				e.printStackTrace();
 		}

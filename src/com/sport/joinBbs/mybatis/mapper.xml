@@ -55,7 +55,7 @@
 		INSERT INTO JOIN_BBS (BBS_IDX, USERIDX, TEAM_IDX, SUBJECT, TIME, MEMBER_MAX, 
 	    	LIMIT, PLACE, EVENT, CONTENT, WRITE_DATE, IMAGE_IDX, TEAM_NAME, HIT)
 		VALUES (#{bbsIdx }, #{useridx}, #{teamIdx}, #{subject}, #{time}, #{memberMax}, #{
-	    	limit}, #{place}, #{event}, #{content}, SYSDATE, #{imgaeIdx}, #{teamName}, #{hit})
+	    	limit}, #{place}, #{event}, #{content}, SYSDATE, #{imageIdx}, #{teamName}, #{hit})
 	</insert>
 	
 	<select id="getnewTeamIdx" resultType="String">
@@ -63,12 +63,14 @@
 	</select>
 	
 	<insert id="teamInsert" parameterType="com.sport.joinBbs.vo.TeamVO">
-		INSERT INTO TEAMS (TEAM_IDX, USERIDX, TEAM_NAME, IMAGE_IDX, START_DATE)
-		VALUES (SEQ_TEAM_IDX.NEXTVAL, #{useridx},#{teamName}, #{imgaeIdx}, SYSDATE)
+		INSERT INTO TEAMS (TEAM_IDX, USERIDX, TEAM_NAME, IMAGE_IDX, JOIN_CHECK, START_DATE)
+		VALUES (#{teamIdx}, #{useridx},#{teamName}, #{imageIdx}, #{joinCheck}, SYSDATE)
 	</insert>
 	
-	<select id="myTeamList" resultType="com.sport.joinBbs.vo.TeamVO">
-		SELECT * FROM TEAMS ORDER BY TEAM_IDX
+	<select id="myTeamList" parameterType="String" resultType="com.sport.joinBbs.vo.TeamVO">
+		SELECT T.* FROM TEAMS T, TEAM_MEMBER M
+		WHERE T.TEAM_IDX = M.TEAM_IDX
+		AND M.USERIDX = #{useridx };
 	</select>
 	
 	<update id="teamUpdate" parameterType="com.sport.joinBbs.vo.TeamVO">
@@ -79,7 +81,7 @@
 	
 	<insert id="signupInsert" parameterType="com.sport.joinBbs.vo.TeamSignupVO">
 		INSERT INTO TEAM_SIGNUP (SIGNUP_IDX, TEAM_IDX, USERIDX, SIGNUP_CHECK, SIGNUP_DATE, CONTENT)
-		VALUES (SEQ_SIGNUP_IDX.NEXTVAL, #{teamIdx}, #{uesridx}, #{signupCheck}, SYSDATE, #{content})
+		VALUES (SEQ_SIGNUP_IDX.NEXTVAL, #{teamIdx}, #{useridx}, #{signupCheck}, SYSDATE, #{content})
 	</insert>
 			
 </mapper>

@@ -10,73 +10,65 @@ public class TeamVO {
 	private String joinCheck; //
 	private String teamName; //팀명
 	private String imageIdx; //팀이미지
-	private String imagePi; //이미지pi
+	private String startDate;
+	private String endDate;
 	
 	private List<UserVO> memberList = null;
-
-	// geters
-	public String getTeamIdx() {
-		return teamIdx;
-	}
-
-	public String getUseridx() {
-		return useridx;
-	}
-
-	public String getGender() {
-		return joinCheck;
-	}
-
-	public String getTeamName() {
-		return teamName;
-	}
-
-	public String getImage() {
-		return imageIdx;
-	}
-
-	public String getImagePi() {
-		return imagePi;
-	}
 
 	public List<UserVO> getMemberList() {
 		return memberList;
 	}
-
-	//seters
-	public void setTeamIdx(String teamIdx) {
-		this.teamIdx = teamIdx;
-	}
-
-	public void setUseridx(String useridx) {
-		this.useridx = useridx;
-	}
-
-	public void setGender(String gender) {
-		this.joinCheck = gender;
-	}
-
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
-	}
-
-	public void setImage(String image) {
-		this.imageIdx = image;
-	}
-
-	public void setImagePi(String imagePi) {
-		this.imagePi = imagePi;
-	}
-
 	public void setMemberList(List<UserVO> memberList) {
 		this.memberList = memberList;
 	}
-
+	public String getTeamIdx() {
+		return teamIdx;
+	}
+	public void setTeamIdx(String teamIdx) {
+		this.teamIdx = teamIdx;
+	}
+	public String getUseridx() {
+		return useridx;
+	}
+	public void setUseridx(String useridx) {
+		this.useridx = useridx;
+	}
+	public String getJoinCheck() {
+		return joinCheck;
+	}
+	public void setJoinCheck(String joinCheck) {
+		this.joinCheck = joinCheck;
+	}
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+	public String getImageIdx() {
+		return imageIdx;
+	}
+	public void setImageIdx(String imageIdx) {
+		this.imageIdx = imageIdx;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 	@Override
 	public String toString() {
-		return "TeamVO [teamIdx=" + teamIdx + ", useridx=" + useridx + ", gender=" + joinCheck + ", teamName=" + teamName
-				+ ", image=" + imageIdx + ", imagePi=" + imagePi + ", memberList=" + memberList + "]";
+		return "TeamVO [teamIdx=" + teamIdx + ", useridx=" + useridx + ", joinCheck=" + joinCheck + ", teamName="
+				+ teamName + ", imageIdx=" + imageIdx + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", memberList=" + memberList + "]";
 	}
-	
+
 	
 }
