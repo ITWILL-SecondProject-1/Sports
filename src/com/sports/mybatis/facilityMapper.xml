@@ -30,6 +30,26 @@
 		WHERE f.facility_idx = ${facilityIdx}
 		GROUP BY f.facility_idx, f.capacity
 	</select>
+	
+	<!-- 시설 추가 -->
+	<insert id="insertFacility" parameterType="FaVO">
+		<selectKey keyProperty="imageIdx" resultType="int" order="BEFORE" statementType="STATEMENT">
+            SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
+        </selectKey>
+		INSERT INTO FACILITY (FACILITY_IDX, FACILITY_NAME, ADDRESS, 
+								PHONE_NUMBER, EVENT, 
+								OPEN_TIME, CLOSE_TIME, CAPACITY, IMAGE_IDX)
+		VALUES(SEQ_FACILITY_IDX.NEXTVAL, #{facilityName}, #{address}, 
+								#{phoneNumber}, #{event}, 
+								#{openTime}, #{closeTime}, #{capacity}, #{imageIdx})
+	</insert>
+	
+	<!-- 시설 삭제 -->
+	<delete id="deleteFacility" parameterType="int">
+		DELETE
+		FROM FACILITY
+		WHERE FACILITY_IDX = #{facilityIdx}
+	</delete>
 </mapper>
 
 
