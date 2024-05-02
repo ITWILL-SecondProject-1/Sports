@@ -96,6 +96,11 @@
 	<select id="getTeamLogo" parameterType="int" resultType="string">
 		SELECT LOGO FROM TEAMS WHERE TEAM_IDX = #{teamIdx }
 	</select>
+	
+	<insert id="insertTeamMember" parameterType="com.sports.model.vo.TeamMemberVO">
+		INSERT INTO TEAM_MEMBER (TEAM_IDX, USERIDX, JOIN_DATE)
+		VALUES (#{teamIdx }, #{useridx }, SYSDATE)
+	</insert>
 			
 </mapper>
 

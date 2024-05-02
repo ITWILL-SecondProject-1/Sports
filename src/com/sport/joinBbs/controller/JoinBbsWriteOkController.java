@@ -16,6 +16,8 @@ import com.sport.joinBbs.dao.TeamDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sport.joinBbs.vo.TeamVO;
 import com.sports.cloudinary.IMGUpload;
+import com.sports.model.dao.TeamMemberDAO;
+import com.sports.model.vo.TeamMemberVO;
 import com.sports.model.vo.UserVO;
 
 @MultipartConfig(
@@ -49,7 +51,7 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		bbsIdx : 작성글idx, 작성 후 글보기창 이동
 		
 		*/
-		String responseUrl = "join_bbs_view"; //응답url
+		String responseUrl = "join_bbs"; //응답url
 		//********************************
 		
 	    String imageUrl = null;
@@ -103,6 +105,16 @@ public class JoinBbsWriteOkController extends HttpServlet {
 			if(TeamDAO.insertTeam(teamVo) == 1) {
 				System.out.println("    팀생성 성공");
 			}
+			
+			//팀맴버테이블에 가입자로 인서트
+			TeamMemberVO teamMem = new TeamMemberVO();
+			teamMem.setTeamIdx(teamIdx);
+			teamMem.setUseridx(useridx);
+			/**/System.out.println("    teamMem : "+teamMem);
+			if(TeamMemberDAO.insertTeamMember(teamMem) == 1) {
+				System.out.println("    맴버인서트 성공");
+			}
+			
 		} else {
 			//기존팀 모집글경우 팀update
 			TeamVO teamVo = new TeamVO();

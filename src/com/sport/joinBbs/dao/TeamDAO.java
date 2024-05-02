@@ -18,6 +18,16 @@ public class TeamDAO {
 		return null;
 	}
 	
+	public static TeamVO getOneTeam(String teamIdx) {
+		/**/System.out.println("  >>TeamDAO.getOneTeam()");
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			return ss.selectOne("teamMapper.getOneTeam", teamIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static List<TeamVO> getMyTeamList(String useridx){
 		try(SqlSession ss = DBService.getFactory().openSession()){
 			return ss.selectList("joinBbs.myTeamList", useridx);

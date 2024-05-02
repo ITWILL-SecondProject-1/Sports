@@ -11,25 +11,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#a {
-	height: 500px;
-	border: 1px solid red;
-}
 
-#b {
-	height: 500px;
-	border: 1px solid green;
-}
-
-#c {
+#teamLogo {
 	height: 300px;
-	border: 1px solid orange;
+	background-color: rgb(220, 220, 220);
+	border-radius: 8px;
 }
+#logo-img {
+	height: 300px;
+}
+/* #teamLogo2 {
+	height: 100%;
+} */
 
-#d {
-	height: 500px;
-	border: 1px solid blue;
-}
 #writer-info-profile-img {
 		display: inline-block;
 		width: 50px;
@@ -37,6 +31,26 @@
 		border-radius: 50%;
 		margin-right: 10px;
 	}
+
+/* 
+#logoDiv {
+    width: 100%; /* 부모 요소인 .col-md-4의 너비에 맞춰서 너비 설정 */
+    height: 300px;
+    padding-top: 100%; /* 높이를 너비와 같게 설정 */
+    position: relative; /* 이미지를 절대 위치로 조정하기 위해 상대 위치 설정 */
+    overflow: hidden; /* 컨테이너 밖으로 나가는 이미지를 숨김 */
+}
+
+#logoDiv img {
+overflow: hidden;
+    position: absolute;
+    top: 50%;   /* 이미지를 상자의 중앙으로 이동 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 이미지 중심을 상자 중앙에 정확히 위치시킴 */
+    height: 100%; /* 이미지가 상자의 최소 높이를 가짐 */
+    min-width: 100%;  /* 이미지가 상자의 최소 너비를 가짐 */
+    object-fit: cover; /* 이미지가 비율을 유지하면서 상자를 채움 */
+} */
 </style>
 <script>
 
@@ -53,34 +67,48 @@
 <body>
 	<jsp:include page='../../partials/commonbody.jsp' flush="false" />
 
-	<div class="container-fluid px-4">
-		<div class="row" id="a">
+	<div class="container">
+		<div class="row justify-content-md-center">
 			<!-- 화면왼쪽 -->
 			<div class="col-2">
+			
 				<%-- 가입맴버 표시 --%>
-				<div class="position-fixed">
-					<div class="row">가입맴버</div>
-					<c:forEach var="row" items="${memberList}">
-						<div class="card comment-row">
-							<div
-								class="card-header d-flex justify-content-between align-items-center comment-name">
-								<span> <img
-									src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
-									alt="profile-image" id="writer-info-profile-img"> <a
-									href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
-								</span>
-							</div>
+				<div class="accordion position-fixed" id="accordionExample">
+					<div class="card">
+						<div class="card-header bg-dark" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left" type="button"
+									data-toggle="collapse" data-target="#teamMemberLsit"
+									aria-expanded="true" aria-controls="collapseOne">가입맴버
+								</button>
+							</h2>
 						</div>
-					</c:forEach>
-				</div>
-			</div>
 
+						<div id="teamMemberLsit" class="collapse show"
+							aria-labelledby="headingOne">
+							<c:forEach var="row" items="${memberList}">
+								<div class="card comment-row">
+									<div
+										class="card-body d-flex justify-content-between align-items-center comment-name">
+										<span> <img
+											src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+											alt="profile-image" id="writer-info-profile-img"> <a
+											href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+										</span>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+
+			</div>
 			<%-- 화면중앙 --%>
 			<div class="col-8" id="b">
 				<%-- 팀사진 --%>
-				<div class="row" id="c">
-					<div class="col-8 mx-auto d-block border">
-						<img src="*" class="img-fluid">팀사진
+				<div class="row" id="teamLogo">
+					<div class="col-8 mx-auto d-block" id="teamLogo2">
+						<img src="${teamVo.logo }" alt="profile-image" id="logo-img">
 					</div>
 				</div>
 				
@@ -153,35 +181,121 @@
 			
 			<%-- 화면오른쪽 --%>
 			<div class="col-2">
-				<div class="row">진행중인 모집글</div>
-				<div class="row">신청자 목록
-					<c:forEach var="row" items="${signupList}">
-						<c:if test="${row.signupCheck == 'u'}"><%-- 신청서 확인 안한 경우만 출력 --%>
-							<div class="card comment-row">
-								<div class="card-header d-flex justify-content-between align-items-center comment-name">
-									<span> <img
-										src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
-										alt="profile-image" id="writer-info-profile-img"> <a
-										href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
 
-									</span>
+
+				<div class="accordion position-fixed" id="accordionExample2">
+				
+					<div class="card">
+						<div class="card-header bg-dark" id="headingTwo">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left collapsed"
+									type="button" data-toggle="collapse" data-target="#lookJoinBbs"
+									aria-expanded="false" aria-controls="collapseTwo">
+									모집글</button>
+							</h2>
+						</div>
+						<div id="lookJoinBbs" class="collapse"
+							aria-labelledby="headingTwo">
+							<div class="card-body">Some placeholder content for the
+								second accordion panel. This panel is hidden by default.</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header bg-dark" id="headingThree">
+							<h2 class="mb-0">
+								<button class="btn btn-dark btn-block text-left" type="button"
+									data-toggle="collapse" data-target="#collapseOne"
+									aria-expanded="true" aria-controls="collapseOne">
+									신청서</button>
+							</h2>
+						</div>
+
+						<div id="collapseOne" class="collapse show"
+							aria-labelledby="headingOne">
+							<c:forEach var="row" items="${signupList}">
+							<c:if test="${row.signupCheck == 'u'}">
+								<%-- 신청서 확인 안한 경우만 출력 --%>
+								<div class="card comment-row">
+									<div class="card-header d-flex justify-content-between align-items-center comment-name">
+										<span> <img
+											src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+											alt="profile-image" id="writer-info-profile-img"> <a
+											href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+
+										</span>
+									</div>
+									<div class="card-body">
+									<p class="card-text">${row.content}</p>
+										<form>
+											<input type="hidden" name="signupIdx"
+												value="{row.signupIdx }"> <input type="button"
+												onclick="accept(this.form)"
+												class="btn btn-primary right-box" value="수락"> <input
+												type="button" onclick="decline(this.form)"
+												class="btn btn-danger right-box" value="거절">
+										</form>
+									</div>
 								</div>
-								<div class="comment-content bg-light">${row.content}</div>
-								<div>
-									<form>
-										<input type="hidden" name="signupIdx" value="{row.signupIdx }">
-										<input type="button" onclick="accept(this.form)"
-											class="btn btn-primary right-box" value="수락"> <input
-											type="button" onclick="decline(this.form)"
-											class="btn btn-danger right-box" value="거절">
-									</form>
+							</c:if>
+						</c:forEach>
+						</div>
+					</div>
+					
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%-- 
+					<div class="row">진행중인 모집글</div>
+					<div class="row">
+						신청자 목록
+						<c:forEach var="row" items="${signupList}">
+							<c:if test="${row.signupCheck == 'u'}">
+								신청서 확인 안한 경우만 출력
+								<div class="card comment-row">
+									<div
+										class="card-header d-flex justify-content-between align-items-center comment-name">
+										<span> <img
+											src="${UserDAO.indexToUserInfo(row.useridx).getImage() }"
+											alt="profile-image" id="writer-info-profile-img"> <a
+											href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }">${row.nickname}</a>
+
+										</span>
+									</div>
+									<div class="comment-content bg-light">${row.content}</div>
+									<div>
+										<form>
+											<input type="hidden" name="signupIdx"
+												value="{row.signupIdx }"> <input type="button"
+												onclick="accept(this.form)"
+												class="btn btn-primary right-box" value="수락"> <input
+												type="button" onclick="decline(this.form)"
+												class="btn btn-danger right-box" value="거절">
+										</form>
+									</div>
 								</div>
-							</div>
-						</c:if>
-					</c:forEach>
+							</c:if>
+						</c:forEach> 
+--%>
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 </body>
 </html>
