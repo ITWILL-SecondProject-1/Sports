@@ -112,15 +112,13 @@ public class BoardDAO {
 	}
 	
 	//게시글삭제
-	public static int boardDelete(int bbsIdx) {
-		int result = 0;
+	public static boolean boardDelete(int bbsIdx) {
 		try (SqlSession ss = DBService.getFactory().openSession(true)) {
-			result = ss.delete("sports.deleteBoard", bbsIdx);
-			return result;
+			return ss.delete("sports.deleteBoard", bbsIdx) > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return false;
 	}
 
 	
