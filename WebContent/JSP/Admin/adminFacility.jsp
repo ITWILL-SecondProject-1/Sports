@@ -116,11 +116,13 @@
 								<td>${vo.facilityName }</td>
 								<td>${vo.address }</td>
 								<td id="facilityButton">
-									<form action="updateFacility" action="post" class="m-1">
+									<form method="post" class="m-1">
 										<input type="button" class="btn btn-danger" onclick="updateFacility(this.form)" value="수정">
+										<input type="hidden" name="facilityIdx" value="${vo.facilityIdx }">
 									</form>
-									<form action="deleteFacility" action="post" class="m-1">
+									<form method="post" class="m-1">
 										<input type="button" class="btn btn-danger" onclick="deleteFacility(this.form)" value="삭제">
+										<input type="hidden" name="facilityIdx" value="${vo.facilityIdx }">
 									</form>
 								</td>
 							</tr>
@@ -138,4 +140,15 @@
 </div>
 </div>
 </body>
+<script>
+	function updateFacility(frm) {
+		
+	}
+	
+	function deleteFacility(frm) {
+		confirm("삭제하시겠습니까?");
+		frm.action = "deleteFacility";
+		frm.submit();
+	}
+</script>
 </html>

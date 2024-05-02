@@ -48,12 +48,15 @@
 	} else {
 			String useridx = userVO.getUseridx();
 			pageContext.setAttribute("useridx", useridx);
+			String manager = userVO.getManager();
+			System.out.println(manager);
+			String master = "master";
 %>
 			<a class="dropdown-item" href="/STP/userpage?email=<%=userVO.getEmail()%>">마이페이지</a>
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
-			<c:if test="${useridx == '777' }">
+			<c:if test="${manager == master}">
 				<a class="dropdown-item" href="/STP/adminFacility">관리자페이지</a>
 			</c:if>
 <%

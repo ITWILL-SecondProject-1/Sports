@@ -77,7 +77,6 @@ public class UserVO implements Serializable {
 	public void setImagePi(String imagePi) {
 		this.imagePi = imagePi;
 	}
-
 	public String getManager() {
 		return manager;
 	}
@@ -92,5 +91,9 @@ public class UserVO implements Serializable {
 				+ ", phone=" + phone + ", gender=" + gender + ", image=" + image + ", imagePi=" + imagePi + ", manager="
 				+ manager + "]";
 	}
+
+	
+
+	
 	
 }

@@ -12,34 +12,9 @@
 <script>
 	//null 확인
 	
-	function go_addFacility(frm) {
-		alert(frm.faName.value);
-		if (frm.faName.value.trim() == "") {
-			alert("시설이름을 입력하세요");
-			return false;
-		}
-		if (frm.address.value.trim() == "") {
-			alert("시설주소를 입력하세요");
-			return false;
-		}
-		if (frm.phone.value.trim() == "") {
-			alert("전화번호를 입력하세요");
-			return false;
-		}
-		if (frm.event.value.trim() == "") {
-			alert("종목을 입력하세요");
-			return false;
-		}
-		if (frm.openTime.value.trim() == "") {
-			alert("오픈시간을 입력하세요");
-			return false;
-		}
-		if (frm.closeTime.value.trim() == "") {
-			alert("마감시간을 입력하세요");
-			return false;
-		}
-		
+	function go_addFacility(frm) {		
 		frm.action="addFacility";
+		alert(frm.faName.value);
 		frm.submit();
 	}
 	
@@ -179,6 +154,10 @@
 							<input type="text" name="phone" class="form-control" placeholder = "전화번호를 입력해주세요!!" id="phone" required>
 						</div>
 						<div class="mb-3">
+							<label for="capacity" class="form-label">수용인원</label>
+							<input type="number" name="capacity" class="form-control" placeholder = "수용인원을 입력해주세요!!" id="capacity" required>
+						</div>
+						<div class="mb-3">
 							<label for="event" class="form-label">종목</label>
 							<select class="form-control" name="event" id="event">
 	  							<option>풋살</option>
@@ -187,18 +166,21 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="time" class="form-label">이용시간</label><br>
-							<select class="form-control time" name="openTime" id="openTime">
-							<c:forEach var="i" items="${timeList }">
-								<option>${i }:00</option>
-							</c:forEach>
-							</select>
-							 ~ 
-							<select class="form-control time" name="closeTime" id="closeTime">
-							<c:forEach var="i" items="${timeList }">
-								<option>${i }:00</option>
-							</c:forEach>
-							</select>
+							<div>
+								<label for="openTime" class="form-label">오픈</label><br>
+								<select class="form-control time" name="openTime" id="openTime">
+								<c:forEach var="i" items="${timeList }">
+									<option value="${i }">${i }:00</option>
+								</c:forEach>
+								</select>
+								 ~ 
+								<label for="closeTime" class="form-label">마감</label><br>
+								<select class="form-control time" name="closeTime" id="closeTime">
+								<c:forEach var="i" items="${timeList }">
+									<option value="${i }">${i }:00</option>
+								</c:forEach>
+								</select>
+							</div>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -209,12 +191,11 @@
 								<label class="custom-file-label" for="images">Choose file</label>
 							</div>
 						</div>
-						<input type="submit" class="btn btn-secondary" value="작성하기" onclick="go_addFacility(this.form)">
+						<input type="button" class="btn btn-secondary" value="작성하기" onclick="go_addFacility(this.form)">
 						<input type="button" class="btn btn-secondary" value="취소" onclick="go_back()">
 					</form>
     			</div>
    			</div>
-   			
 		</div>
      </main> 
 

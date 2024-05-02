@@ -40,4 +40,27 @@ public class FaDAO {
 		} 
 		return null;
 	}
+	
+	//시설 추가
+	public static int insertFacility(FaVO vo) {
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			ss.insert("facility.insertFacility", vo);
+			return vo.getImageIdx();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	//시설 삭제
+	public static int deleteFacility(int facilityIdx) {
+		int result = 0;
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			result = ss.delete("facility.deleteFacility", facilityIdx);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
