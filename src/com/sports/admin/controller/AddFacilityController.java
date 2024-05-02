@@ -2,6 +2,7 @@ package com.sports.admin.controller;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -37,14 +38,6 @@ public class AddFacilityController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("faName : " + request.getParameter("faName"));
-		System.out.println("address : " + request.getParameter("address"));
-		System.out.println("phone : " + request.getParameter("phone"));
-		System.out.println("capacity : " + request.getParameter("capacity"));
-		System.out.println("event : " + request.getParameter("event"));
-		System.out.println("openTime : " + request.getParameter("openTime"));
-		System.out.println("closeTime : " + request.getParameter("closeTime"));
-		
 		Collection<Part> parts = request.getParts();
 		
 		FaVO faVO = new FaVO();
@@ -57,10 +50,23 @@ public class AddFacilityController extends HttpServlet {
 		faVO.setOpenTime((int)Integer.parseInt(request.getParameter("openTime")));
 		faVO.setCloseTime((int)Integer.parseInt(request.getParameter("closeTime")));
 		
+		for(Part part : parts) {
+			if (part.getSubmittedFileName() == null) continue;
+			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
+				if (part.getName().equals("card-thumbnail")) {
+					Map<String, String> resultMap = imgUpload.uploadImage(part);
+					faVO.setThumb(resultMap.get("url"));
+					faVO.setThumbPi(resultMap.get("public_id"));					
+				} else {
+					continue;
+				}
+			}
+		}
+		
 		int imageIdx = FaDAO.insertFacility(faVO);
 		
 		try {
-			imgUpload.uploadImages(parts, imageIdx);			
+			imgUpload.uploadImagesCarousel(parts, imageIdx);			
 		} catch(NullPointerException e) {
 			System.out.println("이미지를 입력하지 않음.");
 		}

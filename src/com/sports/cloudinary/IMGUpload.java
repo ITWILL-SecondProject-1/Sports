@@ -38,6 +38,25 @@ public class IMGUpload {
 		return;
     }
     
+    public void uploadImagesCarousel(Collection<Part> parts, int imageIdx) throws IOException, NullPointerException {
+    	for (Part part : parts) {
+    		if (part.getSubmittedFileName() == null) continue;
+    		if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
+    			if (part.getName().equals("images-carousel")) {
+    				Map<String, String> resultMap = uploadImage(part);
+    				ImagesVO imagesVO = new ImagesVO();
+    				imagesVO.setImageIdx(imageIdx);
+    				imagesVO.setImage(resultMap.get("url"));
+    				imagesVO.setImagePi(resultMap.get("public_id"));
+    				ImagesDAO.insertImage(imagesVO);    				
+    			} else {
+    				continue;
+    			}
+    		}
+    	}
+    	return;
+    }
+    
     // 이미지 업로드 메소드
     public Map<String, String> uploadImage(Part filePart) throws IOException {
         File tempFile = File.createTempFile("upload-", ".tmp"); // 임시 파일 생성
