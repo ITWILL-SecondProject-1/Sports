@@ -38,7 +38,7 @@
         </selectKey>
 		INSERT INTO FACILITY (FACILITY_IDX, FACILITY_NAME, ADDRESS, 
 								PHONE_NUMBER, EVENT, THUMB, THUMB_PI,
-								OPEN_TIME, CLOSE_TIME, CAPACITY, IMAGE_IDX)
+								OPEN_TIME, CLOSE_TIME, CAPACITY, DATE_RANGE_FOR_RESERVATION, IMAGE_IDX)
 		VALUES(SEQ_FACILITY_IDX.NEXTVAL, #{facilityName}, #{address}, 
 								#{phoneNumber}, #{event},
 			<choose>
@@ -49,8 +49,22 @@
 	                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
 	            </otherwise>
 	        </choose>
-								,#{openTime}, #{closeTime}, #{capacity}, #{imageIdx})
+								,#{openTime}, #{closeTime}, #{capacity}, #{DateRangeForReservation}, #{imageIdx})
 	</insert>
+	
+	<!-- 시설 수정 -->
+	<update id="updateFacility" parameterType="FaVO">
+		UPDATE FACILITY
+		SET FACILITY_NAME = #{facilityName},
+		    ADDRESS = #{address},
+		    PHONE_NUMBER = #{phoneNumber},
+		    EVENT = #{event},
+		    OPEN_TIME = #{openTime},
+		    CLOSE_TIME = #{closeTime},
+		    CAPACITY = #{capacity},
+		    DATE_RANGE_FOR_RESERVATION = #{DateRangeForReservation}
+		WHERE FACILITY_IDX = #{facilityIdx}
+	</update>
 	
 	<!-- 시설 삭제 -->
 	<delete id="deleteFacility" parameterType="int">

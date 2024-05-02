@@ -52,6 +52,18 @@ public class FaDAO {
 		return 0;
 	}
 	
+	//시설 수정
+	public static int updateFacility(FaVO vo) {
+		int result = 0;
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			result = ss.update("facility.updateFacility", vo);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	//시설 삭제
 	public static int deleteFacility(int facilityIdx) {
 		int result = 0;
