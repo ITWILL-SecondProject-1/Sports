@@ -30,7 +30,7 @@
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="join_bbs">모집</a></li>
 			
 			<c:if test="${empty UserVO }">
-				<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="">Team</a></li>
+				<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="#">Team</a></li>
 			</c:if>
 			<c:if test="${not empty UserVO }">
 				<li class="nav-item col-md-auto dropdown">

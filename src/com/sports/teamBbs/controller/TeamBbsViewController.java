@@ -13,7 +13,9 @@ import com.sport.joinBbs.dao.JoinBbsDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sport.joinBbs.vo.JoinCommentVO;
 import com.sports.model.dao.TeamBbsDAO;
+import com.sports.model.dao.UserDAO;
 import com.sports.model.vo.TeamBbsVO;
+import com.sports.model.vo.UserVO;
 
 import Paging.BbsVO;
 import Paging.CommentVO;
@@ -32,7 +34,9 @@ public class TeamBbsViewController extends HttpServlet {
 		
 		- 응답 파라메터
 		vo : 게시글VO
+		writerVO : 글작성자 UserVO
 		commentsList : 댓글리스트
+		memberList : 팀맴버리스트
 		cPage : 현재페이지
 		bbsUrl : 게시판 서블릿 url매핑
 		updateBbsUrl : 게시글 수정 url
@@ -40,9 +44,6 @@ public class TeamBbsViewController extends HttpServlet {
 		updateCommentUrl : 댓글수정 url
 		deleteCommentUrl : 댓글삭제 url
 		*/
-		//게시글VO : JoinBbsVO
-		//게시글DAO : JoinBbsDAO
-		//댓글VO : JoinBbsDAO
 		String bbsUrl = "teamBbs";
 		String updateBbsUrl = "";
 		String deleteBbsUrl = "";
@@ -52,12 +53,18 @@ public class TeamBbsViewController extends HttpServlet {
 		String responseUrl = "JSP/TeamBoard/teamBbsView.jsp";
 		//*****************
 		
-		/**/System.out.println(">>join_bbs_view");
+		/**/System.out.println(">>teamBbsview");
 		String bbsIdx = request.getParameter("bbsIdx");
 		/**/System.out.println("    bbsIdx : "+bbsIdx);
 		
 		//게시글
 		TeamBbsVO vo = (TeamBbsVO)TeamBbsDAO.getOndBbs(bbsIdx);
+		
+		//작성자
+		UserVO writerVO = UserDAO.indexToUserInfo(vo.getUseridx());
+		
+		//팀 맴버 리스트
+		List<UserVO> memberList = TeamBbsDAO.getTeamMembers(vo.getTeamIdx());
 		
 		//댓글
 		List<CommentVO> commlist = TeamBbsDAO.getCommentsList(bbsIdx);
@@ -76,6 +83,8 @@ public class TeamBbsViewController extends HttpServlet {
 		request.setAttribute("deleteCommentUrl", updateCommentUrl);
 		request.setAttribute("deleteCommentUrl", deleteCommentUrl);
 		request.setAttribute("vo", vo);
+		request.setAttribute("writerVO", writerVO);
+		request.setAttribute("memberList", memberList);
 		request.setAttribute("commentList", commlist);
 		request.setAttribute("cPage", request.getParameter("cPage"));
 		request.getRequestDispatcher(responseUrl).forward(request, response);

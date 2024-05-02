@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sport.joinBbs.dao.TeamDAO;
 import com.sports.model.dao.TeamBbsDAO;
 import com.sports.model.vo.TeamSignupVO;
 import com.sports.model.vo.UserVO;
@@ -30,7 +32,7 @@ public class TeamBbsCntroller extends HttpServlet {
 		teamIdx : 팀인덱스
 		
 		- 응답파라메터 
-		teamIdx : 팀인덱스
+		teamVo : 팀Vo
 		bbsUrl : 게시판 서블릿 url매핑
 		viewBbsUrl : 게시글작성 서블릿 url매핑
 		p : 페이징 객체 Paging
@@ -97,7 +99,8 @@ public class TeamBbsCntroller extends HttpServlet {
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);
-		request.setAttribute("teamIdx", teamIdx);
+		request.setAttribute("teamVo", TeamDAO.getOneTeam(teamIdx));
+		/**/System.out.println("    teamVo : " + TeamDAO.getOneTeam(teamIdx));
 		request.setAttribute("p", p);
 		request.setAttribute("memberList", memberList);
 		request.setAttribute("signupList", signupList);

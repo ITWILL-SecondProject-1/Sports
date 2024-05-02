@@ -10,6 +10,11 @@
         	AND USERIDX = #{useridx } ), 1, 0) AS TF 
 		FROM DUAL
 	</select>
+	
+	<!-- 팀 하나 가져오기 -->
+	<select id="getOneTeam" parameterType="String" resultType="com.sport.joinBbs.vo.TeamVO">
+		SELECT * FROM TEAMS WHERE TEAM_IDX = #{teamIdx }
+	</select>
 
 	<select id="getTotalCount" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS CNT FROM TEAM_BBS WHERE TEAM_IDX = #{teamIdx }

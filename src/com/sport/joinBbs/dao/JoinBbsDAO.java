@@ -89,9 +89,14 @@ public class JoinBbsDAO {
 		return -1;
 	}
 	
-
-
-	
+	public static String getTeamLogo(int teamIdx) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.selectOne("joinBbs.getTeamLogo", teamIdx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 }
