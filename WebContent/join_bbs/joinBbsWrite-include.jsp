@@ -1,7 +1,16 @@
 
+<%@page import="com.sport.joinBbs.dao.TeamDAO"%>
+<%@page import="com.sport.joinBbs.vo.TeamVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sports.model.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+		UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
+   		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
+   		pageContext.setAttribute("teamList", teamList);
+%>
 <script>
 
 	//폼요소 리스트
@@ -81,14 +90,15 @@
 		<div class="form-group col">
 			<select class="form-control" id="selectTeam" name="selectTeam" onchange="selectBbs(this.value)">
 				<option value="-">팀 선택하기..</option>
-				<c:forEach var="vo" items="${teams }">
-					<c:if test="${empty vo.teamName }">
+				<c:forEach var="vo" items="${teamList }">
+				 	<c:if test="${empty vo.teamName }">
 						<option value="${vo.teamIdx }">이름없는팀${vo.teamIdx }</option>
 					</c:if>
 					<c:if test="${not empty vo.teamName }">
 						<option value="${vo.teamIdx }">${vo.teamName }</option>
 					</c:if>
 				</c:forEach>
+				
 				<option value="newTeam">새팀 만들기</option>
 			</select>
 		</div>

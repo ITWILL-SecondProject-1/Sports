@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sport.joinBbs.common.Paging;
 import com.sport.joinBbs.dao.JoinBbsDAO;
+import com.sport.joinBbs.dao.TeamDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sports.model.vo.UserVO;
 
@@ -32,6 +33,7 @@ public class JoinBbsController extends HttpServlet {
 		viewBbsServlet : 게시글작성 서블릿 url매핑
 		p : 페이징 객체 Paging
 		list : 현재페이지 게시글 목록
+		teams : 로그인유저 가입팀목록
 		
 		*/
 		//게시글VO : JoinBbsVO, 게시글DAO : JoinBbsDAO
@@ -39,7 +41,7 @@ public class JoinBbsController extends HttpServlet {
 		String viewBbsUrl = "join_bbs_view"; //게시글보기 서블릿 url매핑
 		String writeBbsUrl = "join_bbs_write"; //게시글보기 서블릿 url매핑
 		String responseUrl = "join_bbs/join_bbs.jsp"; //응답url
-		int numPerPage = 10; //페이지당 게시글수
+		int numPerPage = 8; //페이지당 게시글수
 		int pagePerBlock = 5; //블럭당 페이지수
 		int totalRecord = JoinBbsDAO.getTotalCount(); //DB의 총 게시글 개수
 		//**************************
@@ -57,6 +59,11 @@ public class JoinBbsController extends HttpServlet {
 		}
 		List<JoinBbsVO> joinList = JoinBbsDAO.getJoinBbsList(p.getBegin(),p.getEnd());
 		/**/System.out.println("    Paging  p : "+ p.toString());
+		UserVO loginUser = (UserVO) request.getSession().getAttribute("UserVO");
+		/**/System.out.println("    useridx : "+loginUser.getUseridx());
+		if(loginUser != null) {
+			request.setAttribute("teams", TeamDAO.getMyTeamList(loginUser.getUseridx()));
+		}
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);

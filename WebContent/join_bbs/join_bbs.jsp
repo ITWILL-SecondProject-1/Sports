@@ -71,7 +71,13 @@
 	        // 모달 표시
 	        $('#infoModal').modal('show');
 	    });
+	    
+	   /*  $('.close').click(function() {
+	    	$('#infoModal').modal('show');
+	    } */
 	});
+	
+	
 </script>
 </head>
 <body>
@@ -181,7 +187,10 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="modalTitle"></h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      	
 	      </div>
 	      <div class="modal-body">
 	        <p id="modalSubject"></p>
@@ -189,7 +198,7 @@
 	        <p id="modalDate"></p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">닫기</button>
 	      </div>
 	    </div>
 	  </div>
