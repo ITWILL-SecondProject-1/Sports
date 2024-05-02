@@ -24,7 +24,7 @@
 		location.href = "${writeBbsUrl }";
 	} */
 	
-	function writeBbs(frm){
+/* 	function writeBbs(frm){
 		console.log(frm);
 		console.log(frm.subject.value);
 		if (frm.subject == null) {
@@ -34,7 +34,7 @@
   			frm.action = "join_bbs_write_ok";
 			frm.submit(); 
 		}
-	}
+	} */
 </script>
 </head>
 <body>

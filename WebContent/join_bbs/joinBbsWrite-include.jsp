@@ -2,7 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
+
 	//폼요소 리스트
 	let elements = document.getElementsByClassName("inputForm");
 	let writeButton = null;
@@ -74,7 +76,7 @@
 <!-- 타겟모달 -->
 <div class="modal-dialog">
     <div class="modal-content">
-      <form method="post">
+      <form method="post" enctype="multipart/form-data" action="join_bbs_write_ok">
       <div class="modal-header">
         <h5 class="modal-title col" id="staticBackdropLabel">모집글 작성</h5>
 		<div class="form-group col">
@@ -99,48 +101,72 @@
       <!-- 글작성폼 -->
       <div class="modal-body">
 		<span>선택옵션 : </span>
-			<button type="button" class="btn btn-outline-secondary">종목</button>
-			<button type="button" class="btn btn-outline-secondary">장소</button>
-			<button type="button" class="btn btn-outline-secondary">인원수</button>
-			<button type="button" class="btn btn-outline-secondary">시간</button>
-			<button type="button" class="btn btn-outline-secondary">조건</button>
+			<button type="button" class="btn btn-outline-secondary" 
+				data-toggle="collapse" data-target="#eventdiv" 
+				aria-expanded="false" aria-controls="event">종목</button>
+			<button type="button" class="btn btn-outline-secondary" 
+				data-toggle="collapse" data-target="#placediv" 
+				aria-expanded="false" aria-controls="event">장소</button>
+			<button type="button" class="btn btn-outline-secondary" 
+				data-toggle="collapse" data-target="#memberMaxdiv" 
+				aria-expanded="false" aria-controls="event">인원수</button>
+			<button type="button" class="btn btn-outline-secondary" 
+				data-toggle="collapse" data-target="#timediv" 
+				aria-expanded="false" aria-controls="event">시간</button>
+			<button type="button" class="btn btn-outline-secondary" 
+				data-toggle="collapse" data-target="#limitdiv" 
+				aria-expanded="false" aria-controls="event">조건</button>
 		<hr>
 		<div class="form-group">
 			<label for="subject">제목</label>
-				<input type="text" id="subject" class="form-control inputForm" name="subject" placeholder="제목을 적어주세요">
+				<input type="text" id="subject" class="form-control inputForm" name="subject" placeholder="제목을 적어주세요" required>
 		</div>
-		<div class="form-group">
-			<label for="event">종목</label>
-				<input type="text" id="event" class="form-control inputForm" name="event" value="${vo.event }" placeholder="운동 종목을 적어주세요">
+		<div id="eventdiv">
+			<div class="form-group">
+				<label for="event">종목</label>
+					<input type="text" id="event" class="form-control inputForm" name="event" value="${vo.event }" placeholder="운동 종목을 적어주세요">
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="place">장소</label>
-				<input type="text" id="place" class="form-control inputForm" name="place" value="${vo.place }" placeholder="장소을 적어주세요">
+		<div id="placediv">
+			<div class="form-group">
+				<label for="place">장소</label>
+					<input type="text" id="place" class="form-control inputForm" name="place" value="${vo.place }" placeholder="장소을 적어주세요">
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="memberMax">인원수</label>
-				<input type="text" id="memberMax" class="form-control inputForm" name="memberMax"	value="${vo.memberMax }" placeholder="모집할 인원수를 적어주세요">
+		<div id="memberMaxdiv">
+			<div class="form-group">
+				<label for="memberMax">인원수</label>
+					<input type="text" id="memberMax" class="form-control inputForm" name="memberMax"	value="${vo.memberMax }" placeholder="모집할 인원수를 적어주세요">
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="time">시간</label>
-				<input type="text" id="time" class="form-control inputForm" name="time" value="${vo.time }" placeholder="시간을 적어주세요">
+		<div id="timediv">
+			<div class="form-group">
+				<label for="time">시간</label>
+					<input type="text" id="time" class="form-control inputForm" name="time" value="${vo.time }" placeholder="시간을 적어주세요">
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="limit">조건</label>
-				<input type="text" id="limit" class="form-control inputForm" name="limit" value="${vo.limit }" placeholder="모집 대상을 적어주세요">
+			<div id="limitdiv">
+			<div class="form-group">
+				<label for="limit">조건</label>
+					<input type="text" id="limit" class="form-control inputForm" name="limit" value="${vo.limit }" placeholder="모집 대상을 적어주세요">
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="content">내용</label>
-				<textarea class="form-control inputForm" id="content" name="content" rows="5"></textarea>
+				<textarea class="form-control inputForm" id="content" name="content" rows="5"  required></textarea>
 		</div>
 		<div class="form-group">
 			<label for="teamName">팀이름</label>
-				<input type="text" id="teamName" class="form-control inputForm" name="teamName" value="${vo.teamName }" placeholder="팀 이름을 지어주세요">
+				<input type="text" id="teamName" class="form-control inputForm" name="teamName" value="${vo.teamName }" placeholder="팀 이름을 지어주세요"  required>
+		</div>
+		<div class="input-group mb-3">
+			<input type="file" class="form-control" id="image" name="image">
+			<label class="input-group-text" for="image">Upload</label>
 		</div>
 	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="writeButton" type="button" class="btn btn-primary" onclick="writeBbs(this.form)">작성하기</button>
+        <button id="writeButton" type="submit" class="btn btn-primary">작성하기</button>
       </div>
       </form>
       
