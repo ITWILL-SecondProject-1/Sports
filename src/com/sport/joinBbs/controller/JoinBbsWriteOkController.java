@@ -36,6 +36,10 @@ public class JoinBbsWriteOkController extends HttpServlet {
     }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("main");
+	}
+		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*****************************
 		- 요청 파라메터
 		selectTeam : 새팀/기존팀 구분, 기존팀일경우 teamIdx값
@@ -138,10 +142,4 @@ public class JoinBbsWriteOkController extends HttpServlet {
 	
 		response.sendRedirect(responseUrl + "?bbsIdx=" + bbsIdx);
 	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }
