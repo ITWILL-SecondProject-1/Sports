@@ -37,11 +37,19 @@
             SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
         </selectKey>
 		INSERT INTO FACILITY (FACILITY_IDX, FACILITY_NAME, ADDRESS, 
-								PHONE_NUMBER, EVENT, 
+								PHONE_NUMBER, EVENT, THUMB, THUMB_PI,
 								OPEN_TIME, CLOSE_TIME, CAPACITY, IMAGE_IDX)
 		VALUES(SEQ_FACILITY_IDX.NEXTVAL, #{facilityName}, #{address}, 
-								#{phoneNumber}, #{event}, 
-								#{openTime}, #{closeTime}, #{capacity}, #{imageIdx})
+								#{phoneNumber}, #{event},
+			<choose>
+	            <when test="thumb != null">
+	                #{thumb}, #{thumbPi}
+	            </when>
+	            <otherwise>
+	                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
+	            </otherwise>
+	        </choose>
+								,#{openTime}, #{closeTime}, #{capacity}, #{imageIdx})
 	</insert>
 	
 	<!-- 시설 삭제 -->
