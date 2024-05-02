@@ -113,7 +113,7 @@
 				<div class="modal fade" id="staticBackdrop" data-backdrop="static"
 					data-keyboard="false" tabindex="-1"
 					aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					<%@include file="../../join_bbs/joinBbsWrite-include.jsp"%>
+					<%@include file="../../partials/joinBbsWrite-include.jsp"%>
 
 				</div>
 			</c:if>
