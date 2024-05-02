@@ -53,6 +53,25 @@
 			frm.submit(); 
 		}
 	} */
+	
+	$(document).ready(function() {
+	    $('.join-card').click(function() {
+	        // 카드의 정보 가져오기
+	        var teamName = $(this).find('.card-title').text();
+	        var subject = $(this).find('.card-text').first().text();
+	        var writerEmail = $(this).find('.text-muted').first().text();
+	        var writeDate = $(this).find('.card-footer .text-muted').text();
+
+	        // 모달에 정보 설정
+	        $('#modalTitle').text(teamName);
+	        $('#modalSubject').text(subject);
+	        $('#modalEmail').text(writerEmail);
+	        $('#modalDate').text(writeDate);
+
+	        // 모달 표시
+	        $('#infoModal').modal('show');
+	    });
+	});
 </script>
 </head>
 <body>
@@ -154,6 +173,26 @@
 				</li>
 			</ul>
 		</nav>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalTitle"></h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="modalSubject"></p>
+	        <p id="modalEmail"></p>
+	        <p id="modalDate"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </body>
 </html>
