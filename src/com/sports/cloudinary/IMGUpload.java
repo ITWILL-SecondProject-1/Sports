@@ -41,13 +41,17 @@ public class IMGUpload {
     public void uploadImagesCarousel(Collection<Part> parts, int imageIdx) throws IOException, NullPointerException {
     	for (Part part : parts) {
     		if (part.getSubmittedFileName() == null) continue;
-    		if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png") || part.getName().equals("images-carousel")) {
-    			Map<String, String> resultMap = uploadImage(part);
-    			ImagesVO imagesVO = new ImagesVO();
-    			imagesVO.setImageIdx(imageIdx);
-    			imagesVO.setImage(resultMap.get("url"));
-    			imagesVO.setImagePi(resultMap.get("public_id"));
-    			ImagesDAO.insertImage(imagesVO);
+    		if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
+    			if (part.getName().equals("images-carousel")) {
+    				Map<String, String> resultMap = uploadImage(part);
+    				ImagesVO imagesVO = new ImagesVO();
+    				imagesVO.setImageIdx(imageIdx);
+    				imagesVO.setImage(resultMap.get("url"));
+    				imagesVO.setImagePi(resultMap.get("public_id"));
+    				ImagesDAO.insertImage(imagesVO);    				
+    			} else {
+    				continue;
+    			}
     		}
     	}
     	return;

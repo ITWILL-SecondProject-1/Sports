@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 <%@page import="com.sports.model.vo.FaVO"%>
 <%@page import="com.sports.model.vo.ResVO"%>
 <%@page import="com.sports.model.vo.UserVO"%>
+<%@page import="com.sports.model.vo.ImagesVO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	FaVO facilityVO = (FaVO) request.getAttribute("FaVO");
   	UserVO userVO = (UserVO) request.getAttribute("UserVO");
@@ -205,7 +208,26 @@ $(document).ready(function() {
 		</div>
 		<div class="row">
 		<div class="col card">
-			asdds
+				<c:if test="${imagesList.isEmpty() == false}">
+					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
+						<div class="carousel-inner">
+							<c:forEach var="image" items="${imagesList}" varStatus="status">
+								<div class="carousel-item ${status.index == 0 ? 'active' : ''}" data-interval="10000">
+									<img src="${image.image}" class="d-block w-100">
+								</div>
+							</c:forEach>
+						</div>
+						<button class="carousel-control-prev" type="button" data-target="#ImagesListCarousel" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-target="#ImagesListCarousel" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</button>
+					</div>
+				<hr>
+				</c:if>
 		</div>
 	</div>
 </div>

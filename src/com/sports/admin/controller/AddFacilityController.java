@@ -52,10 +52,14 @@ public class AddFacilityController extends HttpServlet {
 		
 		for(Part part : parts) {
 			if (part.getSubmittedFileName() == null) continue;
-			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png") || part.getName().equals("card-thumbnail")) {
-				Map<String, String> resultMap = imgUpload.uploadImage(part);
-				faVO.setThumb(resultMap.get("url"));
-				faVO.setThumbPi(resultMap.get("public_id"));
+			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {
+				if (part.getName().equals("card-thumbnail")) {
+					Map<String, String> resultMap = imgUpload.uploadImage(part);
+					faVO.setThumb(resultMap.get("url"));
+					faVO.setThumbPi(resultMap.get("public_id"));					
+				} else {
+					continue;
+				}
 			}
 		}
 		
