@@ -60,7 +60,7 @@
 
 	.navbar-nav .nav-item {
 	  text-align: center;
-	  margin: 0 30px; /* 硫붾돱 �꾩씠�� �ъ씠媛꾧꺽*/
+	  margin: 0 30px; 
 	}
 	
 	.navbar-nav .nav-item .nav-link {

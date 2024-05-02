@@ -8,9 +8,19 @@
 
     <!-- 예약 정보 조회 -->
     <select id="selectReservation" parameterType="int" resultType="ResVO">
-        SELECT * FROM FACILITY_RESERVE WHERE reserveIdx = #{reserveIdx}
+        SELECT * FROM FACILITY_RESERVE WHERE RESERVE_IDX= #{reserveIdx}
     </select>
+	
+	<!-- 예약된 인원수 합계 조회 -->
+	<select id="selectCapacity" parameterType="map" resultType="int">
+	    SELECT COALESCE(SUM(HEAD_COUNT), 0) AS total_reserved
+	    FROM FACILITY_RESERVE
+	    WHERE FACILITY_IDX = #{facilityIdx}
+	      AND RESERVE_DATE = #{reserveDate}
+	      AND RESERVE_TIME = #{reserveTime}
+	</select>
 
+	
     <!-- 예약 정보 업데이트 -->
     <update id="updateReservation" parameterType="ResVO">
         UPDATE FACILITY_RESERVE
