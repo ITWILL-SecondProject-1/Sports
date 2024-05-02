@@ -103,7 +103,21 @@
 
 	// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
 	$(document).ready(function() {
-	    $('.custom-file-input').on('change', function() {
+	    $('#images-carousel').on('change', function() {
+	        // 선택된 파일 개수
+	        var filesCount = $(this).get(0).files.length;
+
+	        if (filesCount === 1) {
+	            // 단일 파일 선택 시, 파일 이름을 표시
+	            var fileName = $(this).val().split('\\').pop();
+	            $(this).siblings('.custom-file-label').text(fileName);
+	        } else {
+	            // 여러 파일 선택 시, 파일 개수를 표시
+	            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
+	        }
+	    });
+
+	    $('#card-thumbnail').on('change', function() {
 	        // 선택된 파일 개수
 	        var filesCount = $(this).get(0).files.length;
 
@@ -247,14 +261,13 @@
 						</div>
 						<div class="mb-3">
 							<div>
-								<label for="openTime" class="form-label">오픈</label><br>
+								오픈
 								<select class="form-control time" name="openTime" id="openTime">
 								<c:forEach var="i" items="${timeList }">
 									<option value="${i }">${i }:00</option>
 								</c:forEach>
 								</select>
-								 ~ 
-								<label for="closeTime" class="form-label">마감</label><br>
+								 ~ 마감
 								<select class="form-control time" name="closeTime" id="closeTime">
 								<c:forEach var="i" items="${timeList }">
 									<option value="${i }">${i }:00</option>
@@ -264,13 +277,25 @@
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text" id="images">Upload</span>
+								<span class="input-group-text">Card-Thumbnail</span>
 							</div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="images" name="images" aria-describedby="images" multiple>
-								<label class="custom-file-label" for="images">Choose file</label>
+								<input type="file" class="custom-file-input" id="card-thumbnail" name="card-thumbnail" aria-describedby="card-thumbnail">
+								<label class="custom-file-label" for="card-thumbnail">Choose file</label>
 							</div>
 						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Upload</span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="images-carousel" name="images-carousel" aria-describedby="images-carousel" multiple>
+								<label class="custom-file-label" for="images-carousel">Choose file</label>
+							</div>
+						</div>
+						
+						<div></div>
 						<input type="button" class="btn btn-secondary" value="작성하기" onclick="go_addFacility(this.form)">
 						<input type="button" class="btn btn-secondary" value="취소" onclick="go_back()">
 					</form>
