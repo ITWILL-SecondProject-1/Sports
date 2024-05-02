@@ -51,7 +51,6 @@ public class AddFacilityController extends HttpServlet {
 		faVO.setCloseTime((int)Integer.parseInt(request.getParameter("closeTime")));
 		faVO.setDateRangeForReservation((int)Integer.parseInt(request.getParameter("DateRangeForReservation")));
 		
-		System.out.println(faVO);
 		for(Part part : parts) {
 			if (part.getSubmittedFileName() == null) continue;
 			if (part.getContentType().equals("image/jpeg") || part.getContentType().equals("image/png")) {

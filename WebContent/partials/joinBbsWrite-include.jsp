@@ -79,7 +79,24 @@
 			} else {
 			}
 		};
-	} 
+	}
+	
+	// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
+	$(document).ready(function() {
+	    $('#images-carousel').on('change', function() {
+	        // 선택된 파일 개수
+	        var filesCount = $(this).get(0).files.length;
+
+	        if (filesCount === 1) {
+	            // 단일 파일 선택 시, 파일 이름을 표시
+	            var fileName = $(this).val().split('\\').pop();
+	            $(this).siblings('.custom-file-label').text(fileName);
+	        } else {
+	            // 여러 파일 선택 시, 파일 개수를 표시
+	            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
+	        }
+	    });
+	});
 </script>
 <!-- 타겟모달 -->
 <div class="modal-dialog">
@@ -129,34 +146,34 @@
 			<label for="subject">제목</label>
 				<input type="text" id="subject" class="form-control inputForm" name="subject" placeholder="제목을 적어주세요" required>
 		</div>
-		<div id="eventdiv">
+		<div id="eventdiv" class="collapse">
 			<div class="form-group">
 				<label for="event">종목</label>
-					<input type="text" id="event" class="form-control inputForm" name="event" value="${vo.event }" placeholder="운동 종목을 적어주세요">
+				<input type="text" id="event" class="form-control inputForm" name="event" value="${vo.event}" placeholder="운동 종목을 적어주세요">
 			</div>
 		</div>
-		<div id="placediv">
+		<div id="placediv" class="collapse">
 			<div class="form-group">
 				<label for="place">장소</label>
-					<input type="text" id="place" class="form-control inputForm" name="place" value="${vo.place }" placeholder="장소을 적어주세요">
+				<input type="text" id="place" class="form-control inputForm" name="place" value="${vo.place}" placeholder="장소를 적어주세요">
 			</div>
 		</div>
-		<div id="memberMaxdiv">
+		<div id="memberMaxdiv" class="collapse">
 			<div class="form-group">
 				<label for="memberMax">인원수</label>
-					<input type="text" id="memberMax" class="form-control inputForm" name="memberMax"	value="${vo.memberMax }" placeholder="모집할 인원수를 적어주세요">
+				<input type="text" id="memberMax" class="form-control inputForm" name="memberMax" value="${vo.memberMax}" placeholder="모집할 인원수를 적어주세요">
 			</div>
 		</div>
-		<div id="timediv">
+		<div id="timediv" class="collapse">
 			<div class="form-group">
 				<label for="time">시간</label>
-					<input type="text" id="time" class="form-control inputForm" name="time" value="${vo.time }" placeholder="시간을 적어주세요">
+				<input type="text" id="time" class="form-control inputForm" name="time" value="${vo.time}" placeholder="시간을 적어주세요">
 			</div>
 		</div>
-			<div id="limitdiv">
+		<div id="limitdiv" class="collapse">
 			<div class="form-group">
 				<label for="limit">조건</label>
-					<input type="text" id="limit" class="form-control inputForm" name="limit" value="${vo.limit }" placeholder="모집 대상을 적어주세요">
+				<input type="text" id="limit" class="form-control inputForm" name="limit" value="${vo.limit}" placeholder="모집 대상을 적어주세요">
 			</div>
 		</div>
 		<div class="form-group">
@@ -168,8 +185,13 @@
 				<input type="text" id="teamName" class="form-control inputForm" name="teamName" value="${vo.teamName }" placeholder="팀 이름을 지어주세요"  required>
 		</div>
 		<div class="input-group mb-3">
-			<input type="file" class="form-control" id="image" name="image">
-			<label class="input-group-text" for="image">Upload</label>
+			<div class="input-group-prepend">
+				<span class="input-group-text">Upload</span>
+			</div>
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="images-carousel" name="images-carousel" aria-describedby="images-carousel">
+				<label class="custom-file-label" for="images-carousel">Choose file</label>
+			</div>
 		</div>
 	  </div>
       <div class="modal-footer">

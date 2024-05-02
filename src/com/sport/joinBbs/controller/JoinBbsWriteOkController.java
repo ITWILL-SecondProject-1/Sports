@@ -30,10 +30,10 @@ public class JoinBbsWriteOkController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private IMGUpload imgUpload;
 	
-	  @Override
-	    public void init() {
-	        this.imgUpload = new IMGUpload();
-	    }
+  @Override
+    public void init() {
+        this.imgUpload = new IMGUpload();
+    }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*****************************
@@ -82,7 +82,7 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		vo.setTeamName(request.getParameter("teamName"));
 		
 		//이미지 처리
-		Part filePart = request.getPart("image");
+		Part filePart = request.getPart("images-carousel");
         if (filePart.getSize() != 0) {
             // 파일을 Cloudinary에 업로드
         	Map<String, String> resultMap = imgUpload.uploadImage(filePart);

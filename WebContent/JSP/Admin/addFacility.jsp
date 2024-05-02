@@ -300,8 +300,8 @@
 						</div>
 						
 						<div></div>
-						<input type="button" class="btn btn-secondary" value="작성하기" onclick="go_addFacility(this.form)">
-						<input type="button" class="btn btn-secondary" value="취소" onclick="go_back()">
+						<input type="button" class="btn btn-primary" value="작성하기" onclick="go_addFacility(this.form)">
+						<input type="button" class="btn btn-danger" value="취소" onclick="go_back()">
 					</form>
     			</div>
    			</div>
