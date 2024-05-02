@@ -55,13 +55,13 @@ public class JoinBbsController extends HttpServlet {
 		} else {
 			p.setNowPage(Integer.parseInt(cPage));
 		}
-		List<JoinBbsVO> list = JoinBbsDAO.getJoinBbsList(p.getBegin(),p.getEnd());
+		List<JoinBbsVO> joinList = JoinBbsDAO.getJoinBbsList(p.getBegin(),p.getEnd());
 		/**/System.out.println("    Paging  p : "+ p.toString());
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);
 		request.setAttribute("p", p);
-		request.setAttribute("list", list);
+		request.setAttribute("joinList", joinList);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}
 

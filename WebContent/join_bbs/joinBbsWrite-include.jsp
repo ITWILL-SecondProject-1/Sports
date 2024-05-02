@@ -80,8 +80,7 @@
       <div class="modal-header">
         <h5 class="modal-title col" id="staticBackdropLabel">모집글 작성</h5>
 		<div class="form-group col">
-			<select class="form-control" id="selectTeam" name="selectTeam"
-				onchange="selectBbs(this.value)">
+			<select class="form-control" id="selectTeam" name="selectTeam" onchange="selectBbs(this.value)">
 				<option value="-">팀 선택하기..</option>
 				<c:forEach var="vo" items="${teams }">
 					<c:if test="${empty vo.teamName }">
