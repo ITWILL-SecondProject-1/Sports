@@ -141,7 +141,8 @@
 </body>
 <script>
 	function updateFacility(frm) {
-		
+		frm.action = "updateFacility";
+		frm.submit();
 	}
 	
 	function deleteFacility(frm) {

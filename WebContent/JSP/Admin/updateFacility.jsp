@@ -1,3 +1,5 @@
+<%@page import="com.sports.model.dao.FaDAO"%>
+<%@page import="com.sports.model.vo.FaVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -123,6 +125,10 @@
 <body>
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
 <%
+	int facilityIdx = Integer.parseInt(request.getParameter("facilityIdx"));
+	FaVO faVO = FaDAO.inquireData(facilityIdx);
+
+	System.out.println(facilityIdx);
 	List<Integer> timeList = new ArrayList<>();
 	for (int i = 0; i < 25; i++) {
 		timeList.add(i, i);
@@ -218,12 +224,12 @@
     		<div class="chartjs-size-monitor-expand">
     			<div class="facilityList card p-3">
     				<div class="card-header">
-						<h2>시설추가하기</h2>
+						<h2>시설수정하기</h2>
 					</div>
     				<form method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="faName" class="form-label">이름</label>
-							<input type="text" name="faName" class="form-control" placeholder = "시설이름을 입력해주세요!!" id="faName" required>
+							<input type="text" name="faName" class="form-control" placeholder = "시설이름을 입력해주세요!!" id="faName" value="${faVO.facilityName }">
 						</div>
 						<div class="mb-3">
 							<label for="address" class="form-label">주소</label>
