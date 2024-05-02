@@ -5,7 +5,16 @@
 <%@page import="com.sports.model.vo.UserVO"%>
 <%
 	FaVO facilityVO = (FaVO) request.getAttribute("FaVO");
-  	UserVO userVO = (UserVO) request.getAttribute("UserVO");
+	UserVO userVO = (UserVO) session.getAttribute("UserVO");
+	String userIdx;
+	if (session.getAttribute("UserVO") != null) {
+		userVO = (UserVO) session.getAttribute("UserVO");
+		userIdx = userVO.getUseridx();
+	}else{
+		userVO = null;
+		userIdx = null;
+	}
+	
 %>
 
 <!DOCTYPE html>
@@ -114,15 +123,21 @@ function addRowTimeTableRow(key, value) {
 // 클래스에 제로(즉, 수용가능 인원이 0이면) 토글 이벤트가 발생하지 않는다.
 $(document).ready(function() {
     $(document).on('click', '.reserve-table-row', function() {
-    	let bbsreplll = $(this).attr('id');
-    	if($(this).hasClass("zero") === true) {
-    		return;
-    	}
-    	$(this).toggleClass("table-primary");
-    	$(this).toggleClass("selected-time-row");
-    	selectedTime = $(this).attr('id');
+        if($(this).hasClass("zero")) {
+            return; // 제로면 수행x
+        }
+        
+        // 모든 행에서 "table-primary"와 "selected-time-row" 클래스 제거
+        $('.reserve-table-row').removeClass("table-primary selected-time-row");
+        
+        // 현재 클릭된 행 클래스 추가
+        $(this).addClass("table-primary selected-time-row");
+
+        // 시간 업데이트함
+        selectedTime = $(this).attr('id');
     });
 });
+
 
 // 추후 방향성
 // 1. submit 버튼을 누르면, "#selected-time-row" 클래스들을 가져온다. 해당 클래스는 선택된 시간의 열에게만 있는 클래스이다.
@@ -153,7 +168,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify({
                     facilityIdx: <%=facilityVO.getFacilityIdx()%>,
-                    userIdx: <%=userVO.getUseridx()%>,
+                    userIdx: <%=userIdx%>,
                     reserveDate: selectedDate,  
                     reserveTime: selectedTime,
                     headCount: headCount
@@ -191,6 +206,9 @@ $(document).ready(function() {
 					<tbody id="reserve-time-table">
 					</tbody>
 				</table>
+<%
+	if (userVO != null) {
+%>
 				<div class="input-group mb-3">
 					<span class="input-group-text" id="HeadCount-label">HeadCount</span>
 					<input type="number" class="form-control" id="headCount"
@@ -201,6 +219,9 @@ $(document).ready(function() {
 					<button type="button" class="btn btn-primary"
 						id="reserve-submit-btn">Reserve</button>
 				</div>
+<%
+	}
+%>
 			</div>
 		</div>
 		<div class="row">
