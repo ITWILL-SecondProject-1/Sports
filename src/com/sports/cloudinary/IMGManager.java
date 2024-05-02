@@ -1,6 +1,9 @@
 package com.sports.cloudinary;
 
+import java.util.List;
+
 import com.sports.model.dao.ImagesDAO;
+import com.sports.model.vo.ImagesVO;
 
 public class IMGManager {
 	
@@ -22,5 +25,17 @@ public class IMGManager {
 	            continue;
 	        }
 	    }
+	}
+	
+	public boolean deleteImages(List<ImagesVO> imagesList) {
+		if (imagesList.isEmpty()) return true;
+		try {
+			for (ImagesVO image : imagesList) {
+				ImagesDAO.deleteImage(image.getImagePi());
+			}
+			return true;			
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

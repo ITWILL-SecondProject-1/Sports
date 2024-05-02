@@ -21,6 +21,10 @@ public class UserVO implements Serializable {
 	public void setUseridx(String useridx) {
 		this.useridx = useridx;
 	}
+	
+	public void setUseridx(int useridx) {
+		this.useridx = Integer.toString(useridx);
+	}
 
 	public String getEmail() {
 		return email;

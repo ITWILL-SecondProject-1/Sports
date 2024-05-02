@@ -109,10 +109,7 @@
 				<div id="updateDelete ml-auto">
 					<c:if test="${not empty useridx && useridx == writerIdx }">
 						<button type="button" class="btn btn-primary btn-sm" onclick="editBoard()">수정</button>
-			            <form action="deleteBoard" method="post" class="m-1">
-			              <input type="button" class="btn btn-danger" onclick="deleteBoard(this.form)" value="삭제하기">
-							<input type="hidden" name="bbsIdx" value="${boardVo.bbsIdx }">
-						</form>
+						<button type="button" class="btn btn-danger btn-sm" onclick="deleteBoard()">삭제</button>
 					</c:if>
 				</div>
 			</div>
@@ -169,11 +166,6 @@
   </body>
 <script>
 	
-	function deleteBoard(frm) {
-		confirm("삭제하시겠습니까?");
-		frm.action="deleteBoard";
-		frm.submit();
-	}
 
 	function go_writeComment(frm) {
 		
@@ -200,10 +192,35 @@
 	    window.location.href = url;
 	}
 	
-	function deleteBoard() {
-	    let bbsIdx = <%=bbsIdx%>;
-	    let url = '/deleteBoard2?bbsIdx=' + encodeURIComponent(bbsIdx);
-	    window.location.href = url;
+	
+	async function deleteBoard() {
+	    const response = await fetch('/STP/deleteBoard', {
+	        method: 'POST', // HTTP 메소드 지정
+	        headers: {
+	            'Content-Type': 'application/json' // 컨텐츠 타입 헤더 설정
+	        },
+	        body: JSON.stringify({
+	            bbsIdx: <%=bbsIdx%>,
+	        }) // 전송할 데이터
+	    });
+
+	    if (response.ok) { // 응답 성공 체크
+	        const jsonResponse = await response.json();
+	        Swal.fire({
+	            title: 'Success',
+	            text: '게시물을 삭제하였습니다.',
+	            icon: 'success',
+	            didClose:() => {
+	            	window.location.href='board?cPage=<%=nowPage%>';
+	            }
+	        });
+	    } else {
+	        Swal.fire({
+	            title: 'Error',
+	            text: '오류가 발생하였습니다.',
+	            icon: 'error'
+	        });
+	    }
 	}
 	
 	async function editComment(userIdx, commentIdx) {
@@ -329,7 +346,7 @@
 	        const jsonResponse = await response.json();
 	        Swal.fire({
 	            title: 'Success',
-	            text: 'Your comment has been deleted successfully.',
+	            text: '댓글이 삭제되었습다!',
 	            icon: 'success',
 	            didClose:() => {
 	            	window.location.reload();
@@ -338,7 +355,7 @@
 	    } else {
 	        Swal.fire({
 	            title: 'Error',
-	            text: 'There was a problem deleting your comment.',
+	            text: '알수없는 문제가 발생했습니다!',
 	            icon: 'error'
 	        });
 	    }
