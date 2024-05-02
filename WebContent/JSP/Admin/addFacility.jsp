@@ -248,6 +248,10 @@
 							<input type="text" name="phone" class="form-control" placeholder = "전화번호를 입력해주세요!!" id="phone" required>
 						</div>
 						<div class="mb-3">
+							<label for="DateRangeForReservation" class="form-label">예약가능 일수</label>
+							<input type="number" name="DateRangeForReservation" class="form-control" placeholder = "예약가능 일수를 입력해주세요!!" id="DateRangeForReservation" required>
+						</div>
+						<div class="mb-3">
 							<label for="capacity" class="form-label">수용인원</label>
 							<input type="number" name="capacity" class="form-control" placeholder = "수용인원을 입력해주세요!!" id="capacity" required>
 						</div>
