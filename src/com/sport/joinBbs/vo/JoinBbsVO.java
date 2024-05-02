@@ -1,5 +1,8 @@
 package com.sport.joinBbs.vo;
 
+import com.sport.joinBbs.dao.JoinBbsDAO;
+import com.sports.model.dao.UserDAO;
+
 public class JoinBbsVO {
 	private String bbsIdx; //게시글 고유번호
 	private String useridx; //작성자
@@ -17,7 +20,10 @@ public class JoinBbsVO {
 	private String hit = "0"; //조회수
 	
 	private String nickname; //작성자 닉네임
-
+	
+	// 자동생성 항목
+	private String logo; // 로고 이미지 주소
+	private String writerEmail;
 	
 	public String getBbsIdx() {
 		return bbsIdx;
@@ -29,12 +35,16 @@ public class JoinBbsVO {
 		return useridx;
 	}
 	public void setUseridx(String useridx) {
+		// useridx가 셋팅되면, 자동적으로 작성자의 정보를 가져온다.
+		this.writerEmail = UserDAO.indexToUserInfo(useridx).getEmail();
 		this.useridx = useridx;
 	}
 	public String getTeamIdx() {
 		return teamIdx;
 	}
 	public void setTeamIdx(String teamIdx) {
+		// TeamIdx가 셋팅되면, 데이터베이스의 팀 로고도 자동으로 셋팅되게 만듬
+		this.logo = JoinBbsDAO.getTeamLogo(Integer.parseInt(teamIdx));
 		this.teamIdx = teamIdx;
 	}
 	public String getSubject() {
@@ -109,12 +119,19 @@ public class JoinBbsVO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	public String getLogo() {
+		return logo;
+	}
+	public String getWriterEmail() {
+		return writerEmail;
+	}	
 	@Override
 	public String toString() {
 		return "JoinBbsVO [bbsIdx=" + bbsIdx + ", useridx=" + useridx + ", teamIdx=" + teamIdx + ", subject=" + subject
 				+ ", time=" + time + ", memberMax=" + memberMax + ", limit=" + limit + ", place=" + place + ", event="
 				+ event + ", content=" + content + ", writeDate=" + writeDate + ", imageIdx=" + imageIdx + ", teamName="
-				+ teamName + ", hit=" + hit + ", nickname=" + nickname + "]";
+				+ teamName + ", hit=" + hit + ", nickname=" + nickname + ", logo=" + logo + "]";
 	}
+	
 	
 }

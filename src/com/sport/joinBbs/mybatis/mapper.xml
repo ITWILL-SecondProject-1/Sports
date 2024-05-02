@@ -92,6 +92,10 @@
 		INSERT INTO TEAM_SIGNUP (SIGNUP_IDX, TEAM_IDX, USERIDX, SIGNUP_CHECK, SIGNUP_DATE, CONTENT)
 		VALUES (SEQ_SIGNUP_IDX.NEXTVAL, #{teamIdx}, #{useridx}, #{signupCheck}, SYSDATE, #{content})
 	</insert>
+	
+	<select id="getTeamLogo" parameterType="int" resultType="string">
+		SELECT LOGO FROM TEAMS WHERE TEAM_IDX = #{teamIdx }
+	</select>
 			
 </mapper>
 
