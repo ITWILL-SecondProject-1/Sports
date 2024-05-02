@@ -60,7 +60,6 @@ public class JoinBbsController extends HttpServlet {
 		List<JoinBbsVO> joinList = JoinBbsDAO.getJoinBbsList(p.getBegin(),p.getEnd());
 		/**/System.out.println("    Paging  p : "+ p.toString());
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("UserVO");
-		/**/System.out.println("    useridx : "+loginUser.getUseridx());
 		if(loginUser != null) {
 			request.setAttribute("teams", TeamDAO.getMyTeamList(loginUser.getUseridx()));
 		}
