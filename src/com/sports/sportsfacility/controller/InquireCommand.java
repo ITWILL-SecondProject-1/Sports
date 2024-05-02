@@ -18,9 +18,8 @@ public class InquireCommand implements Command {
 	@Override
 	public String exec(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		FaVO faVO = FaDAO.inquireData(Integer.parseInt(req.getParameter("index")));
-		List<ImagesVO> imageList = ImagesDAO.imageList(faVO.getImageIdx());
 		req.setAttribute("FaVO", faVO);
-		req.setAttribute("imageList", imageList);
+		req.setAttribute("imagesList", ImagesDAO.imageList(faVO.getImageIdx()));
 		return "JSP/Facility/facility.jsp";
 	}
 
