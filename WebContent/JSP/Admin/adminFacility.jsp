@@ -8,7 +8,6 @@
 <title>관리자 페이지</title>
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <script>
-	@import "../node_modules/bootstrap/scss/bootstrap";
 </script>
 </head>
 <body>

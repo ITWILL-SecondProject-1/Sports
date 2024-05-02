@@ -10,11 +10,42 @@
 <title>관리자 페이지</title>
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <script>
+
 	//null 확인
-	
-	function go_addFacility(frm) {		
+	function go_addFacility(frm) {
+		var faName = document.getElementById('faName').value;
+		var address = document.getElementById('address').value;
+		var phone = document.getElementById('phone').value;
+		var capacity = document.getElementById('capacity').value;
+		var openTime = document.getElementById('openTime').value;
+		var closeTime = document.getElementById('closeTime').value;
+		
+		if (faName.length == 0) {
+			emptyFaNameAlert();
+			return false;
+		}
+		
+		if (address.length == 0) {
+			emptyAddressAlert();
+			return false;
+		}
+
+		if (phone.length == 0) {
+			emptyPhoneAlert();
+			return false;
+		}
+		
+		if (capacity.length == 0) {
+			emptyCapacityAlert();
+			return false;
+		}
+
+		if (openTime > closeTime) {
+			emptyTimeAlert();
+			return false;
+		}
+		
 		frm.action="addFacility";
-		alert(frm.faName.value);
 		frm.submit();
 	}
 	
@@ -22,6 +53,51 @@
 		window.history.back();
 	}
 	
+	function emptyFaNameAlert() {	
+		Swal.fire({
+		  icon: "error",
+		  title: "empty...",
+		  text: "시설 이름이 없습니다!",
+		  footer: '<span style="color:indianred">시설 이름을 입력해 주세요.</span>'
+		});
+	}
+
+	function emptyPhoneAlert() {	
+		Swal.fire({
+		  icon: "error",
+		  title: "empty...",
+		  text: "시설의 전화번호가 없습니다!",
+		  footer: '<span style="color:indianred">시설의 번호를 입력해 주세요.</span>'
+		});
+	}
+
+	function emptyAddressAlert() {	
+		Swal.fire({
+		  icon: "error",
+		  title: "empty...",
+		  text: "시설의 주소가 없습니다!",
+		  footer: '<span style="color:indianred">시설의 주소를 입력해 주세요.</span>'
+		});
+	}
+
+	function emptyCapacityAlert() {	
+		Swal.fire({
+		  icon: "error",
+		  title: "empty...",
+		  text: "시간당 이용가능 인원이 없습니다!!",
+		  footer: '<span style="color:indianred">시간당 이용가능 인원을 입력해 주세요.</span>'
+		});
+	}
+
+	function emptyTimeAlert() {	
+		Swal.fire({
+		  icon: "error",
+		  title: "time error...",
+		  text: "시간값이 정확하지 않습니다!",
+		  footer: '<span style="color:indianred">시간을 정확히 선택해주세요.</span>'
+		});
+	}
+
 	// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
 	$(document).ready(function() {
 	    $('.custom-file-input').on('change', function() {
@@ -38,6 +114,7 @@
 	        }
 	    });
 	});
+	
 </script>
 </head>
 <body>
@@ -198,6 +275,5 @@
    			</div>
 		</div>
      </main> 
-
 </body>
 </html>
