@@ -291,13 +291,27 @@
 								오픈
 								<select class="form-control time" name="openTime" id="openTime">
 								<c:forEach var="i" items="${timeList }">
-									<option value="${i }">${i }:00</option>
+									<c:choose>
+										<c:when test="${faVO.openTime == i }">
+											<option value="${i }" selected="selected">${i }:00</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${i }">${i }:00</option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 								</select>
 								 ~ 마감
 								<select class="form-control time" name="closeTime" id="closeTime">
 								<c:forEach var="i" items="${timeList }">
-									<option value="${i }">${i }:00</option>
+									<c:choose>
+										<c:when test="${faVO.closeTime == i }">
+											<option value="${i }" selected="selected">${i }:00</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${i }">${i }:00</option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 								</select>
 							</div>
