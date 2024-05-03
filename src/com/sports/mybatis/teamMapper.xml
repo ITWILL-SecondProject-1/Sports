@@ -75,16 +75,18 @@
 		SELECT T.*, S.* FROM TEAM_SIGNUP T,SPORT_USER S  WHERE T.USERIDX = S.USERIDX AND TEAM_IDX = #{teamIdx}
 	</select>
 	
-	<!-- 가입신청서 체크상태 업데이트 -->
-	<update id="updateTeamSignup" parameterType="com.sports.model.vo.TeamSignupVO">
-		UPDATE TEAM_SIGNUP
-		SET SIGNUP_CHECK = #{signupCheck}
-		WHERE SIGNUP_IDX = #{signupIdx }
-	</update>
+	<!-- 가입신청서 VO얻기 -->
+	<select id="getSignupVO" parameterType="String" resultType="com.sports.model.vo.TeamSignupVO">
+		SELECT * FROM TEAM_SIGNUP WHERE SIGNUP_IDX = #{signupIdx}
+	</select>
 	
 	<!-- 신청서 수락/거절 업데이트 -->
-	<update id="getOneSignup" parameterType="com.sports.model.vo.TeamSignupVO">
-		SELECT * FROM TEAM_SIGNUP WHERE SIGNUP_IDX = #{signupIdx}
+	<update id="updateTeamSignup" parameterType="com.sports.model.vo.TeamSignupVO">
+		UPDATE TEAM_SIGNUP 
+		SET SIGNUP_CHECK = #{signupCheck}
+		WHERE TEAM_IDX = #{teamIdx}
+		AND SIGNUP_CHECK = 'u'
+		AND USERIDX = #{useridx}
 	</update>
 </mapper>
 
