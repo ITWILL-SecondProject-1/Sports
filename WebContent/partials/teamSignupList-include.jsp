@@ -5,11 +5,11 @@
 
 	function accept(val) {
 		console.log("val : " + val);
-		location.href = "${signupAcceptUrl}?type=t&signupIdx="+val ;
+		location.href = "${signupAcceptUrl}?type=t&signupIdx="+val;
 	}
 	function decline(val) {
 		console.log("val : " + val);
-		location.href = "${signupAcceptUrl}?type=f&signupIdx="+val";
+		location.href = "${signupAcceptUrl}?type=f&signupIdx="+val;
 	}
 	
 </script>
