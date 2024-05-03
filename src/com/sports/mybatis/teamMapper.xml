@@ -83,9 +83,9 @@
 	</update>
 	
 	<!-- 신청서 수락/거절 업데이트 -->
-<!-- 	<update id="getOneSignup" parameterType="String" resultType="com.sports.model.vo.TeamSignupVO">
+	<update id="getOneSignup" parameterType="com.sports.model.vo.TeamSignupVO">
 		SELECT * FROM TEAM_SIGNUP WHERE SIGNUP_IDX = #{signupIdx}
-	</update> -->
+	</update>
 </mapper>
 
 
