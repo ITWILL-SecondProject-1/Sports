@@ -19,7 +19,6 @@
 	}
 	#sidebarMenu {
 		margin-top: 100px;
-		border: 1px solid black;
 	}
 	li .sidemenu {
 		border: 1px solid black;

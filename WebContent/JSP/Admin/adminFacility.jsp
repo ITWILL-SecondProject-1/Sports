@@ -19,7 +19,6 @@
 	}
 	#sidebarMenu {
 		margin-top: 100px;
-		border: 1px solid black;
 	}
 	li .sidemenu {
 		border: 1px solid black;
@@ -117,7 +116,7 @@
 						<c:forEach var="vo" items="${list }">
 							<tr>
 								<td>${vo.facilityIdx }</td>
-								<td>${vo.facilityName }</td>
+								<td><a href="facility?type=inquire&index=${vo.facilityIdx }">${vo.facilityName }</a></td>
 								<td>${vo.address }</td>
 								<td id="facilityButton">
 									<form method="post" class="m-1">
