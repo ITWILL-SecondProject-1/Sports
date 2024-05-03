@@ -204,7 +204,31 @@ $(document).ready(function() {
 
 </script>
 <div class="container" id="calender-container">
-		<div class="row mb-4">
+	<div class="row my-3 p-3">
+		<div class="col card">
+				<c:if test="${imagesList.isEmpty() == false}">
+					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
+						<div class="carousel-inner">
+							<c:forEach var="image" items="${imagesList}" varStatus="status">
+								<div class="carousel-item ${status.index == 0 ? 'active' : ''}" data-interval="10000">
+									<img src="${image.image}" class="d-block w-100">
+								</div>
+							</c:forEach>
+						</div>
+						<button class="carousel-control-prev" type="button" data-target="#ImagesListCarousel" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-target="#ImagesListCarousel" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</button>
+					</div>
+				<hr>
+				</c:if>
+		</div>
+	</div>
+		<div class="row mb-4 mt-4">
 			<div class="col-6 card" id="calender-card">
 				<div id='calendar' class="card-body"></div>
 			</div>
@@ -238,30 +262,6 @@ $(document).ready(function() {
 %>
 			</div>
 		</div>
-		<div class="row">
-		<div class="col card">
-				<c:if test="${imagesList.isEmpty() == false}">
-					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
-						<div class="carousel-inner">
-							<c:forEach var="image" items="${imagesList}" varStatus="status">
-								<div class="carousel-item ${status.index == 0 ? 'active' : ''}" data-interval="10000">
-									<img src="${image.image}" class="d-block w-100">
-								</div>
-							</c:forEach>
-						</div>
-						<button class="carousel-control-prev" type="button" data-target="#ImagesListCarousel" data-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</button>
-						<button class="carousel-control-next" type="button" data-target="#ImagesListCarousel" data-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</button>
-					</div>
-				<hr>
-				</c:if>
-		</div>
-	</div>
 </div>
 </body>
 </html>

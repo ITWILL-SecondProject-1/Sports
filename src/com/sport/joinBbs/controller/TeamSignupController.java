@@ -26,7 +26,7 @@ public class TeamSignupController extends HttpServlet {
 		- 응답파라메터 
 		
 		*/
-		String responseUrl = "join_bbs_view"; //응답url
+		String responseUrl = "join_bbs"; //응답url
 		//********************
 		
 		
@@ -43,7 +43,7 @@ public class TeamSignupController extends HttpServlet {
 			System.out.println("    신청서 입력완료");
 		};
 		
-		request.getRequestDispatcher(responseUrl).forward(request, response);
+		response.sendRedirect(responseUrl);
 	}
 
 

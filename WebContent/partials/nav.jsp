@@ -39,13 +39,14 @@
 						UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
 			    		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
 			    		pageContext.setAttribute("teamList", teamList);
+			    		boolean teamListCheck = teamList.isEmpty();
 					%>
 					
 					<ul class="dropdown-menu">
 						<c:forEach var="team" items="${teamList }">
 							<li><a class="dropdown-item text-secondary" href="../STP/teamBbs?teamIdx=${team.teamIdx }">${team.teamName }</a></li>
 						</c:forEach>
-						<c:if test="${teamList.size() } == 0">
+						<c:if test="<%=teamListCheck%>">
 							<li><a class="dropdown-item text-secondary" href="#">가입한 팀이 없습니다</a></li>
 						</c:if>
 					</ul>
@@ -71,17 +72,17 @@
 	} else {
 			String useridx = userVO.getUseridx();
 			pageContext.setAttribute("useridx", useridx);
-			String manager = userVO.getManager();
-			System.out.println(manager);
-			String master = "master";
+			pageContext.setAttribute("manager", userVO.getManager());
+
 %>
 			<a class="dropdown-item" href="/STP/userpage?email=<%=userVO.getEmail()%>">마이페이지</a>
 			<a class="dropdown-item" href="#">고객센터</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" href="/STP/logout">로그아웃</a>
-			<c:if test="${manager == master}">
+			<c:if test="${manager != null}">
 				<a class="dropdown-item" href="/STP/adminFacility">관리자페이지</a>
 			</c:if>
+
 <%
 	}
 %>

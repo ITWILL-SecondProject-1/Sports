@@ -31,6 +31,7 @@ public class JoinBbsController extends HttpServlet {
 		- 응답파라메터 
 		bbsServlet : 게시판 서블릿 url매핑
 		viewBbsServlet : 게시글작성 서블릿 url매핑
+		teamSignupUrl : 가입신청URL
 		p : 페이징 객체 Paging
 		list : 현재페이지 게시글 목록
 		teams : 로그인유저 가입팀목록
@@ -40,6 +41,7 @@ public class JoinBbsController extends HttpServlet {
 		String bbsUrl = "join_bbs"; //게시판 서블릿 url매핑
 		String viewBbsUrl = "join_bbs_view"; //게시글보기 서블릿 url매핑
 		String writeBbsUrl = "join_bbs_write"; //게시글보기 서블릿 url매핑
+		String teamSignupUrl = "sign_up_ok";
 		String responseUrl = "join_bbs/join_bbs.jsp"; //응답url
 		int numPerPage = 8; //페이지당 게시글수
 		int pagePerBlock = 5; //블럭당 페이지수
@@ -66,6 +68,7 @@ public class JoinBbsController extends HttpServlet {
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);
+		request.setAttribute("teamSignupUrl", teamSignupUrl);
 		request.setAttribute("p", p);
 		request.setAttribute("joinList", joinList);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
