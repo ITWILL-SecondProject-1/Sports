@@ -75,7 +75,6 @@ public class TeamBbsController extends HttpServlet {
 			return;
 		}
 		
-		
 		//페이징
 		int totalRecord = TeamBbsDAO.getTotalCount(teamIdx); //DB의 총 게시글 개수
 		Paging p = new Paging(numPerPage, pagePerBlock, totalRecord);

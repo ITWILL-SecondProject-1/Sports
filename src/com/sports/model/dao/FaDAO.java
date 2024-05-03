@@ -1,6 +1,8 @@
 package com.sports.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,6 +21,19 @@ public class FaDAO {
 			e.printStackTrace();
 		} 
 		return null;
+	}
+	
+	public static List<FaVO> getPagingList(int begin, int end){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			Map<String, Integer> map = new HashMap<>();
+			map.put("begin", begin);
+			map.put("end", end);
+			return ss.selectList("facility.getPagingList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 	
 	// 시설 한 개를 조회
