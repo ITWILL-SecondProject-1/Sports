@@ -1,9 +1,12 @@
 package com.sports.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+
+import com.sports.model.vo.FaVO;
 import com.sports.model.vo.ResVO;
 import com.sports.mybatis.DBService;
 
@@ -44,16 +47,17 @@ public class ResDAO {
         }
     }
 
-	// 예약 정보 가져오기 (마이페이지에서)
-    public static ResVO getReservation(int reserveIdx) {
-        try (SqlSession ss = DBService.getFactory().openSession()) {
-            return ss.selectOne("Res.selectReservation", reserveIdx); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
+    //모든 예약을 조회
+    public static List<ResVO> getList(int userIdx) {
+		try (SqlSession ss = DBService.getFactory().openSession()) {
+			return ss.selectList("Res.selectReservation", userIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
+	}
+    
     // 예약 수정하기 (마이페이지에서 구현?)
     public static boolean editReservation(ResVO reservation) {
         try (SqlSession ss = DBService.getFactory().openSession()) {
@@ -67,14 +71,24 @@ public class ResDAO {
     }
 
     // 예약 취소하기 (예약 삭제 마페)
-    public static boolean cancelReservation(int reserveIdx) {
-        try (SqlSession ss = DBService.getFactory().openSession()) {
-            int result = ss.delete("Res.deleteReservation", reserveIdx); 
-            ss.commit();
-            return result > 0;
+    public static boolean deleteReservation(int reserveIdx) {
+        SqlSession session = null;
+        try {
+            session = DBService.getFactory().openSession();
+            int affectedRows = session.delete("Res.deleteReservationById", reserveIdx);
+            session.commit();
+            return affectedRows > 0;  // 삭제된 행이 있다면 true 반환
         } catch (Exception e) {
+            if (session != null) {
+                session.rollback();  // 오류 발생 시 롤백
+            }
             e.printStackTrace();
-            return false;
+            return false; 
+        } finally {
+            if (session != null) {
+                session.close(); // 세션 닫기
+            }
         }
     }
+
 }
