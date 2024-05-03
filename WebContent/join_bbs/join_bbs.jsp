@@ -56,17 +56,31 @@
 	
 	$(document).ready(function() {
 	    $('.join-card').click(function() {
-	        // 카드의 정보 가져오기
-	        var teamName = $(this).find('.card-title').text();
+	        // 값 추출
+     	    var teamName = $(this).find('.card-title').text();
 	        var subject = $(this).find('.card-text').first().text();
 	        var writerEmail = $(this).find('.text-muted').first().text();
 	        var writeDate = $(this).find('.card-footer .text-muted').text();
+	        var teamIdx = $(this).find('input[name="join-card-teamIdx"]').val();
+	        var content = $(this).find('input[name="join-card-content"]').val();
+	        var event = $(this).find('input[name="join-card-event"]').val();
+	        var place = $(this).find('input[name="join-card-place"]').val();
+	        var memberMax = $(this).find('input[name="join-card-memberMax"]').val();
+	        var time = $(this).find('input[name="join-card-time"]').val();
+	        var limit = $(this).find('input[name="join-card-limit"]').val();
 
 	        // 모달에 정보 설정
 	        $('#modalTitle').text(teamName);
 	        $('#modalSubject').text(subject);
 	        $('#modalEmail').text(writerEmail);
 	        $('#modalDate').text(writeDate);
+	        $('#modalTeamIdx').val(teamIdx);
+	        if (content && content != 'null') $('#modalContent').text("내용: " + content);
+	        if (event && event != 'null') $('#modalEvent').text("종목: " + event);
+	        if (place && place != 'null') $('#modalPlace').text("장소: " + place);
+	        if (memberMax && memberMax != 'null') $('#modalMemberMax').text("모집인원: " + memberMax);
+	        if (time && time != 'null') $('#modalTime').text("시간: " + time);
+	        if (limit && limit != 'null') $('#modalLimit').text("자격조건: " + limit);
 
 	        // 모달 표시
 	        $('#infoModal').modal('show');
@@ -76,6 +90,11 @@
 	    	$('#infoModal').modal('hide');
 		});
 	});
+	    
+	function application() {
+		var teamIdx = $('#modalTeamIdx').val();
+		alert('추후구현' + teamIdx);
+	}
 	
 </script>
 </head>
@@ -121,7 +140,7 @@
 		<div class="card-deck d-flex justify-content-center my-3 position-relative">
 			<c:forEach var="joinVO" items="${joinList}">
 				<div>
-					<div class="card border-secondary shadow mb-3 join-card" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 480px;">
+					<div class="card border-secondary shadow mb-3 join-card" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 480px; height:190px;">
 						<div class="row no-gutters">
 							<div class="col-md-4 border">
 								<div class="square-image">
@@ -141,6 +160,13 @@
 								</div>
 							</div>
 						</div>
+						<input type="hidden" name="join-card-content" value="${joinVO.content }" class="join-card-content">
+						<input type="hidden" name="join-card-event" value="${joinVO.event }" class="join-card-event">
+						<input type="hidden" name="join-card-place" value="${joinVO.place }" class="join-card-place">
+						<input type="hidden" name="join-card-memberMax" value="${joinVO.memberMax }" class="join-card-memberMax">
+						<input type="hidden" name="join-card-time" value="${joinVO.time }" class="join-card-time">
+						<input type="hidden" name="join-card-limit" value="${joinVO.limit }" class="join-card-limit">
+						<input type="hidden" name="join-card-teamIdx" value="${joinVO.teamIdx }" class="join-card-teamIdx">
 					</div>
 				</div>
 			</c:forEach>
@@ -179,7 +205,6 @@
 			</ul>
 		</nav>
 	</div>
-
 	<!-- Modal -->
 	<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -195,8 +220,16 @@
 	        <p id="modalSubject"></p>
 	        <p id="modalEmail"></p>
 	        <p id="modalDate"></p>
+	        <p id="modalContent"></p>
+	        <p id="modalEvent"></p>
+	        <p id="modalPlace"></p>
+	        <p id="modalMemberMax"></p>
+	        <p id="modalTime"></p>
+	        <p id="modalLimit"></p>
+	        <input type="hidden" id="modalTeamIdx">
 	      </div>
 	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" onclick="application()">신청하기</button>
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close2">닫기</button>
 	      </div>
 	    </div>

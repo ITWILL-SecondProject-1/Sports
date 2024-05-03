@@ -51,6 +51,9 @@
 	#facilityButton {
 		text-align: center;
 	}
+	.facility-add-button {
+    	text-align: right;
+	}
 </style>
 <div class="container">
   <div class="row">
@@ -98,7 +101,9 @@
     				<div class="card-header">
 						<h2>시설관리</h2>
 					</div>
-    				<button onclick="location.href='addFacility'" class="btn btn-secondary right-box" id="writeButton">시설추가</button ><br>	    	
+					<div class="m-3 facility-add-button">
+	    				<button onclick="location.href='addFacility'" class="btn btn-primary right-box" id="writeButton">시설추가</button ><br>	    	
+					</div>
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -116,7 +121,7 @@
 								<td>${vo.address }</td>
 								<td id="facilityButton">
 									<form method="post" class="m-1">
-										<input type="button" class="btn btn-danger" onclick="updateFacility(this.form)" value="수정">
+										<input type="button" class="btn btn-warning" onclick="updateFacility(this.form)" value="수정">
 										<input type="hidden" name="facilityIdx" value="${vo.facilityIdx }">
 									</form>
 									<form method="post" class="m-1">

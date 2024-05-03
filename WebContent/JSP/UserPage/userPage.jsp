@@ -87,7 +87,7 @@
 			    		pageContext.setAttribute("teamList", teamList);
 					%>
 						<c:forEach var="team" items="${teamList }">
-							<div class="row border">${team.teamName }</div>
+							<div class="row border m-1 p-2">${team.teamName }</div>
 						</c:forEach>
 						<c:if test="${teamList.size() } == 0">
 							<div class="row border">가입한 팀이 없습니다</div>

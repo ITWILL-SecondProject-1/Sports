@@ -18,10 +18,11 @@
 		var address = document.getElementById('address').value;
 		var phone = document.getElementById('phone').value;
 		var capacity = document.getElementById('capacity').value;
-		var openTime = document.getElementById('openTime').value;
-		var closeTime = document.getElementById('closeTime').value;
+		var openTime = parseInt(document.getElementById('openTime').value, 10);
+		var closeTime = parseInt(document.getElementById('closeTime').value, 10);
 		console.log(openTime);
 		console.log(closeTime);
+		console.log(openTime > closeTime);
 		
 		if (faName.length == 0) {
 			emptyFaNameAlert();
@@ -43,7 +44,7 @@
 			return false;
 		}
 
-		if (openTime >= closeTime) {
+		if (openTime > closeTime) {
 			emptyTimeAlert();
 			return false;
 		}
@@ -300,8 +301,8 @@
 						</div>
 						
 						<div></div>
-						<input type="button" class="btn btn-secondary" value="작성하기" onclick="go_addFacility(this.form)">
-						<input type="button" class="btn btn-secondary" value="취소" onclick="go_back()">
+						<input type="button" class="btn btn-primary" value="작성하기" onclick="go_addFacility(this.form)">
+						<input type="button" class="btn btn-danger" value="취소" onclick="go_back()">
 					</form>
     			</div>
    			</div>

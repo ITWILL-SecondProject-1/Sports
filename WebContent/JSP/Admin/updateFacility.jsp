@@ -20,8 +20,8 @@
 		var address = document.getElementById('address').value;
 		var phone = document.getElementById('phone').value;
 		var capacity = document.getElementById('capacity').value;
-		var openTime = document.getElementById('openTime').value;
-		var closeTime = document.getElementById('closeTime').value;
+		var openTime = parseInt(document.getElementById('openTime').value, 10);
+		var closeTime = parseInt(document.getElementById('closeTime').value, 10);
 		console.log(openTime);
 		console.log(closeTime);
 		
@@ -121,6 +121,22 @@
 	});
 	
 </script>
+<style>
+	.popover {
+	    max-width: 500px !important; /* 팝오버 최대 너비 설정 */
+	}
+	
+	.popover .popover-body {
+	    max-height: 500px; /* 팝오버 내부 내용의 최대 높이 설정 */
+	    overflow: auto; /* 필요 시 스크롤바 표시 */
+	}
+	.popover-body img {
+		    width: 100%; /* 너비를 컨테이너에 맞춤 */
+		    height: 480px; /* 높이를 고정 */
+		    object-fit: contain; /* 이미지를 컨테이너 내에 맞추어 전체가 보이게 함 */
+		    margin: auto; /* 중앙 정렬을 위해 사용 */
+	}
+</style>
 </head>
 <body>
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
@@ -272,31 +288,16 @@
 						</div>
 						<div class="mb-3">
 							<div>
-								<label for="openTime" class="form-label">오픈</label><br>
+								오픈
 								<select class="form-control time" name="openTime" id="openTime">
 								<c:forEach var="i" items="${timeList }">
-									<c:choose>
-										<c:when test="${faVO.openTime == i }">
-											<option value="${i }" selected="selected">${i }:00</option>
-										</c:when>
-										<c:otherwise>
-											<option value="${i }">${i }:00</option>
-										</c:otherwise>
-									</c:choose>
+									<option value="${i }">${i }:00</option>
 								</c:forEach>
 								</select>
-								 ~ 
-								<label for="closeTime" class="form-label">마감</label><br>
+								 ~ 마감
 								<select class="form-control time" name="closeTime" id="closeTime">
 								<c:forEach var="i" items="${timeList }">
-									<c:choose>
-										<c:when test="${faVO.closeTime == i }">
-											<option value="${i }" selected="selected">${i }:00</option>
-										</c:when>
-										<c:otherwise>
-											<option value="${i }">${i }:00</option>
-										</c:otherwise>
-									</c:choose>
+									<option value="${i }">${i }:00</option>
 								</c:forEach>
 								</select>
 							</div>

@@ -4,25 +4,25 @@ import com.sport.joinBbs.dao.JoinBbsDAO;
 import com.sports.model.dao.UserDAO;
 
 public class JoinBbsVO {
-	private String bbsIdx; //게시글 고유번호
-	private String useridx; //작성자
-	private String teamIdx; //모집팀id
-	private String subject; //제목
-	private String time; //모집시간
-	private String memberMax; //모집인원
+	private String bbsIdx; //게시글 고유번호 
+	private String useridx; //작성자 
+	private String teamIdx; //모집팀id 
+	private String subject; //제목 
+	private String time; //모집시간 
+	private String memberMax; //모집인원 
 	private String limit; //모집조건
 	private String place; //모집장소
 	private String event; //운동종목
 	private String content; //글내용
-	private String writeDate; //작성일
-	private String imageIdx; //이미지 첨부파일
-	private String teamName; //팀명
+	private String writeDate; //작성일 
+	private String imageIdx; //이미지 첨부파일 
+	private String teamName; //팀명 
 	private String hit = "0"; //조회수
 	
 	private String nickname; //작성자 닉네임
 	
 	// 자동생성 항목
-	private String logo; // 로고 이미지 주소
+	private String logo; // 로고 이미지 주소 
 	private String writerEmail;
 	
 	public String getBbsIdx() {

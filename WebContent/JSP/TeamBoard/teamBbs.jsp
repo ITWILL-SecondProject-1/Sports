@@ -10,7 +10,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>팀 구하기!</title>
 <style>
 #teamLogo {
 	height: 300px;
