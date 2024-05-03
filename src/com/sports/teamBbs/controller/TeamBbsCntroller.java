@@ -19,7 +19,7 @@ import Paging.Paging;
 
 
 @WebServlet("/teamBbs")
-public class TeamBbsController extends HttpServlet {
+public class TeamBbsCntroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
