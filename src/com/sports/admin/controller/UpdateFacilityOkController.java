@@ -58,7 +58,7 @@ public class UpdateFacilityOkController extends HttpServlet {
 		faVO.setCloseTime((int)Integer.parseInt(request.getParameter("closeTime")));
 		faVO.setDateRangeForReservation((int)Integer.parseInt(request.getParameter("DateRangeForReservation")));
 		
-		System.out.println(FaDAO.updateFacility(faVO));
+		response.sendRedirect("adminFacility");
 		
 	}
 
