@@ -36,10 +36,6 @@
 		location.href = "${writeBbsUrl }";
 	}
 
-	function accept(val) {
-		console.log("val : " + val);
-		location.href = "${signupAccept }";
-	}
 </script>
 </head>
 <body>

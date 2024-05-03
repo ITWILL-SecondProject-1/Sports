@@ -32,9 +32,10 @@ public class TeamBbsCntroller extends HttpServlet {
 		teamIdx : 팀인덱스
 		
 		- 응답파라메터 
+		bbsUrl : 게시판 컨트롤러
+		viewBbsUrl : 게시글작성 컨트롤러
+		signupUrl : 팀 가입신청 수락/거절 컨트롤러
 		teamVo : 팀Vo
-		bbsUrl : 게시판 서블릿 url매핑
-		viewBbsUrl : 게시글작성 서블릿 url매핑
 		p : 페이징 객체 Paging
 		memberList : 팀가입맴버 리스트
 		signupList : 팀신청서 리스트
@@ -45,11 +46,12 @@ public class TeamBbsCntroller extends HttpServlet {
 		String bbsUrl = "teamBbs";
 		String viewBbsUrl = "teamBbsview";
 		String writeBbsUrl = "teamBbsWrite";
-		String responseUrl = "JSP/TeamBoard/teamBbs.jsp";
+		String signupAcceptUrl = "teamSignupAccept";
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("UserVO");
 		String teamIdx = request.getParameter("teamIdx");
 		int numPerPage = 10; //페이지당 게시글수
 		int pagePerBlock = 5; //블럭당 페이지수
+		String responseUrl = "JSP/TeamBoard/teamBbs.jsp";
 	
 		/**/System.out.println(">>teamBbs");
 		/**/System.out.println("    teamIdx : " + teamIdx);
@@ -99,6 +101,7 @@ public class TeamBbsCntroller extends HttpServlet {
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
 		request.setAttribute("writeBbsUrl", writeBbsUrl);
+		request.setAttribute("signupAcceptUrl", signupAcceptUrl);
 		request.setAttribute("teamVo", TeamDAO.getOneTeam(teamIdx));
 		/**/System.out.println("    teamVo : " + TeamDAO.getOneTeam(teamIdx));
 		request.setAttribute("p", p);

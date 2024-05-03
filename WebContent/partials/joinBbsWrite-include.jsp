@@ -25,6 +25,7 @@
 			ele.disabled = true;
 			ele.value = " ";
 		}
+		document.getElementById("logo").disabled = true;
 		writeButton.disabled = true;
 	};
 	
@@ -38,6 +39,7 @@
 				ele.disabled = true;
 				ele.value = " ";
 			}
+			document.getElementById("logo").disabled = true;
 			writeButton.disabled = true;
 			break;
 		//새팀
@@ -46,6 +48,7 @@
 				ele.disabled = false;
 				ele.value = null;
 			}
+			document.getElementById("logo").disabled = false;
 			writeButton.disabled = false;
 			break;
 		//기존팀선택, value : teamIdx
@@ -54,6 +57,7 @@
 				ele.disabled = false;
 				ele.value = "-";
 			}
+			document.getElementById("logo").disabled = true;
 			writeButton.disabled = false;
 			//기존모집글 내용 출력해줌
 			printForm(val);
@@ -83,7 +87,7 @@
 	
 	// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
 	$(document).ready(function() {
-	    $('#images-carousel').on('change', function() {
+	    $('#logo').on('change', function() {
 	        // 선택된 파일 개수
 	        var filesCount = $(this).get(0).files.length;
 
@@ -189,7 +193,7 @@
 				<span class="input-group-text">Upload</span>
 			</div>
 			<div class="custom-file">
-				<input type="file" class="custom-file-input" id="images-carousel" name="images-carousel" aria-describedby="images-carousel">
+				<input type="file" class="custom-file-input form-control" id="logo" name="logo" aria-describedby="images-carousel">
 				<label class="custom-file-label" for="images-carousel">Choose file</label>
 			</div>
 		</div>

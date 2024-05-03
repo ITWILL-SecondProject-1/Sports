@@ -44,7 +44,7 @@ public class GetJsonJoinBbsController extends HttpServlet {
 		result.append("{\"key\":\"nickname\",\"value\":\""+ vo.getNickname() + "\"},");
 		result.append("{\"key\":\"hit\",\"value\":\""+ vo.getHit() + "\"},");
 		result.append("{\"key\":\"bbsIdx\",\"value\":\""+ vo.getBbsIdx() + "\"},");
-		result.append("{\"key\":\"bbsIdx\",\"value\":\""+ vo.getBbsIdx() + "\"}]");
+		result.append("{\"key\":\"logo\",\"value\":\""+ vo.getLogo() + "\"}]");
 		
 		
 		/*
