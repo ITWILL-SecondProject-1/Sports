@@ -20,10 +20,7 @@ public class DeleteFacilityController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int facilityIdx = Integer.parseInt(request.getParameter("facilityIdx"));
-		FaDAO.deleteFacility(facilityIdx);
 		
-		response.sendRedirect("adminFacility");
 	}
 
 }
