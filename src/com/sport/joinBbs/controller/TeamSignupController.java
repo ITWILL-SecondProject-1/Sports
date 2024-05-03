@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sport.joinBbs.dao.TeamDAO;
-import com.sport.joinBbs.vo.TeamSignupVO;
+import com.sports.model.vo.TeamSignupVO;
 import com.sports.model.vo.UserVO;
 
 @WebServlet("/sign_up_ok")

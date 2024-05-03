@@ -88,7 +88,7 @@
 		WHERE TEAM_IDX = #{teamIdx }
 	</update>
 	
-	<insert id="signupInsert" parameterType="com.sport.joinBbs.vo.TeamSignupVO">
+	<insert id="signupInsert" parameterType="com.sports.model.vo.TeamSignupVO">
 		INSERT INTO TEAM_SIGNUP (SIGNUP_IDX, TEAM_IDX, USERIDX, SIGNUP_CHECK, SIGNUP_DATE, CONTENT)
 		VALUES (SEQ_SIGNUP_IDX.NEXTVAL, #{teamIdx}, #{useridx}, #{signupCheck}, SYSDATE, #{content})
 	</insert>
