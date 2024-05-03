@@ -34,21 +34,6 @@ public class ResController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        
-        int reserveIdx = Integer.parseInt(request.getParameter("id"));
-        ResVO reservation = ResDAO.getReservation(reserveIdx);
-
-        if (reservation != null) {
-            response.getWriter().write(gson.toJson(reservation));
-        } else {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            response.getWriter().write(gson.toJson(new MessageResponse("예약이 없습니다")));
-        }
-    }
-
-    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
 
@@ -64,20 +49,7 @@ public class ResController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-
-        int reserveIdx = Integer.parseInt(request.getParameter("id"));
-        boolean result = ResDAO.cancelReservation(reserveIdx);
-
-        if (result) {
-            response.getWriter().write(gson.toJson(new MessageResponse("예약 취소 완료")));
-        } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write(gson.toJson(new MessageResponse("예약 취소 실패")));
-        }
-    }
+    
 
     private class MessageResponse {
         private String message;

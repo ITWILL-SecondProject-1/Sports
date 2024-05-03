@@ -17,6 +17,12 @@
 		WHERE FACILITY_IDX = ${facilityIdx} 
 	</select>
 	
+	<!-- 예약목록에서 시설 아이디로 시설 이름 가져오기 -->
+	<select id="selectFacilityNameById" parameterType="int" resultType="String">
+    SELECT FACILITY_NAME FROM FACILITY WHERE FACILITY_IDX = #{facilityIdx}
+	</select>
+	
+	
 	<!-- 해당 날짜에 대한 시설의 예약 상태 조회 -->
 	<select id="getReserveData" parameterType="FaReserveVO" resultType="ReservationSummaryVO">
 		SELECT
