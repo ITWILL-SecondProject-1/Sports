@@ -131,7 +131,7 @@
 			<%-- 화면오른쪽 --%>
 			<div class="col-2">
 				<!-- 모집글&가입신청 표시 -->
-				<%@include file="../../partials/teamMemberList-include.jsp"%>
+				<%@include file="../../partials/teamSignupList-include.jsp"%>
 			</div>
 		</div>
 	</div>

@@ -75,6 +75,7 @@
 	        $('#modalEmail').text(writerEmail);
 	        $('#modalDate').text(writeDate);
 	        $('#modalTeamIdx').val(teamIdx);
+	        $('#signupTeamIdx').val(teamIdx);
 	        if (content && content != 'null') $('#modalContent').text("내용: " + content);
 	        if (event && event != 'null') $('#modalEvent').text("종목: " + event);
 	        if (place && place != 'null') $('#modalPlace').text("장소: " + place);
@@ -96,6 +97,11 @@
 		alert('추후구현' + teamIdx);
 	}
 	
+	function teamSignup(frm){
+		alert("가입신청");
+		frm.action="${teamSignupUrl }";
+		frm.submit();
+	}
 </script>
 </head>
 <body>
@@ -229,7 +235,22 @@
 	        <input type="hidden" id="modalTeamIdx">
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary" onclick="application()">신청하기</button>
+	      	<!-- <button type="button" class="btn btn-primary" onclick="application()">신청하기</button> -->
+	      	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp"
+						aria-expanded="false" aria-controls="collapseExample">가입신청
+			</button>
+	        <div class="collapse" id="showSignUp">
+				<div class="card card-body">
+				  	<form method="post">
+				        <label for="exampleFormControlTextarea1" class="form-label">가입신청 (팀 : ${vo.teamName })</label>
+				        <textarea class="form-control" id="r_content" name="content" rows="4" cols="80" placeholder="신청내용을 적어보세요. 신청서는 팀장에게 전달됩니다"></textarea>
+				        <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
+				        <input id="signupTeamIdx" type="hidden" name="teamIdx" value="${vo.teamIdx }">
+				        <input type="hidden" name="cPage" value="${cPage }" >
+				        <input id="btnCommentWrite" type="submit" class="btn btn-primary" value="신청" onclick="teamSignup(this.form)">
+				    </form>
+				 </div>
+			</div><%-- 가입신청 토글 끝 --%>
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close2">닫기</button>
 	      </div>
 	    </div>
