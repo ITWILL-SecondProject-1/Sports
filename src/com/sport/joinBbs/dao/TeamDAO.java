@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.sport.joinBbs.mybatis.DBService;
-import com.sport.joinBbs.vo.TeamSignupVO;
 import com.sport.joinBbs.vo.TeamVO;
+import com.sports.model.vo.TeamSignupVO;
 
 public class TeamDAO {
 	public static String getnewTeamIdx(){
@@ -72,4 +72,24 @@ public class TeamDAO {
 		}
 		return -1;
 	}
+	
+	public static TeamSignupVO getSignupVO(String signupIdx) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.selectOne("teamMapper.getSignupVO",signupIdx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static int updateTeamSignup(TeamSignupVO signupVo) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.insert("teamMapper.updateTeamSignup",signupVo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	
 }

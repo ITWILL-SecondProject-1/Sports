@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+
+	function accept(val) {
+		console.log("val : " + val);
+		location.href = "${signupAcceptUrl}?type=t&signupIdx="+val;
+	}
+	function decline(val) {
+		console.log("val : " + val);
+		location.href = "${signupAcceptUrl}?type=f&signupIdx="+val;
+	}
+	
+</script>
 <div class="accordion position-fixed" id="accordionExample2">
 				
 					<div class="card">
@@ -27,7 +39,6 @@
 									신청서</button>
 							</h2>
 						</div>
-
 						<div id="collapseOne" class="collapse show"
 							aria-labelledby="headingOne">
 							<c:forEach var="row" items="${signupList}">
@@ -44,14 +55,18 @@
 									</div>
 									<div class="card-body">
 									<p class="card-text">${row.content}</p>
+									<button onclick="accept('${row.signupIdx}')" class="btn btn-primary right-box">수락</button>
+									<button onclick="decline('${row.signupIdx}')" class="btn btn-danger right-box">거절</button>
+										<!-- 
 										<form>
-											<input type="hidden" name="signupIdx"
-												value="{row.signupIdx }"> <input type="button"
-												onclick="accept(this.form)"
-												class="btn btn-primary right-box" value="수락"> <input
+											<input type="hidden" name="signupIdx" value="{row.signupIdx }"> 
+											<input type="button" onclick="accept(this.form)"
+												class="btn btn-primary right-box" value="수락"> 
+											<input
 												type="button" onclick="decline(this.form)"
 												class="btn btn-danger right-box" value="거절">
-										</form>
+										</form> 
+										-->
 									</div>
 								</div>
 							</c:if>

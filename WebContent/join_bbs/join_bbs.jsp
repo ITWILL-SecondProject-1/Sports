@@ -1,3 +1,4 @@
+<%@page import="java.util.HashSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
@@ -42,7 +43,7 @@
 		location.href = "${writeBbsUrl }";
 	}
 	
-/* 	function writeBbs(frm){
+	function writeBbs(frm){
 		console.log(frm);
 		console.log(frm.subject.value);
 		if (frm.subject == null) {
@@ -52,9 +53,11 @@
   			frm.action = "join_bbs_write_ok";
 			frm.submit(); 
 		}
-	} */
-	
+	}
+
 	$(document).ready(function() {
+		console.log("${teams}");
+		console.log("${teamIdxList}");
 	    $('.join-card').click(function() {
 	        // 값 추출
      	    var teamName = $(this).find('.card-title').text();
@@ -83,6 +86,9 @@
 	        if (time && time != 'null') $('#modalTime').text("시간: " + time);
 	        if (limit && limit != 'null') $('#modalLimit').text("자격조건: " + limit);
 
+	        //가입신청버튼 활성/비활성
+	       /* signupBtnAction(); */
+	        
 	        // 모달 표시
 	        $('#infoModal').modal('show');
 	    });
@@ -101,6 +107,13 @@
 		alert("가입신청");
 		frm.action="${teamSignupUrl }";
 		frm.submit();
+	}
+	
+	function signupBtnAction(){
+	 let btnTeamSignup = $("#btnTeamSignup");
+        if(${not empty UserVO}){ //로그인
+    		btnTeamSignup.disabled = fales; //가입팀이 아니면 활성
+        } 
 	}
 </script>
 </head>
@@ -237,7 +250,7 @@
 	      <div class="modal-footer">
 	      	<!-- <button type="button" class="btn btn-primary" onclick="application()">신청하기</button> -->
 	      	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp"
-						aria-expanded="false" aria-controls="collapseExample">가입신청
+						aria-expanded="false" aria-controls="collapseExample" disabled>가입신청
 			</button>
 	        <div class="collapse" id="showSignUp">
 				<div class="card card-body">
@@ -247,7 +260,7 @@
 				        <input type="hidden" name="bbsIdx" value="${vo.bbsIdx }">
 				        <input id="signupTeamIdx" type="hidden" name="teamIdx" value="${vo.teamIdx }">
 				        <input type="hidden" name="cPage" value="${cPage }" >
-				        <input id="btnCommentWrite" type="submit" class="btn btn-primary" value="신청" onclick="teamSignup(this.form)">
+				        <input id="btnTeamSignup" type="submit" class="btn btn-primary" value="신청" onclick="teamSignup(this.form)">
 				    </form>
 				 </div>
 			</div><%-- 가입신청 토글 끝 --%>

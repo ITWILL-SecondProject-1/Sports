@@ -10,7 +10,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>팀 구하기!</title>
+<title>팀 게시판!</title>
 <style>
 #teamLogo {
 	height: 300px;
@@ -19,7 +19,10 @@
 }
 
 #logo-img {
-	height: 300px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 10px;
 }
 #writer-info-profile-img {
 	display: inline-block;
@@ -28,44 +31,32 @@
 	border-radius: 50%;
 	margin-right: 10px;
 }
-
-
 </style>
 <script>
 	function goWrite() {
 		location.href = "${writeBbsUrl }";
 	}
 
-	function accept(val) {
-		console.log("val : " + val);
-		location.href = "${signupAccept }";
-	}
 </script>
 </head>
 <body>
 	<jsp:include page='../../partials/commonbody.jsp' flush="false" />
 
-	<div class="container">
-		<div class="row justify-content-md-center">
+	<div class="container-fluid">
+		<div class="row">
 			<!-- 화면왼쪽 -->
 			<div class="col-2">
 				<%-- 가입맴버 표시 --%>
 				<%@include file="../../partials/teamMemberList-include.jsp"%>
 			</div>
 			<%-- 화면중앙 --%>
-			<div class="col-8" id="b">
-				<%-- 팀사진 --%>
-				<div class="row" id="teamLogo">
-					<div class="col-8 mx-auto d-block" id="teamLogo2">
-						<img src="${teamVo.logo }" alt="profile-image" id="logo-img">
-					</div>
-				</div>
-
-				<h3>팀게시판</h3>
+			<div class="col-7" id="b">
+				<h3><img src="${teamVo.logo }" alt="profile-image" id="logo-img"> ${teamVo.teamName }게시판</h3>
 				<%-- 팀글 목록 --%>
 				<div class="row border">
-					<button onclick="goWrite()" class="btn btn-danger right-box">글작성하기</button>
-					<br>
+					<button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#writeTeamBoard">
+						모집글 작성하기
+					</button>				
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -129,11 +120,93 @@
 			<%-- 중앙박스 끝 --%>
 
 			<%-- 화면오른쪽 --%>
-			<div class="col-2">
+			<div class="col-3" id="teamSignUpDiv">
 				<!-- 모집글&가입신청 표시 -->
 				<%@include file="../../partials/teamSignupList-include.jsp"%>
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="teamBoardModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalSubject"></h5>
+	        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="close1">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      	
+	      </div>
+	      <div class="modal-body">
+	        <p id="modalEmail"></p>
+	        <p id="modalDate"></p>
+	        <p id="modalContent"></p>
+	        <p id="modalTime"></p>
+	        <input type="hidden" id="modalTeamIdx">
+	      </div>
+	      <div class="modal-footer">
+	      	<!-- <button type="button" class="btn btn-primary" onclick="application()">신청하기</button> -->
+	      	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp"
+						aria-expanded="false" aria-controls="collapseExample">가입신청
+			</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close2">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- 팀 보드 작성시 나오는 모달 -->
+	<div class="modal fade" id="writeTeamBoard" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="writeTeamBoardLabel">${teamVo.teamName } 게시글 작성</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Form -->
+					<form>
+						<div class="form-group">
+							<label for="post-title">제목</label> 
+							<input type="text" class="form-control" id="post-title" placeholder="제목을 입력하세요" required>
+						</div>
+						<div class="form-group">
+							<label for="post-content">내용</label>
+							<textarea class="form-control" id="post-content" rows="7" placeholder="내용을 입력하세요" required></textarea>
+						</div>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="post-images" name="post-images" aria-describedby="post-images" multiple>
+							<label class="custom-file-label" for="post-images">Choose file</label>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">글 작성</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+<script>
+// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
+$(document).ready(function() {
+    $('#post-images').on('change', function() {
+        // 선택된 파일 개수
+        var filesCount = $(this).get(0).files.length;
+
+        if (filesCount === 1) {
+            // 단일 파일 선택 시, 파일 이름을 표시
+            var fileName = $(this).val().split('\\').pop();
+            $(this).siblings('.custom-file-label').text(fileName);
+        } else {
+            // 여러 파일 선택 시, 파일 개수를 표시
+            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
+        }
+    });
+});
+</script>
 </html>

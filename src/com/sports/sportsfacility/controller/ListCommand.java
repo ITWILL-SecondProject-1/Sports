@@ -17,7 +17,8 @@ public class ListCommand implements Command {
 
 	@Override
 	public String exec(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-			List<FaVO> list = FaDAO.getList();
+		
+		List<FaVO> list = FaDAO.getList();
 			req.setAttribute("list", list);
 		return "JSP/Facility/facilityList.jsp";
 	}

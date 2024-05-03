@@ -1,7 +1,11 @@
 package com.sports.model.vo;
 
-public class TeamMemberVO {
+public class TeamMemberVO extends UserVO{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String teamIdx;
 	private String useridx;
 	private String joinDate;

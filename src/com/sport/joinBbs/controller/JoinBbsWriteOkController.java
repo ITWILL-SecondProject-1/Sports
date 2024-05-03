@@ -50,6 +50,7 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		memberMax
 		limit
 		content
+		logo
 		
 		- 응답 파라메터
 		bbsIdx : 작성글idx, 작성 후 글보기창 이동
@@ -85,16 +86,17 @@ public class JoinBbsWriteOkController extends HttpServlet {
 		vo.setContent(request.getParameter("content"));
 		vo.setTeamName(request.getParameter("teamName"));
 		
-		//이미지 처리
-		Part filePart = request.getPart("images-carousel");
-        if (filePart.getSize() != 0) {
-            // 파일을 Cloudinary에 업로드
-        	Map<String, String> resultMap = imgUpload.uploadImage(filePart);
-            imageUrl = resultMap.get("url");
-            imagePI = resultMap.get("public_id");
-        }
 		
-		if(selectTeam.equals("newTeam")) {
+		if(selectTeam.equals("newTeam")) { //새팀생성
+			//이미지 처리
+			Part filePart = request.getPart("logo");
+			if (filePart.getSize() != 0) {
+				// 파일을 Cloudinary에 업로드
+				Map<String, String> resultMap = imgUpload.uploadImage(filePart);
+				imageUrl = resultMap.get("url");
+				imagePI = resultMap.get("public_id");
+			}
+			
 			//새팀생성일 경우 팀insert
 			TeamVO teamVo = new TeamVO();
 			String teamIdx = TeamDAO.getnewTeamIdx();
@@ -119,14 +121,15 @@ public class JoinBbsWriteOkController extends HttpServlet {
 				System.out.println("    맴버인서트 성공");
 			}
 			
-		} else {
+		} else { //기존팀 
 			//기존팀 모집글경우 팀update
+			vo.setTeamIdx(selectTeam);
 			TeamVO teamVo = new TeamVO();
 			teamVo.setLogo(bbsIdx);
 			teamVo.setTeamIdx(request.getParameter(selectTeam));
 			teamVo.setTeamName(request.getParameter("teamName"));
-			teamVo.setLogo(imageUrl);
-			teamVo.setLogoPi(imagePI);
+//			teamVo.setLogo(imageUrl);
+//			teamVo.setLogoPi(imagePI);
 			/**/System.out.println("    update)teamVo : "+teamVo);
 			TeamDAO.updateTeam(teamVo);
 		}

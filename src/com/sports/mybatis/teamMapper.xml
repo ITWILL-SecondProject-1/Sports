@@ -65,8 +65,7 @@
 		VALUES (SEQ_TEAM_COMMENTS.NEXTVAL, #{bbsIdx }, #{useridx }, #{content },SYSDATE)
 	</insert>
 	
-	<!-- 팀게시판-팀맴버 출력용 -->
-	<!-- 맴버 IDX리스트 얻기 -->
+	<!-- 팀게시판-팀맴버 출력용 맴버 IDX리스트 얻기 -->
 	<select id="getTeamMembers" parameterType="String" resultType="String">
 		SELECT USERIDX FROM TEAM_MEMBER WHERE TEAM_IDX = #{teamIdx}
 	</select>
@@ -75,6 +74,20 @@
 	<select id="getSignupList" parameterType="String" resultType="com.sports.model.vo.TeamSignupVO">
 		SELECT T.*, S.* FROM TEAM_SIGNUP T,SPORT_USER S  WHERE T.USERIDX = S.USERIDX AND TEAM_IDX = #{teamIdx}
 	</select>
+	
+	<!-- 가입신청서 VO얻기 -->
+	<select id="getSignupVO" parameterType="String" resultType="com.sports.model.vo.TeamSignupVO">
+		SELECT * FROM TEAM_SIGNUP WHERE SIGNUP_IDX = #{signupIdx}
+	</select>
+	
+	<!-- 신청서 수락/거절 업데이트 -->
+	<update id="updateTeamSignup" parameterType="com.sports.model.vo.TeamSignupVO">
+		UPDATE TEAM_SIGNUP 
+		SET SIGNUP_CHECK = #{signupCheck}
+		WHERE TEAM_IDX = #{teamIdx}
+		AND SIGNUP_CHECK = 'u'
+		AND USERIDX = #{useridx}
+	</update>
 </mapper>
 
 
