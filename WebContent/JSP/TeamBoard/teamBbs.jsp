@@ -29,6 +29,18 @@
 	border-radius: 50%;
 	margin-right: 10px;
 }
+
+.carousel-item {
+   height: 300px; /* 원하는 높이로 설정 */
+   overflow: hidden; /* 컨테이너를 벗어나는 부분은 숨깁니다 */
+}
+
+.carousel-item img {
+    width: 100%; /* 너비를 컨테이너에 맞춤 */
+    height: 300px; /* 높이를 고정 */
+    object-fit: contain; /* 이미지를 컨테이너 내에 맞추어 전체가 보이게 함 */
+    margin: auto; /* 중앙 정렬을 위해 사용 */
+}
 </style>
 </head>
 <body>
@@ -65,10 +77,10 @@
 									<td class="row-subject">${vo.subject }</td>
 									<td class="row-nickname">${vo.nickname }</td>
 									<td class="row-writeDate">${vo.writeDate }</td>
-								    <td>
-								       <input type="hidden" name="useridx" value="${vo.useridx}">
-								       <input type="hidden" name="content" value="${vo.content}">
-								       <input type="hidden" name="imageIdx" value="${vo.imageIdx}">
+								    <td class="hidden-td">
+								       <input type="hidden" class="row-useridx" name="useridx" value="${vo.useridx}">
+								       <input type="hidden" class="row-content" name="content" value="${vo.content}">
+								       <input type="hidden" class="row-imageIdx" name="imageIdx" value="${vo.imageIdx}">
 								   </td>
 								</tr>
 							</c:forEach>
@@ -186,44 +198,147 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 팀 게시판 읽는 모달 -->
+	<div class="modal fade" id="viewTeamBoard" tabindex="-1" role="dialog" aria-labelledby="viewTeamBoard" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="teamBoardSubject"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Carousel -->
+					<div id="teamBoardImages"><!-- 이미지 콘텐츠 들어갈 자리 --></div>
+					<!-- Carousel End -->
+				</div>
+			        <p><strong>닉네임:</strong> <span id="teamBoardNickname"></span></p>
+			        <p><strong>내용:</strong> <span id="teamBoardContent"></span></p>
+				<div class="modal-footer">
+			        <p><strong>작성일:</strong> <span id="teamBoardWriteDate"></span></p>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script>
-	$(document).ready(function() {
-	    $('#post-images').on('change', function() {
-	        // 선택된 파일 개수
-	        var filesCount = $(this).get(0).files.length;
-	
-	        if (filesCount === 1) {
-	            // 단일 파일 선택 시, 파일 이름을 표시
-	            var fileName = $(this).val().split('\\').pop();
-	            $(this).siblings('.custom-file-label').text(fileName);
-	        } else {
-	            // 여러 파일 선택 시, 파일 개수를 표시
-	            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
-	        }
-	    });
-	    $('#postForm').on('submit', function(e) {
-	        e.preventDefault(); // 기본 제출 방지
-	
-	        var formData = new FormData(this);
-	
-	        $.ajax({
-	            type: "POST",
-	            url: $(this).attr('action'),
-	            data: formData,
-	            contentType: false, 
-	            processData: false,
-	            success: function(response) {
-	                console.log('Success:', response);
-	                window.location.reload();
-	            },
-	            error: function(xhr, status, error) {
-	                console.error('Error:', error);
-	            }
-	        });
-	    });
-	    
-	    $('.')
-	});
+	$(document).ready(
+			function() {
+				// 파일 업로드시, file-input 텍스트를 바꾸는 함수
+				$('#post-images').on(
+						'change',
+						function() {
+							// 선택된 파일 개수
+							var filesCount = $(this).get(0).files.length;
+
+							if (filesCount === 1) {
+								// 단일 파일 선택 시, 파일 이름을 표시
+								var fileName = $(this).val().split('\\').pop();
+								$(this).siblings('.custom-file-label').text(
+										fileName);
+							} else {
+								// 여러 파일 선택 시, 파일 개수를 표시
+								$(this).siblings('.custom-file-label').text(
+										filesCount + ' files selected');
+							}
+						});
+				
+				// 팀게시글 작성시
+				$('#postForm').on('submit', function(e) {
+					e.preventDefault(); // 기본 제출 방지
+
+					var formData = new FormData(this);
+
+					$.ajax({
+						type : "POST",
+						url : $(this).attr('action'),
+						data : formData,
+						contentType : false,
+						processData : false,
+						success : function(response) {
+							console.log('Success:', response);
+							window.location.reload();
+						},
+						error : function(xhr, status, error) {
+							console.error('Error:', error);
+						}
+					});
+				});
+				
+			// 게시글 조회 함수
+			$('.teamBoardRow').click(function() {
+				var bbsIdx = $(this).find('.row-bbsIdx').text();
+				var subject = $(this).find('.row-subject').text();
+				var nickname = $(this).find('.row-nickname').text();
+				var writeDate = $(this).find('.row-writeDate').text();
+		
+				// 숨겨진 input에서 값 가져오기
+			    var useridx = $(this).find('.hidden-td').find('.row-useridx').val();
+			    var content = $(this).find('.hidden-td').find('.row-content').val();
+			    var imageIdx = $(this).find('.hidden-td').find('.row-imageIdx').val();
+			    
+			    $.ajax({
+			        type: "GET",
+			        url: "teamBoardImageAndCommentList",
+			        data: { bbsIdx: bbsIdx, imageIdx: imageIdx },
+			        success: function(response) {
+			            // 이미지 리스트 처리
+			            var imagesHtml = '';
+			            if (response.images && response.images.length > 0) {
+			                imagesHtml += '<div id="ImagesListCarousel" class="carousel slide" data-ride="carousel">';
+			                imagesHtml += '<div class="carousel-inner">';
+			                
+			                response.images.forEach(function(image, index) {
+			                    imagesHtml += '<div class="carousel-item ' + (index === 0 ? 'active' : '') + '">';
+			                    console.log(image);
+			                    imagesHtml += '<img src="' + image.image + '" class="d-block w-100" alt="Carousel image">';
+			                    imagesHtml += '</div>';
+			                });
+
+			                imagesHtml += '</div>';
+			                imagesHtml += '<a class="carousel-control-prev" href="#ImagesListCarousel" role="button" data-slide="prev">';
+			                imagesHtml += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+			                imagesHtml += '<span class="sr-only">Previous</span>';
+			                imagesHtml += '</a>';
+			                imagesHtml += '<a class="carousel-control-next" href="#ImagesListCarousel" role="button" data-slide="next">';
+			                imagesHtml += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+			                imagesHtml += '<span class="sr-only">Next</span>';
+			                imagesHtml += '</a>';
+			                imagesHtml += '</div>';
+			            } else {
+			                imagesHtml += '<p>No images available.</p>';
+			            }
+			            $('#teamBoardImages').html(imagesHtml);
+						
+			            var commentsHtml = '';
+			            // 댓글 리스트 처리
+						if (response.comments && response.comments.length > 0) {
+				            response.comments.forEach(function(comment) {
+			                	commentsHtml += '<div class="comment"><strong>' + comment.userName + ':</strong> ' + comment.comment + '</div>';
+				            });
+				        } else {
+				            commentsHtml = '<p>No comments yet.</p>';
+				        }
+						 $('#teamBoardComments').html(commentsHtml);
+			            
+			            // 서버로부터 받은 데이터를 사용하여 모달 내용을 업데이트
+			            $('#teamBoardSubject').text(subject);
+			            $('#teamBoardNickname').text(nickname);
+			            $('#teamBoardWriteDate').text(writeDate);
+			            $('#teamBoardContent').text(content);
+
+			            // 모달 표시
+			            $('#viewTeamBoard').modal('show');
+			        },
+			        error: function(xhr, status, error) {
+			            console.error("AJAX 요청 중 오류 발생: " + error);
+			        }
+			    });
+			});
+		}
+	);
 </script>
 </html>

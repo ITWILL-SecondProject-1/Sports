@@ -1,5 +1,7 @@
 package Paging;
 
+import org.json.simple.JSONObject;
+
 public class CommentVO {
 	private String commentIdx;
 	private String useridx;
@@ -60,5 +62,18 @@ public class CommentVO {
 	public String toString() {
 		return "BoardCommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname=" + nickname
 				+ ", bbsIdx=" + bbsIdx + ", content=" + content + ", writeDate=" + writeDate + "]";
+	}
+	
+	//JSON객체로 변환하는 메소드
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject() {
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("commentIdx", commentIdx);
+		jsonObj.put("useridx", useridx);
+		jsonObj.put("nickname", nickname);
+		jsonObj.put("bbsIdx", bbsIdx);
+		jsonObj.put("content", content);
+		jsonObj.put("writeDate", writeDate);
+		return jsonObj;
 	}
 }

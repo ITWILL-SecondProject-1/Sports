@@ -1,5 +1,7 @@
 package com.sports.model.vo;
 
+import org.json.simple.JSONObject;
+
 public class ImagesVO {
 	int imageIdx;
 	String image;
@@ -35,5 +37,15 @@ public class ImagesVO {
 	@Override
 	public String toString() {
 		return "ImagesVO [imageIdx=" + imageIdx + ", image=" + image + ", imagePi=" + imagePi + "]";
+	}
+	
+	//JSON객체로 변환하는 메소드
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject() {
+		JSONObject jsonObj = new JSONObject();
+        jsonObj.put("imageIdx", imageIdx);
+        jsonObj.put("image", image);
+        jsonObj.put("imagePi", imagePi);
+        return jsonObj;
 	}
 }
