@@ -1,6 +1,7 @@
 package com.sport.joinBbs.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import com.sport.joinBbs.common.Paging;
 import com.sport.joinBbs.dao.JoinBbsDAO;
 import com.sport.joinBbs.dao.TeamDAO;
 import com.sport.joinBbs.vo.JoinBbsVO;
+import com.sport.joinBbs.vo.TeamVO;
 import com.sports.model.vo.UserVO;
 
 /**
@@ -34,7 +36,8 @@ public class JoinBbsController extends HttpServlet {
 		teamSignupUrl : 가입신청URL
 		p : 페이징 객체 Paging
 		list : 현재페이지 게시글 목록
-		teams : 로그인유저 가입팀목록
+		teamList : 로그인유저 가입팀목록
+		teamIdxList
 		
 		*/
 		//게시글VO : JoinBbsVO, 게시글DAO : JoinBbsDAO
@@ -63,7 +66,14 @@ public class JoinBbsController extends HttpServlet {
 		/**/System.out.println("    Paging  p : "+ p.toString());
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("UserVO");
 		if(loginUser != null) {
-			request.setAttribute("teams", TeamDAO.getMyTeamList(loginUser.getUseridx()));
+			List<TeamVO> teamList = TeamDAO.getMyTeamList(loginUser.getUseridx());
+			request.setAttribute("teams", teamList);
+			List<String> teamIdxList = new ArrayList<>();
+			for(TeamVO a : teamList) {
+				teamIdxList.add(a.getTeamIdx());
+			}
+			request.setAttribute("teamIdxList", teamIdxList);
+			
 		}
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);

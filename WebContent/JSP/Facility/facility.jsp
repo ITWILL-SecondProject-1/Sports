@@ -61,6 +61,7 @@
     pointer-events: none; /* 클릭 이벤트 비활성화 */
     cursor: not-allowed; /* 마우스 커서를 변경 */
 	}
+	
 </style>
 </head>
 <body>
@@ -206,6 +207,7 @@ $(document).ready(function() {
 <div class="container" id="calender-container">
 	<div class="row my-3 p-3">
 		<div class="col card">
+			<h2><%=facilityVO.getFacilityName() %></h2>
 				<c:if test="${imagesList.isEmpty() == false}">
 					<div id="ImagesListCarousel" class="carousel slide card" data-ride="carousel">
 						<div class="carousel-inner">
@@ -226,6 +228,26 @@ $(document).ready(function() {
 					</div>
 				<hr>
 				</c:if>
+			<div>
+				<table>
+					<tr>
+						<th>주소</th>
+						<td><%=facilityVO.getAddress() %></td>
+					</tr>
+					<tr>
+						<th>종목</th>
+						<td><%=facilityVO.getEvent() %></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td><%=facilityVO.getPhoneNumber() %></td>
+					</tr>
+					<tr>
+						<th>운영시간</th>
+						<td><%=facilityVO.getOpenTime() %> ~ <%=facilityVO.getCloseTime() %></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 		<div class="row mb-4 mt-4">

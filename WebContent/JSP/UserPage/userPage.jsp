@@ -1,3 +1,6 @@
+<%@page import="com.sports.model.dao.FaDAO"%>
+<%@page import="com.sports.model.dao.ResDAO"%>
+<%@page import="com.sports.model.vo.ResVO"%>
 <%@page import="com.sport.joinBbs.dao.TeamDAO"%>
 <%@page import="com.sport.joinBbs.vo.TeamVO"%>
 <%@page import="com.sports.model.vo.BoardVO"%>
@@ -178,8 +181,71 @@
 	</div>
 </div>
 <%
+    if (userVO != null) {
+        int userIdx = Integer.parseInt(userVO.getUseridx());
+        List<ResVO> reservations = ResDAO.getList(userIdx);
+        if (reservations != null && !reservations.isEmpty()) {
+%>
+    <div class="col-md-7 ml-4 card">
+        <h3>나의 예약목록</h3>
+        <form id="deleteForm" action="deleteReservation" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>예약번호</th>
+                        <th>예약시설 이름</th>
+                        <th>예약날짜</th>
+                        <th>예약시간</th>
+                        <th>인원 수</th>
+                        <th>선택</th>
+                    </tr>
+                </thead>
+                <tbody>
+<%
+                    for (ResVO res : reservations) {
+                        int startTime = Integer.parseInt(res.getReserveTime()); 
+                        String formattedStartTime = String.format("%02d", startTime); 
+                        String formattedEndTime = String.format("%02d", startTime + 1);
+                        String facilityName = FaDAO.getFacilityNameById(res.getFacilityIdx());
+%>
+                    <tr>
+                        <td><%= res.getReserveIdx() %></td>
+                        <td><%= facilityName %></td>
+                        <td><%= res.getReserveDate() %></td>
+                        <td><%= formattedStartTime %>:00 시 ~ <%= formattedEndTime %>:00 시</td>
+                        <td><%= res.getHeadCount() %></td>
+                        <td><input type="checkbox" name="reservationId" value="<%= res.getReserveIdx() %>" class="checkbox"></td>
+                    </tr>
+<%
+                    }
+%>
+                </tbody>
+            </table>
+	<div style="text-align: right; margin-top: 20px;">
+            <button type="submit" class="btn btn-danger">예약 삭제</button>
+    </div>        
+        </form>
+    </div>
+    
+<%
+        } else {
+%>
+            <p>예약목록이 없습니다.</p>
+<%
+        }
+    } else {
+%>
+        <p>로그인이 필요합니다.</p>
+<%
+    }
+%>
+
+
+
+<%
 	if (auth == true) {
 %>
+
 <!-- 프로필 편집 팝업창을 띄우는 스크립트 -->
 <script>
 function showEditProfilePopup() {
@@ -363,8 +429,25 @@ async function editProfileImg() {
 	});
 }
 </script>
+
 <%
 	} 
 %>
+<!-- 삭제버튼 클릭시 alert -->
+<script>
+        window.addEventListener('load', function() {
+            var deleteForm = document.getElementById('deleteForm');
+            if (deleteForm) {
+                deleteForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    if (confirm('예약을 삭제하시겠습니까?')) {
+                        this.submit();
+
+                    } else {              
+                    }
+                });
+            }
+        });
+</script>
 </body>
 </html>

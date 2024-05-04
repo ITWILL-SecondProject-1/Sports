@@ -19,7 +19,7 @@
 		<ul class="navbar-nav mx-auto mt-2 mt-lg-0 row justify-content-center">
 			<!-- 중앙 정렬 및 그리드 시스템 활용(부트스트랩) -->
 				<!-- 중앙 정렬 --> 
-			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="facility?type=list">Gym</a></li>
+			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="facilityController">Gym</a></li>
 			<li class="nav-item col-md-auto"><a class="nav-link font-weight-bold" href="board">Board</a></li>
 			<li class="nav-item col-md-auto text-center">
 				<!-- 중앙 정렬 --> 

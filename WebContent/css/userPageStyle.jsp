@@ -44,4 +44,8 @@
 		max-width: var(--user-info-max);
 		padding: 10px 50px;
 	}
+	.checkbox {
+    transform: scale(2); 
+    margin: 10px; 
+}
 </style>

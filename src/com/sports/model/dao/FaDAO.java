@@ -1,6 +1,8 @@
 package com.sports.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,6 +22,29 @@ public class FaDAO {
 		} 
 		return null;
 	}
+	
+	public static List<FaVO> getPagingList(int begin, int end){
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			Map<String, Integer> map = new HashMap<>();
+			map.put("begin", begin);
+			map.put("end", end);
+			return ss.selectList("facility.getPagingList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+  //예약목록에서 시설 아이디로 시설 이름 가져오기 
+  public static String getFacilityNameById(int facilityIdx) {
+      try (SqlSession session = DBService.getFactory().openSession()) {
+          return session.selectOne("facility.selectFacilityNameById", facilityIdx);
+      } catch (Exception e) {
+          e.printStackTrace();
+          return null;
+      }
+  }
+
 	
 	// 시설 한 개를 조회
 	public static FaVO inquireData(int facilityIdx) {

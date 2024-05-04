@@ -268,22 +268,23 @@
 						<div class="mb-3">
 							<label for="event" class="form-label">종목</label>
 							<select class="form-control" name="event" id="event" value="${faVO.event }">
-								<c:if test="${faVO.event == '풋살' }">
-									<option value="풋살" selected="selected">풋살</option>
-									<option value="농구">농구</option>
-	  								<option value="테니스">테니스</option>
-								</c:if>
-								<c:if test="${faVO.event != '풋살' && faVO.event != '테니스' && faVO.event == '농구' }">
-									<option value="풋살">풋살</option>
-									<option value="농구" selected="selected">농구</option>
-	  								<option value="테니스">테니스</option>
-								</c:if>
-								<c:if test="${faVO.event != '풋살' && faVO.event != '농구' && faVO.event == '테니스' }">
-									<option value="풋살">풋살</option>
-									<option value="농구">농구</option>
-	  								<option value="테니스" selected="selected">테니스</option>
-								</c:if>
-	  							
+								<c:choose>
+									<c:when test="${faVO.event == '풋살'}">
+										<option value="풋살" selected="selected">풋살</option>
+										<option value="농구">농구</option>
+	  									<option value="테니스">테니스</option>
+									</c:when>
+									<c:when test="${faVO.event == '농구' }">
+										<option value="풋살">풋살</option>
+										<option value="농구" selected="selected">농구</option>
+	  									<option value="테니스">테니스</option>
+									</c:when>
+									<c:when test="${faVO.event == '테니스' }">
+										<option value="풋살">풋살</option>
+										<option value="농구">농구</option>
+	  									<option value="테니스" selected="selected">테니스</option>
+									</c:when>
+								</c:choose>
 							</select>
 						</div>
 						<div class="mb-3">
