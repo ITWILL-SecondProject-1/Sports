@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.sports.model.vo.TeamBbsVO;
 import com.sports.model.vo.TeamSignupVO;
 import com.sports.model.vo.UserVO;
 import com.sports.mybatis.DBService;
@@ -103,13 +104,14 @@ public class TeamBbsDAO {
 	}
 	
 	//글작성
-	public static int insertBbs(BbsVO vo) {
-		try(SqlSession ss = DBService.getFactory().openSession(true)){
-			return ss.insert(mapperNamespace + ".insertBbs",vo);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
+	public static int insertBbs(TeamBbsVO vo) {
+	    try (SqlSession ss = DBService.getFactory().openSession(true)) {
+	        ss.insert(mapperNamespace +".insertBbs", vo);
+	        return vo.getImageIdx(); // BoardVO 객체에서 imageIdx 값 반환
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
 	}
 	
 	//댓글리스트

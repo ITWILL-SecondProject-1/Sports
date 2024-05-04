@@ -47,9 +47,13 @@
 		SELECT SEQ_TEAM_BBS_IDX.NEXTVAL FROM DUAL
 	</select>
 	
+	<!-- 팀 게시글 올리기 -->
 	<insert id="insertBbs" parameterType="com.sports.model.vo.TeamBbsVO">
+	    <selectKey keyProperty="imageIdx" resultType="int" order="BEFORE" statementType="STATEMENT">
+            SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
+        </selectKey>
 		INSERT INTO TEAM_BBS (BBS_IDX, USERIDX, TEAM_IDX, SUBJECT, CONTENT, WRITE_DATE, IMAGE_IDX, HIT)
-		VALUES (#{bbsIdx }, #{useridx}, #{teamIdx}, #{subject}, #{content}, SYSDATE, #{imageIdx}, #{hit})
+		VALUES (SEQ_TEAM_BBS_IDX.NEXTVAL, #{useridx}, #{teamIdx}, #{subject}, #{content}, SYSDATE, #{imageIdx}, 0)
 	</insert>
 	
 	<!-- 댓글 -->

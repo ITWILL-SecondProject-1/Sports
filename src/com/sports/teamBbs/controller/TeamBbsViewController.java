@@ -44,50 +44,50 @@ public class TeamBbsViewController extends HttpServlet {
 		updateCommentUrl : 댓글수정 url
 		deleteCommentUrl : 댓글삭제 url
 		*/
-		String bbsUrl = "teamBbs";
-		String updateBbsUrl = "";
-		String deleteBbsUrl = "";
-		String writeCommentUrl = "";
-		String updateCommentUrl = "";
-		String deleteCommentUrl = "";
-		String responseUrl = "JSP/TeamBoard/teamBbsView.jsp";
-		//*****************
-		
-		/**/System.out.println(">>teamBbsview");
-		String bbsIdx = request.getParameter("bbsIdx");
-		/**/System.out.println("    bbsIdx : "+bbsIdx);
-		
-		//게시글
-		TeamBbsVO vo = (TeamBbsVO)TeamBbsDAO.getOndBbs(bbsIdx);
-		
-		//작성자
-		UserVO writerVO = UserDAO.indexToUserInfo(vo.getUseridx());
-		
-		//팀 맴버 리스트
-		List<UserVO> memberList = TeamBbsDAO.getTeamMembers(vo.getTeamIdx());
-		
-		//댓글
-		List<CommentVO> commlist = TeamBbsDAO.getCommentsList(bbsIdx);
-		/**/System.out.println("    vo : "+vo.toString());
-		/**/System.out.println("    commlist : "+commlist.toString());
-		
-		//가입여부 확인
-		
-		//신청여부 확인
-		
-		//응답
-		request.setAttribute("bbsUrl", bbsUrl);
-		request.setAttribute("updateBbsUrl", updateBbsUrl);
-		request.setAttribute("deleteBbsUrl", deleteBbsUrl);
-		request.setAttribute("writeCommentUrl", writeCommentUrl);
-		request.setAttribute("deleteCommentUrl", updateCommentUrl);
-		request.setAttribute("deleteCommentUrl", deleteCommentUrl);
-		request.setAttribute("vo", vo);
-		request.setAttribute("writerVO", writerVO);
-		request.setAttribute("memberList", memberList);
-		request.setAttribute("commentList", commlist);
-		request.setAttribute("cPage", request.getParameter("cPage"));
-		request.getRequestDispatcher(responseUrl).forward(request, response);
+//		String bbsUrl = "teamBbs";
+//		String updateBbsUrl = "";
+//		String deleteBbsUrl = "";
+//		String writeCommentUrl = "";
+//		String updateCommentUrl = "";
+//		String deleteCommentUrl = "";
+//		String responseUrl = "JSP/TeamBoard/teamBbsView.jsp";
+//		//*****************
+//		
+//		/**/System.out.println(">>teamBbsview");
+//		String bbsIdx = request.getParameter("bbsIdx");
+//		/**/System.out.println("    bbsIdx : "+bbsIdx);
+//		
+//		//게시글
+//		TeamBbsVO vo = (TeamBbsVO)TeamBbsDAO.getOndBbs(bbsIdx);
+//		
+//		//작성자
+//		UserVO writerVO = UserDAO.indexToUserInfo(vo.getUseridx());
+//		
+//		//팀 맴버 리스트
+//		List<UserVO> memberList = TeamBbsDAO.getTeamMembers(vo.getTeamIdx());
+//		
+//		//댓글
+//		List<CommentVO> commlist = TeamBbsDAO.getCommentsList(bbsIdx);
+//		/**/System.out.println("    vo : "+vo.toString());
+//		/**/System.out.println("    commlist : "+commlist.toString());
+//		
+//		//가입여부 확인
+//		
+//		//신청여부 확인
+//		
+//		//응답
+//		request.setAttribute("bbsUrl", bbsUrl);
+//		request.setAttribute("updateBbsUrl", updateBbsUrl);
+//		request.setAttribute("deleteBbsUrl", deleteBbsUrl);
+//		request.setAttribute("writeCommentUrl", writeCommentUrl);
+//		request.setAttribute("deleteCommentUrl", updateCommentUrl);
+//		request.setAttribute("deleteCommentUrl", deleteCommentUrl);
+//		request.setAttribute("vo", vo);
+//		request.setAttribute("writerVO", writerVO);
+//		request.setAttribute("memberList", memberList);
+//		request.setAttribute("commentList", commlist);
+//		request.setAttribute("cPage", request.getParameter("cPage"));
+//		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}
 
 

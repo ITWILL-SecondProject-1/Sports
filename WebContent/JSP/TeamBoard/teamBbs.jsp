@@ -6,8 +6,6 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <jsp:include page='../../partials/commonhead.jsp' flush="false" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>팀 게시판!</title>
@@ -32,12 +30,6 @@
 	margin-right: 10px;
 }
 </style>
-<script>
-	function goWrite() {
-		location.href = "${writeBbsUrl }";
-	}
-
-</script>
 </head>
 <body>
 	<jsp:include page='../../partials/commonbody.jsp' flush="false" />
@@ -55,7 +47,7 @@
 				<%-- 팀글 목록 --%>
 				<div class="row border">
 					<button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#writeTeamBoard">
-						모집글 작성하기
+						게시물 작성하기
 					</button>				
 					<table class="table table-hover">
 						<thead>
@@ -68,13 +60,16 @@
 						</thead>
 						<tbody id="tbody">
 							<c:forEach var="vo" items="${list }">
-								<tr>
-									<td>${vo.bbsIdx }</td>
-									<td><a
-										href="${viewBbsUrl }?bbsIdx=${vo.bbsIdx }&cPage=${p.nowPage}">${vo.subject }</a>
-									</td>
-									<td>${vo.nickname }</td>
-									<td>${vo.writeDate }</td>
+								<tr class="teamBoardRow">
+									<td class="row-bbsIdx">${vo.bbsIdx }</td>
+									<td class="row-subject">${vo.subject }</td>
+									<td class="row-nickname">${vo.nickname }</td>
+									<td class="row-writeDate">${vo.writeDate }</td>
+								    <td>
+								       <input type="hidden" name="useridx" value="${vo.useridx}">
+								       <input type="hidden" name="content" value="${vo.content}">
+								       <input type="hidden" name="imageIdx" value="${vo.imageIdx}">
+								   </td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -99,7 +94,7 @@
 								</c:when>
 								<c:otherwise>
 									<li class="page-item"><a class="page-link"
-										href="${bbsUrl }?cPage=${pageNo }&teamIdx=${teamIdx }">${pageNo }</a></li>
+										href="${bbsUrl }?cPage=${pageNo }&teamIdx=<%=request.getParameter("teamIdx") %>">${pageNo }</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -168,45 +163,67 @@
 				</div>
 				<div class="modal-body">
 					<!-- Form -->
-					<form>
+					<form id="postForm" method="POST" enctype="multipart/form-data" action="teamBoardWrite">
+					<input type="hidden" id="teamIdx" name="teamIdx" value="<%=request.getParameter("teamIdx") %>">
 						<div class="form-group">
 							<label for="post-title">제목</label> 
-							<input type="text" class="form-control" id="post-title" placeholder="제목을 입력하세요" required>
+							<input type="text" class="form-control" id="post-title" name="post-title" placeholder="제목을 입력하세요" required>
 						</div>
 						<div class="form-group">
 							<label for="post-content">내용</label>
-							<textarea class="form-control" id="post-content" rows="7" placeholder="내용을 입력하세요" required></textarea>
+							<textarea class="form-control" id="post-content" name="post-content" rows="7" placeholder="내용을 입력하세요" required></textarea>
 						</div>
 						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="post-images" name="post-images" aria-describedby="post-images" multiple>
 							<label class="custom-file-label" for="post-images">Choose file</label>
 						</div>
+						<div class="modal-footer my-3">
+							<button type="submit" class="btn btn-primary">글 작성</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>
 					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">글 작성</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
-// 파일 입력칸의 라벨을 입력한 파일의 개수로 바꿔주는 코드
-$(document).ready(function() {
-    $('#post-images').on('change', function() {
-        // 선택된 파일 개수
-        var filesCount = $(this).get(0).files.length;
-
-        if (filesCount === 1) {
-            // 단일 파일 선택 시, 파일 이름을 표시
-            var fileName = $(this).val().split('\\').pop();
-            $(this).siblings('.custom-file-label').text(fileName);
-        } else {
-            // 여러 파일 선택 시, 파일 개수를 표시
-            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
-        }
-    });
-});
+	$(document).ready(function() {
+	    $('#post-images').on('change', function() {
+	        // 선택된 파일 개수
+	        var filesCount = $(this).get(0).files.length;
+	
+	        if (filesCount === 1) {
+	            // 단일 파일 선택 시, 파일 이름을 표시
+	            var fileName = $(this).val().split('\\').pop();
+	            $(this).siblings('.custom-file-label').text(fileName);
+	        } else {
+	            // 여러 파일 선택 시, 파일 개수를 표시
+	            $(this).siblings('.custom-file-label').text(filesCount + ' files selected');
+	        }
+	    });
+	    $('#postForm').on('submit', function(e) {
+	        e.preventDefault(); // 기본 제출 방지
+	
+	        var formData = new FormData(this);
+	
+	        $.ajax({
+	            type: "POST",
+	            url: $(this).attr('action'),
+	            data: formData,
+	            contentType: false, 
+	            processData: false,
+	            success: function(response) {
+	                console.log('Success:', response);
+	                window.location.reload();
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('Error:', error);
+	            }
+	        });
+	    });
+	    
+	    $('.')
+	});
 </script>
 </html>
