@@ -1,5 +1,9 @@
 package Paging;
 
+import org.json.simple.JSONObject;
+
+import com.sports.model.dao.UserDAO;
+
 public class CommentVO {
 	private String commentIdx;
 	private String useridx;
@@ -7,6 +11,8 @@ public class CommentVO {
 	private String bbsIdx;
 	private String content;
 	private String writeDate;
+	private String profileImg;
+	private String email;
 
 	public String getCommentIdx() {
 		return commentIdx;
@@ -21,6 +27,8 @@ public class CommentVO {
 	}
 
 	public void setUseridx(String useridx) {
+		this.profileImg = UserDAO.indexToUserInfo(useridx).getImage();
+		this.email = UserDAO.indexToUserInfo(useridx).getEmail();
 		this.useridx = useridx;
 	}
 
@@ -56,9 +64,35 @@ public class CommentVO {
 		this.writeDate = writeDate;
 	}
 
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	//JSON객체로 변환하는 메소드
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject() {
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("commentIdx", commentIdx);
+		jsonObj.put("useridx", useridx);
+		jsonObj.put("nickname", nickname);
+		jsonObj.put("bbsIdx", bbsIdx);
+		jsonObj.put("content", content);
+		jsonObj.put("writeDate", writeDate);
+		jsonObj.put("profileImg", profileImg);
+		jsonObj.put("email", email);
+		
+		return jsonObj;
+	}
+
 	@Override
 	public String toString() {
-		return "BoardCommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname=" + nickname
-				+ ", bbsIdx=" + bbsIdx + ", content=" + content + ", writeDate=" + writeDate + "]";
+		return "CommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname=" + nickname + ", bbsIdx="
+				+ bbsIdx + ", content=" + content + ", writeDate=" + writeDate + ", profileImg=" + profileImg
+				+ ", email=" + email + "]";
 	}
+	
 }

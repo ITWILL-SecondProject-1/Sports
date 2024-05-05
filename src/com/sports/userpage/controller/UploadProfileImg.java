@@ -48,7 +48,10 @@ public class UploadProfileImg extends HttpServlet {
 		UserVO user = (UserVO) session.getAttribute("UserVO");
 		Part filePart = req.getPart("img");
 		boolean deleteResult = true;
-		if (user == null) req.getRequestDispatcher("login").forward(req, res);
+		if (user == null) {
+			res.sendRedirect("login"); 
+			return;
+		}
 	    String imageUrl = "null";
 	    String imagePI = UserDAO.getUserInfo(user.getEmail()).getImagePi();
 	    
