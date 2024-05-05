@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pagingMapper">	
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) AS CNT FROM TEAM_BBS
+	</select>
+	
+	<select id="getBbsList" parameterType="map" resultType="Paging.BbsVO">
+	<![CDATA[
+		SELECT  * 
+		    FROM (SELECT ROWNUM AS RNUM, B.*
+		        FROM (SELECT T.*, S.NICKNAME 
+		        	FROM TEAM_BBS T, SPORT_USER S
+					WHERE S.USERIDX = T.USERIDX
+					ORDER BY BBS_IDX DESC
+				) B
+			)
+		WHERE RNUM >= #{begin } 
+		    AND RNUM <= #{end }
+	]]>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

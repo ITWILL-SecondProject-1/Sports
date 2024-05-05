@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sports">	
+	<!-- 회원 가입 -->
+	<insert id="register" parameterType="UserVO">
+		INSERT INTO SPORT_USER (useridx, email, nickname, password, phone, gender, image, image_pi)
+		VALUES (SEQ_USERIDX.NEXTVAL, #{email}, #{nickname}, #{password}, #{phone}, #{gender},
+		<choose>
+            <when test="image != null">
+                #{image}, #{imagePi}
+            </when>
+            <otherwise>
+                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
+            </otherwise>
+        </choose>
+		)
+	</insert>
+
+	<!-- 이메인 중복 확인 -->
+	<select id="emailDuplicateCheck" parameterType="string" resultType="boolean">
+		SELECT CASE
+		         WHEN EXISTS (SELECT 1 FROM SPORT_USER WHERE EMAIL = #{email}) THEN 'True'
+		         ELSE 'False'
+		       END AS Is_Exists
+		FROM dual
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="authenticateUser" parameterType="UserVO" resultType="UserVO">
+	    SELECT * FROM SPORT_USER 
+	    WHERE EMAIL = #{email} AND PASSWORD = #{password}
+	</select>
+	
+	<!-- 자유게시판 전체글 건수 조회 -->
+	<select id="totalCount" resultType="int">
+		SELECT COUNT(*) AS CNT FROM FREE_BBS
+	</select>
+	
+	<!-- 프로필 수정 -->
+	<update id="editProfile" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET nickname = '${nickname}', password = '${password}', phone = '${phone}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 프로필 이미지 수정 -->
+	<update id="editProfileImg" parameterType="UserVO">
+		UPDATE SPORT_USER
+			SET image = '${image}', image_pi = '${imagePi}'
+			WHERE email = '${email}'
+	</update>
+	
+	<!-- 이메일로 유저인덱스 가져오기 -->
+	<select id="emailToIndex" parameterType="String" resultType="String">
+		SELECT USERIDX
+		FROM SPORT_USER
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 인덱스로 유저 정보 가져오기 -->
+	<select id="indexUserInfo" parameterType="String" resultType="UserVO">
+		SELECT USERIDX, EMAIL, NICKNAME, PHONE, GENDER, IMAGE, IMAGE_PI
+		FROM SPORT_USER
+		WHERE USERIDX = #{useridx}
+	</select>
+	
+	
+	<!-- 유저 작성 자유게시글 건수 -->
+	<select id="totalUserFreeBoard" parameterType="String" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM FREE_BBS
+		WHERE USERIDX = '${useridx}'
+	</select>
+	
+	<!-- 유저페이지에서 유저의 자유게시글 조회 -->
+	<select id="userFreeBoard" parameterType="map" resultType="BoardVO">
+	<![CDATA[
+		SELECT *
+		FROM(SELECT ROWNUM R_NUM, F.*
+		     FROM (SELECT B.BBS_IDX, B.USERIDX, B.SUBJECT, B.CONTENT, B.WRITE_DATE, B.IMAGE_IDX, B.HIT
+		           FROM FREE_BBS B
+		           WHERE B.USERIDX = #{useridx}
+		           ORDER BY BBS_IDX DESC) F
+		     WHERE ROWNUM <= #{end})
+		WHERE R_NUM >= #{begin}
+		ORDER BY BBS_IDX DESC
+	]]>		
+	</select>
+	
+	<!-- 유저의 정보를 비밀번호를 빼고 가져옴-->
+	<select id="getUserInfo" parameterType="string" resultType="UserVO">
+		SELECT EMAIL, NICKNAME, PHONE, GENDER, IMAGE, IMAGE_PI FROM SPORT_USER
+		WHERE EMAIL = '${email}'
+	</select>
+	
+	<!--  자유게시판 전체글 조회 -->
+	<select id="boardAll" resultType="BoardVO">
+		SELECT * FROM FREE_BBS
+	</select>
+	
+		<!-- 자유게시판 페이지 글 조회 -->
+	<select id="boardList" parameterType="map" resultType="BoardVO">
+	<![CDATA[ 
+		SELECT *
+		FROM(SELECT ROWNUM R_NUM, F.*
+		     FROM (SELECT B.BBS_IDX, B.USERIDX, U.NICKNAME, B.SUBJECT, B.CONTENT, B.WRITE_DATE, B.IMAGE_IDX, B.HIT
+		           FROM FREE_BBS B, SPORT_USER U
+                   WHERE B.USERIDX = U.USERIDX
+		           ORDER BY BBS_IDX DESC) F
+		     WHERE ROWNUM <= #{end})
+		WHERE R_NUM >= #{begin}  
+		ORDER BY BBS_IDX DESC      
+	]]>	   
+	</select>
+	
+    <insert id="writeBoard" parameterType="BoardVO">
+        <!-- 시퀀스 값 미리 할당 -->
+        <selectKey keyProperty="imageIdx" resultType="int" order="BEFORE" statementType="STATEMENT">
+            SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO FREE_BBS (BBS_IDX, USERIDX, SUBJECT, CONTENT, WRITE_DATE, IMAGE_IDX, HIT)
+        VALUES (SEQ_FREE_BBS_IDX.NEXTVAL, #{useridx}, #{subject}, #{content}, SYSDATE, #{imageIdx}, null)
+    </insert>
+	
+	<!-- 자유게시판 글 1개 조회 -->
+	<select id="boardOne" parameterType="int" resultType="BoardVO">
+		SELECT B.BBS_IDX, B.USERIDX, U.NICKNAME, B.SUBJECT, B.CONTENT, B.WRITE_DATE, B.IMAGE_IDX, B.HIT
+		FROM FREE_BBS B, SPORT_USER U
+		WHERE B.USERIDX = U.USERIDX
+		AND B.BBS_IDX = #{bbsIdx}
+	</select>
+	
+	<!-- 자유게시판 게시글 수정 -->
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE FREE_BBS
+		SET SUBJECT = '${subject}',
+		    CONTENT = '${content}'
+		WHERE BBS_IDX = ${bbsIdx} 
+	</update>
+	
+	<!-- 자유게시판 글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE 
+		FROM FREE_BBS
+		WHERE BBS_IDX = #{bbsIdx}
+	</delete>
+	
+	<!-- 자유게시판 댓글 목록 -->
+	<select id="selectBoardComment" parameterType="int" resultType="BoardCommentVO">
+		SELECT C.COMMENT_IDX, C.USERIDX, U.NICKNAME, C.BBS_IDX, C.CONTENT, C.WRITE_DATE
+		FROM FREE_COMMENTS C, SPORT_USER U
+		WHERE C.USERIDX = U.USERIDX
+		AND C.BBS_IDX = #{bbsIdx}
+	</select>
+	
+	<select id="selectBoardCommentOne" parameterType="int" resultType="BoardCommentVO">
+		SELECT *
+		FROM FREE_COMMENTS
+		WHERE COMMENT_IDX = #{commentIdx}	
+	</select>
+	
+	<!-- 자유게시판 댓글 작성 -->
+	<insert id="writeBoardComment" parameterType="BoardCommentVO">
+		INSERT INTO FREE_COMMENTS (COMMENT_IDX, USERIDX, BBS_IDX, CONTENT, WRITE_DATE)
+		VALUES (SEQ_FREE_COMMENT_IDX.NEXTVAL,  #{useridx}, #{bbsIdx}, #{content}, SYSDATE)
+	</insert>
+	
+	<!-- 자유게시판 댓글 수정 -->
+	<update id="updateBoardComment" parameterType="BoardCommentVO">
+		UPDATE FREE_COMMENTS
+		SET CONTENT = #{content}
+		WHERE COMMENT_IDX = #{commentIdx}
+	</update>
+	
+	<!-- 자유게시판 댓글 삭제 -->
+	<delete id="deleteBoardComment" parameterType="int">
+		DELETE 
+		FROM FREE_COMMENTS
+		WHERE COMMENT_IDX = #{commentIdx}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

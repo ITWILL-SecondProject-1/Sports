@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="facility">
+	<!-- 시설 리스트 -->
+	<select id="list" resultType="FaVO">
+		SELECT * 
+		FROM FACILITY
+		ORDER BY FACILITY_IDX
+	</select>
+	
+	
+	<select id="getPagingList" parameterType="map" resultType="FaVO">
+	<![CDATA[
+		SELECT  * 
+		    FROM (SELECT ROWNUM AS RNUM, B.*
+		        FROM (SELECT *
+		        	FROM FACILITY
+					ORDER BY FACILITY_IDX
+				) B
+			)
+		WHERE RNUM >= #{begin } 
+		    AND RNUM <= #{end }
+	]]>
+	</select>
+	
+	
+	<!-- 시설 한 개 조회 -->
+	<select id="inquireFacility" parameterType="int" resultType="FaVO">
+		SELECT *
+		FROM FACILITY
+		WHERE FACILITY_IDX = ${facilityIdx} 
+	</select>
+	
+	<!-- 예약목록에서 시설 아이디로 시설 이름 가져오기 -->
+	<select id="selectFacilityNameById" parameterType="int" resultType="String">
+    SELECT FACILITY_NAME FROM FACILITY WHERE FACILITY_IDX = #{facilityIdx}
+	</select>
+	
+	
+	<!-- 해당 날짜에 대한 시설의 예약 상태 조회 -->
+	<select id="getReserveData" parameterType="FaReserveVO" resultType="ReservationSummaryVO">
+		SELECT
+		    f.facility_idx,
+		    COALESCE(SUM(fr.head_count), 0) AS total_head_count,
+		    f.capacity - COALESCE(SUM(fr.head_count), 0) AS remaining_capacity
+		FROM facility f
+		LEFT JOIN facility_reserve fr ON f.facility_idx = fr.facility_idx
+		    AND fr.reserve_date = '${reserveDate}'
+		    AND fr.reserve_time = ${reserveTime}
+		WHERE f.facility_idx = ${facilityIdx}
+		GROUP BY f.facility_idx, f.capacity
+	</select>
+	
+	<!-- 시설 추가 -->
+	<insert id="insertFacility" parameterType="FaVO">
+		<selectKey keyProperty="imageIdx" resultType="int" order="BEFORE" statementType="STATEMENT">
+            SELECT SEQ_IMAGE_IDX.NEXTVAL FROM DUAL
+        </selectKey>
+		INSERT INTO FACILITY (FACILITY_IDX, FACILITY_NAME, ADDRESS, 
+								PHONE_NUMBER, EVENT, THUMB, THUMB_PI,
+								OPEN_TIME, CLOSE_TIME, CAPACITY, DATE_RANGE_FOR_RESERVATION, IMAGE_IDX)
+		VALUES(SEQ_FACILITY_IDX.NEXTVAL, #{facilityName}, #{address}, 
+								#{phoneNumber}, #{event},
+			<choose>
+	            <when test="thumb != null">
+	                #{thumb}, #{thumbPi}
+	            </when>
+	            <otherwise>
+	                'https://res.cloudinary.com/djlee4yl2/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1713834954/logo/github_logo_icon_tpisfg.png', NULL
+	            </otherwise>
+	        </choose>
+								,#{openTime}, #{closeTime}, #{capacity}, #{DateRangeForReservation}, #{imageIdx})
+	</insert>
+	
+	<!-- 시설 수정 -->
+	<update id="updateFacility" parameterType="FaVO">
+		UPDATE FACILITY
+		SET FACILITY_NAME = #{facilityName},
+		    ADDRESS = #{address},
+		    PHONE_NUMBER = #{phoneNumber},
+		    EVENT = #{event},
+		    OPEN_TIME = #{openTime},
+		    CLOSE_TIME = #{closeTime},
+		    CAPACITY = #{capacity},
+		    DATE_RANGE_FOR_RESERVATION = #{DateRangeForReservation}
+		WHERE FACILITY_IDX = #{facilityIdx}
+	</update>
+	
+	<!-- 시설 삭제 -->
+	<delete id="deleteFacility" parameterType="int">
+		DELETE
+		FROM FACILITY
+		WHERE FACILITY_IDX = #{facilityIdx}
+	</delete>
+</mapper>
+
+
