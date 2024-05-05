@@ -1,5 +1,4 @@
-              
-package com.sport.joinBbs.common;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            package com.sport.joinBbs.common;
 
 //게시판의 페이징 처리를 위한 값을 저장 관리
 public class Paging {

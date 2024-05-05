@@ -133,44 +133,6 @@
 						</tbody>
 					</table>
     			</div>
-    			
-    			<nav aria-label="Page navigation example" >
-		  <ul class="pagination justify-content-center">
-		    <li class="page-item">
-		    <%-- [이전]에 대한 사용 여부 처리 --%>
-		    <c:if test="${p.beginPage == 1 }">
-		   		<a class="page-link" aria-label="Previous">
-		    </c:if>
-		    <c:if test="${p.beginPage != 1 }">
-		     	<a class="page-link" href="${bbsUrl }?cPage=${p.beginPage - 1 }" aria-label="Previous">
-		    </c:if>
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    <%-- 페이지태그 --%>
-		    <c:forEach var="pageNo" begin="${p.beginPage }" end="${p.endPage }">
-		    <c:choose>
-		    	<c:when test="${pageNo == p.nowPage }">
-		    		<li class="page-item"><a class="page-link">${pageNo }</a></li>
-		    	</c:when>
-		    	<c:otherwise>
-		    		<li class="page-item"><a class="page-link" href="${bbs }?cPage=${pageNo }">${pageNo }</a></li>
-		    	</c:otherwise>
-		    </c:choose>
-		    </c:forEach>
-		    <%-- [다음]에 대한 사용 여부 처리 --%>
-		    <c:if test="${p.endPage < p.totalPage }">
-		     	<a class="page-link" href="${bbsUrl }?cPage=${p.endPage + 1 }" aria-label="Next">
-		    </c:if>
-		    <c:if test="${p.endPage >= p.totalPage }">
-		     	<a class="page-link" href="#" aria-label="Next">
-		    </c:if>
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-    			
    			</div>
    			<div class="chartjs-size-monitor-shrink">
    				<div class="">
