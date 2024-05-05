@@ -214,27 +214,32 @@
 					<div id="teamBoardImages"><!-- 이미지 콘텐츠 들어갈 자리 --></div>
 					<!-- Carousel End -->
 			        <p><strong>내용:</strong> <span id="teamBoardContent"></span></p>
-			        <p>
-						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#commentViewCollapse" aria-expanded="false" aria-controls="commentViewCollapse">
-							댓글 보기
-						</button>
-					</p>
-				</div>
-				<div class="modal-footer d-flex flex-column align-items-start">
-			        <p><strong>작성자:</strong> <span id="teamBoardNickname"></span></p>
+   			        <p><strong>작성자:</strong> <span id="teamBoardNickname"></span></p>
 			        <p><strong>작성일:</strong> <span id="teamBoardWriteDate"></span></p>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<form method="post">
-						<label for="comment-form" class="form-label">댓글작성하기</label>
-						<textarea class="form-control" id="r_content" name="comment-form" rows="2"></textarea>
-						<input type="hidden" name="bbsIdx" id="boardNumberData" value="bbsIdx">
-						<input id="btnCommentWrite" type="submit" class="btn btn-secondary" value="입력">
-					</form>
-					<div class="collapse" id="commentViewCollapse">
-						<div class="card card-body">
-							<div id="teamBoardComments"><!-- 댓글 리스트가 들어갈 자리 --></div>
-						</div>
-					</div>
+				</div>
+				<div class="modal-footer d-flex justify-content-center align-items-center">
+				    <div class="card w-100">
+				        <div class="card-header text-center">
+				            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#commentViewCollapse" aria-expanded="false" aria-controls="commentViewCollapse">
+				                댓글 보기
+				            </button>
+				        </div>
+				        <div class="collapse" id="commentViewCollapse">
+				            <div class="card card-body">
+				                <div id="teamBoardComments"><!-- 댓글 리스트가 들어갈 자리 --></div>
+				            </div>
+				        </div>
+				        <div class="card-footer">
+				            <form method="post" class="w-100">
+				                <div class="form-group">
+				                    <label for="comment-form" class="form-label">댓글작성하기</label>
+				                    <textarea class="form-control" id="r_content" name="comment-form" rows="2"></textarea>
+				                </div>
+				                <input type="hidden" name="bbsIdx" id="boardNumberData" value="bbsIdx">
+				                <button type="submit" class="btn btn-secondary">입력</button>
+				            </form>
+				        </div>
+				    </div>
 				</div>
 			</div>
 		</div>
@@ -336,7 +341,7 @@
 			                	commentsHtml += '<div class="comment"><strong>' + comment.userName + ':</strong> ' + comment.comment + '</div>';
 				            });
 				        } else {
-				            commentsHtml = '<p>아직 댓글이 없습니다.</p>';
+				            commentsHtml += '<p>아직 댓글이 없습니다.</p>';
 				        }
 						 $('#teamBoardComments').html(commentsHtml);
 			            
