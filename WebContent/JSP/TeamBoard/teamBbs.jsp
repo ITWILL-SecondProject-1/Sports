@@ -72,7 +72,7 @@
 						</thead>
 						<tbody id="tbody">
 							<c:forEach var="vo" items="${list }">
-								<tr class="teamBoardRow">
+								<tr class="teamBoardRow" id="teamBoard${vo.bbsIdx }">
 									<td class="row-bbsIdx">${vo.bbsIdx }</td>
 									<td class="row-subject">${vo.subject }</td>
 									<td class="row-nickname">${vo.nickname }</td>
@@ -209,16 +209,32 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body p-1">
 					<!-- Carousel -->
 					<div id="teamBoardImages"><!-- 이미지 콘텐츠 들어갈 자리 --></div>
 					<!-- Carousel End -->
-				</div>
-			        <p><strong>닉네임:</strong> <span id="teamBoardNickname"></span></p>
 			        <p><strong>내용:</strong> <span id="teamBoardContent"></span></p>
-				<div class="modal-footer">
+			        <p>
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#commentViewCollapse" aria-expanded="false" aria-controls="commentViewCollapse">
+							댓글 보기
+						</button>
+					</p>
+				</div>
+				<div class="modal-footer d-flex flex-column align-items-start">
+			        <p><strong>작성자:</strong> <span id="teamBoardNickname"></span></p>
 			        <p><strong>작성일:</strong> <span id="teamBoardWriteDate"></span></p>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<form method="post">
+						<label for="comment-form" class="form-label">댓글작성하기</label>
+						<textarea class="form-control" id="r_content" name="comment-form" rows="2"></textarea>
+						<input type="hidden" name="bbsIdx" id="boardNumberData" value="bbsIdx">
+						<input id="btnCommentWrite" type="submit" class="btn btn-secondary" value="입력">
+					</form>
+					<div class="collapse" id="commentViewCollapse">
+						<div class="card card-body">
+							<div id="teamBoardComments"><!-- 댓글 리스트가 들어갈 자리 --></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -309,7 +325,7 @@
 			                imagesHtml += '</a>';
 			                imagesHtml += '</div>';
 			            } else {
-			                imagesHtml += '<p>No images available.</p>';
+			                imagesHtml += '<p></p>';
 			            }
 			            $('#teamBoardImages').html(imagesHtml);
 						
@@ -320,7 +336,7 @@
 			                	commentsHtml += '<div class="comment"><strong>' + comment.userName + ':</strong> ' + comment.comment + '</div>';
 				            });
 				        } else {
-				            commentsHtml = '<p>No comments yet.</p>';
+				            commentsHtml = '<p>아직 댓글이 없습니다.</p>';
 				        }
 						 $('#teamBoardComments').html(commentsHtml);
 			            
@@ -329,6 +345,7 @@
 			            $('#teamBoardNickname').text(nickname);
 			            $('#teamBoardWriteDate').text(writeDate);
 			            $('#teamBoardContent').text(content);
+			            $('#boardNumberData').val(bbsIdx);
 
 			            // 모달 표시
 			            $('#viewTeamBoard').modal('show');
