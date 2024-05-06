@@ -20,14 +20,7 @@
 <jsp:include page = '../../partials/commonhead.jsp' flush = "false"/>
 <jsp:include page = '../../css/userPageStyle.jsp' flush = "false"/>
 </head>
-<style>
-	#logo-img {
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		margin-right: 10px;
-	}
-</style>
+
 <body>
 <!-- 공통 링크 로딩 -->
 <jsp:include page = '../../partials/commonbody.jsp' flush = "false"/>
@@ -186,8 +179,9 @@
         List<ResVO> reservations = ResDAO.getList(userIdx);
         if (reservations != null && !reservations.isEmpty()) {
 %>
+<div class="container">
     <div class="col-md-7 ml-4 card">
-        <h3>나의 예약목록</h3>
+		<h3 class="section-title">나의 예약목록</h3>
         <form id="deleteForm" action="deleteReservation" method="post">
             <table class="table">
                 <thead>
@@ -221,12 +215,12 @@
 %>
                 </tbody>
             </table>
-	<div style="text-align: right; margin-top: 20px;">
+            <div class="form-actions">
             <button type="submit" class="btn btn-danger">예약 삭제</button>
-    </div>        
-        </form>
+    	</div>        
+       </form>
     </div>
-    
+</div>    
 <%
         } else {
 %>

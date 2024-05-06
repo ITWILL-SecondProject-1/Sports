@@ -77,16 +77,16 @@ public class ResDAO {
             session = DBService.getFactory().openSession();
             int affectedRows = session.delete("Res.deleteReservationById", reserveIdx);
             session.commit();
-            return affectedRows > 0;  // 삭제된 행이 있다면 true 반환
+            return affectedRows > 0;  
         } catch (Exception e) {
             if (session != null) {
-                session.rollback();  // 오류 발생 시 롤백
+                session.rollback();  
             }
             e.printStackTrace();
             return false; 
         } finally {
             if (session != null) {
-                session.close(); // 세션 닫기
+                session.close(); 
             }
         }
     }
