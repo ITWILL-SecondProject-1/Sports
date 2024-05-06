@@ -106,6 +106,7 @@ public class TeamBbsController extends HttpServlet {
 		request.setAttribute("memberList", memberList);
 		request.setAttribute("signupList", signupList);
 		request.setAttribute("list", list);
+		request.setAttribute("userVO", loginUser);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}
 

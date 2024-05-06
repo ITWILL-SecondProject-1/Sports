@@ -26,24 +26,24 @@ public class TeamBoardImageAndCommentList extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String bbsIdx = req.getParameter("bbsIdx");
 		int imageIdx = Integer.parseInt(req.getParameter("imageIdx"));
-		List<CommentVO> commentList = TeamBbsDAO.getCommentsList(bbsIdx);
+		List<CommentVO> comments = TeamBbsDAO.getCommentsList(bbsIdx);
 		List<ImagesVO> images = ImagesDAO.imageList(imageIdx);
 
 		JSONObject jsonResponse = new JSONObject();
 		JSONArray jsonImages = new JSONArray();
-		JSONArray jsonCommentList = new JSONArray();
+		JSONArray jsonComments = new JSONArray();
 
 		for (ImagesVO image : images) {
 			System.out.println(image.toString());
 		    jsonImages.add(image.toJSONObject());
 		}
 
-		for (CommentVO comment : commentList) {
-		    jsonCommentList.add(comment.toJSONObject());
+		for (CommentVO comment : comments) {
+		    jsonComments.add(comment.toJSONObject());
 		}
 
 		jsonResponse.put("images", jsonImages);
-		jsonResponse.put("commentList", jsonCommentList);
+		jsonResponse.put("comments", jsonComments);
 
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
