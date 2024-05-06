@@ -214,7 +214,7 @@
                         <td><%= res.getReserveDate() %></td>
                         <td><%= formattedStartTime %>:00 시 ~ <%= formattedEndTime %>:00 시</td>
                         <td><%= res.getHeadCount() %></td>
-                        <td><input type="checkbox" name="reservationId" value="<%= res.getReserveIdx() %>" class="checkbox"></td>
+                        <td><input type="radio" name="reservationId" value="<%= res.getReserveIdx() %>" class="checkbox"></td>
                     </tr>
 <%
                     }
@@ -435,19 +435,48 @@ async function editProfileImg() {
 %>
 <!-- 삭제버튼 클릭시 alert -->
 <script>
-        window.addEventListener('load', function() {
-            var deleteForm = document.getElementById('deleteForm');
-            if (deleteForm) {
-                deleteForm.addEventListener('submit', function(event) {
-                    event.preventDefault(); 
-                    if (confirm('예약을 삭제하시겠습니까?')) {
-                        this.submit();
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteForm = document.getElementById('deleteForm');
 
-                    } else {              
-                    }
-                });
+    deleteForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const selectedRadio = document.querySelector('input[name="reservationId"]:checked');
+
+        if (!selectedRadio) {
+            alert("삭제할 예약을 선택해주세요.");
+            return;
+        }
+
+        if (!confirm('선택한 예약을 삭제하시겠습니까?')) {
+            return;
+        }
+
+        const reservationId = selectedRadio.value;
+        fetch('deleteReservation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'reservationId=' + encodeURIComponent(reservationId) // URL 인코딩 추가
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                selectedRadio.closest('tr').remove(); // 행 삭제
+            } else {
+                alert(data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('예약 삭제에 실패하였습니다.');
         });
+    });
+});
 </script>
+
+
+
 </body>
 </html>
