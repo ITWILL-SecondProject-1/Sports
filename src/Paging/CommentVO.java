@@ -29,6 +29,7 @@ public class CommentVO {
 	public void setUseridx(String useridx) {
 		this.profileImg = UserDAO.indexToUserInfo(useridx).getImage();
 		this.email = UserDAO.indexToUserInfo(useridx).getEmail();
+		this.nickname = UserDAO.indexToUserInfo(useridx).getNickname();
 		this.useridx = useridx;
 	}
 
