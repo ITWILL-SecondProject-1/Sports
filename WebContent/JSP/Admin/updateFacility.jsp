@@ -14,7 +14,7 @@
 <script>
 
 	//null 확인
-	function go_addFacility(frm) {
+	function UpdateFacility(frm) {
 		var faName = document.getElementById('faName').value;
 		console.log(faName);
 		var address = document.getElementById('address').value;
@@ -22,9 +22,7 @@
 		var capacity = document.getElementById('capacity').value;
 		var openTime = parseInt(document.getElementById('openTime').value, 10);
 		var closeTime = parseInt(document.getElementById('closeTime').value, 10);
-		console.log(openTime);
-		console.log(closeTime);
-		
+
 		if (faName.length == 0) {
 			emptyFaNameAlert();
 			return false;
@@ -45,7 +43,7 @@
 			return false;
 		}
 
-		if (openTime >= closeTime) {
+		if (openTime > closeTime) {
 			emptyTimeAlert();
 			return false;
 		}
@@ -317,13 +315,24 @@
 								</select>
 							</div>
 						</div>
+						
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text" id="images">Upload</span>
+								<span class="input-group-text">Card-Thumbnail</span>
 							</div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="images" name="images" aria-describedby="images" multiple>
-								<label class="custom-file-label" for="images">Choose file</label>
+								<input type="file" class="custom-file-input" id="card-thumbnail" name="card-thumbnail" aria-describedby="card-thumbnail">
+								<label class="custom-file-label" for="card-thumbnail">Choose file</label>
+							</div>
+						</div>
+						
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Upload</span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="images-carousel" name="images-carousel" aria-describedby="images" multiple>
+								<label class="custom-file-label" for="images-carousel">Choose file</label>
 							</div>
 						</div>
 						<c:if test="${imagesList.isEmpty() == false}">

@@ -250,7 +250,7 @@
 	      <div class="modal-footer">
 	      	<!-- <button type="button" class="btn btn-primary" onclick="application()">신청하기</button> -->
 	      	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#showSignUp"
-						aria-expanded="false" aria-controls="collapseExample" disabled>가입신청
+						aria-expanded="false" aria-controls="collapseExample">가입신청
 			</button>
 	        <div class="collapse" id="showSignUp">
 				<div class="card card-body">

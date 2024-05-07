@@ -20,9 +20,6 @@
 		var capacity = document.getElementById('capacity').value;
 		var openTime = parseInt(document.getElementById('openTime').value, 10);
 		var closeTime = parseInt(document.getElementById('closeTime').value, 10);
-		console.log(openTime);
-		console.log(closeTime);
-		console.log(openTime > closeTime);
 		
 		if (faName.length == 0) {
 			emptyFaNameAlert();

@@ -89,6 +89,17 @@ public class FaDAO {
 		return result;
 	}
 	
+	public static int updateFacilityWithThumb(FaVO vo) {
+		int result = 0;
+		try (SqlSession ss = DBService.getFactory().openSession(true)) {
+			result = ss.update("facility.updateFacilityWithThumb", vo);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	//시설 삭제
 	public static int deleteFacility(int facilityIdx) {
 		int result = 0;

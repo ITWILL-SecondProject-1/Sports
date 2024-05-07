@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="com.sports.model.dao.UserDAO"%>
+<%@page import="com.sports.model.vo.UserVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -51,6 +52,10 @@
 }
 </style>
 </head>
+<%
+	UserVO currentUser = (UserVO)session.getAttribute("UserVO");
+	String currentUserIdx = currentUser.getUseridx();
+%>
 <body>
 	<jsp:include page='../../partials/commonbody.jsp' flush="false" />
 
@@ -83,7 +88,9 @@
 								<tr class="teamBoardRow" id="teamBoard${vo.bbsIdx }">
 									<td class="row-bbsIdx">${vo.bbsIdx }</td>
 									<td class="row-subject">${vo.subject }</td>
-									<td class="row-nickname">${vo.nickname }</td>
+									<td class="row-nickname">
+										<a href="userpage?email=${vo.email}">${vo.nickname}</a>
+									</td>
 									<td class="row-writeDate">${vo.writeDate }</td>
 								    <td class="hidden-td">
 								       <input type="hidden" class="row-useridx" name="useridx" value="${vo.useridx}">
@@ -224,6 +231,7 @@
 			        <p><strong>내용:</strong> <span id="teamBoardContent"></span></p>
    			        <p><strong>작성자:</strong> <span id="teamBoardNickname"></span></p>
 			        <p><strong>작성일:</strong> <span id="teamBoardWriteDate"></span></p>
+			        <div id="UpdateDeleteButtons"></div>
 				</div>
 				<div class="modal-footer d-flex justify-content-center align-items-center">
 				    <div class="card w-100">
@@ -319,12 +327,23 @@ $(document).ready(function() {
                     commentsHtml = '<p>아직 댓글이 없습니다.</p>';
                     $('#teamBoardComments').html(commentsHtml);
                 }
+                
+                var udButtons = '';
+                if (response.boardVO.useridx === '<%=currentUserIdx%>') {
+                	udButtons += '<div class="ml-auto">';
+                	udButtons += '<button type="button" class="btn btn-warning btn-sm board-edit m-1">수정</button>';
+                	udButtons += '<button type="button" class="btn btn-danger btn-sm board-delete m-1">삭제</button>';
+                	udButtons += '</div>';
+                	
+                	$('#UpdateDeleteButtons').html(udButtons);
+                }
 
                 $('#teamBoardSubject').text(subject);
                 $('#teamBoardNickname').text(nickname);
                 $('#teamBoardWriteDate').text(writeDate);
                 $('#teamBoardContent').text(content);
                 $('#boardNumberData').val(bbsIdx);
+                $('#teamBoardModal').attr('data-writer-id', useridx);
 
                 $('#viewTeamBoard').modal('show');
             },
@@ -347,7 +366,6 @@ $(document).ready(function() {
             data: postData,
             success: function(response) {
                 updateComments(postData.bbsIdx);
-                $('#r_content').val('');
             },
             error: function(xhr, status, error) {
                 console.error('댓글 작성 실패: ' + error);
@@ -372,7 +390,8 @@ $(document).ready(function() {
     function CommentsHtml(comments) {
     	var commentsHtml = '';
     	comments.forEach(function(comment) {
-        	commentsHtml += '<div class="card m-2">'
+    		console.log(comment);
+        	commentsHtml += '<div class="card m-2" data-comment-id='+ comment.commentIdx +'>'
             	commentsHtml += '<div class="card-header d-flex justify-content-between align-items-center comment-name">'
            		commentsHtml += '<span>'
        			commentsHtml += '<img src="'+comment.profileImg+'" alt="profile-image" class="comments-writer-profile-img">'
@@ -380,13 +399,73 @@ $(document).ready(function() {
        			commentsHtml += '<br>'
        			commentsHtml += comment.writeDate
        			commentsHtml += '</span>'
+  		        if (comment.useridx === '<%=currentUserIdx%>') {
+   		            commentsHtml += '<div class="ml-auto">';
+   		            commentsHtml += '<button type="button" class="btn btn-warning btn-sm comment-edit m-1">수정</button>';
+   		            commentsHtml += '<button type="button" class="btn btn-danger btn-sm comment-delete m-1">삭제</button>';
+   		            commentsHtml += '</div>';
+   		        }
     			commentsHtml += '</div>'
-                commentsHtml += '<div class="comment">' + comment.content + '</div>';
+                commentsHtml += '<div class="comment p-2">' + comment.content + '</div>';
             	commentsHtml += '</div>'
     	})
     	$('#teamBoardComments').html(commentsHtml);
+    	$('#r_content').val('');
     }
+    
+    $(document).on('click', '.comment-edit', function() {
+        var commentDiv = $(this).closest('.card');
+        var contentDiv = commentDiv.find('.comment');
+        var bbsIdx = $('#boardNumberData').val();
+        var currentText = contentDiv.text();;
+        
+        contentDiv.html('<textarea class="form-control">' + currentText + '</textarea>');
+        $(this).replaceWith('<button type="button" class="btn btn-success btn-sm comment-save m-1">저장</button>');
+        
+        // 저장 버튼 이벤트 핸들러
+        commentDiv.find('.comment-save').on('click', function() {
+            var updatedText = contentDiv.find('textarea').val();
+            // AJAX 요청을 통해 서버에 데이터 업데이트
+            $.ajax({
+                url: '/STP/updateTeamBoardComment',
+                type: 'POST',
+                data: {
+                    commentId: commentDiv.attr('data-comment-id'),
+                    newText: updatedText
+                },
+                success: function(response) {
+                	updateComments(bbsIdx);
+                }
+            });
+        });
+    });
+    
+    $(document).on('click', '.comment-delete', function() {
+        var commentDiv = $(this).closest('.card');
+        var bbsIdx = $('#boardNumberData').val();
+        Swal.fire({
+            title: '정말 댓글을 삭제하시겠습니까?',
+            text: "삭제하면 되돌릴 수 없어요!",
+            icon: "warning",
+            confirmButtonText: "삭제합니다.",
+            cancelButtonText: "삭제하지 않습니다.",
+            showCancelButton: true,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/STP/deleteTeamBoardComment',
+                    type: 'POST',
+                    data: {
+                        commentId: commentDiv.attr('data-comment-id')
+                    },
+                    success: function(response) {
+                        updateComments(bbsIdx);
+                    }
+                });
+            }
+        });
+    });
 });
-
 </script>
 </html>

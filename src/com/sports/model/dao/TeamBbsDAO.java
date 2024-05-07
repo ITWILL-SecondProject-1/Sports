@@ -103,6 +103,18 @@ public class TeamBbsDAO {
 		return null;
 	}
 	
+	public static TeamBbsVO selectOneBBS(String bbsIdx) {
+		try(SqlSession ss = DBService.getFactory().openSession()){
+			System.out.println(bbsIdx);
+			TeamBbsVO vo = ss.selectOne(mapperNamespace + ".selectOneBBS", bbsIdx);
+			return vo;
+		}catch (Exception e) {
+				e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	//글작성
 	public static int insertBbs(TeamBbsVO vo) {
 	    try (SqlSession ss = DBService.getFactory().openSession(true)) {
@@ -128,6 +140,27 @@ public class TeamBbsDAO {
 	public static int insertComment(CommentVO commVO) {
 		try(SqlSession ss = DBService.getFactory().openSession(true)){
 			return ss.insert(mapperNamespace + ".insertComment",commVO);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	// 댓글수정
+	public static int updateComment(CommentVO commVO) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			System.out.println(commVO.toString());
+			return ss.update(mapperNamespace + ".updateComment",commVO);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	// 댓글삭제
+	public static int deleteComment(CommentVO commVO) {
+		try(SqlSession ss = DBService.getFactory().openSession(true)){
+			return ss.delete(mapperNamespace + ".deleteComment",commVO);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

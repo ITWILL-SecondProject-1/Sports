@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import com.sports.model.dao.UserDAO;
 
 public class CommentVO {
-	private String commentIdx;
+	private int commentIdx;
 	private String useridx;
 	private String nickname;
 	private String bbsIdx;
@@ -14,23 +14,31 @@ public class CommentVO {
 	private String profileImg;
 	private String email;
 
-	public String getCommentIdx() {
+	public int getCommentIdx() {
 		return commentIdx;
 	}
 
-	public void setCommentIdx(String commentIdx) {
+	public void setCommentIdx(int commentIdx) {
 		this.commentIdx = commentIdx;
+	}
+	
+	public void setCommentIdx(String commentIdx) {
+		this.commentIdx = Integer.parseInt(commentIdx);
 	}
 
 	public String getUseridx() {
 		return useridx;
 	}
-
+	
 	public void setUseridx(String useridx) {
 		this.profileImg = UserDAO.indexToUserInfo(useridx).getImage();
 		this.email = UserDAO.indexToUserInfo(useridx).getEmail();
 		this.nickname = UserDAO.indexToUserInfo(useridx).getNickname();
 		this.useridx = useridx;
+	}
+	
+	public void setUseridx(int useridx) {
+		setUseridx(Integer.toString(useridx));
 	}
 
 	public String getNickname() {
@@ -91,9 +99,11 @@ public class CommentVO {
 
 	@Override
 	public String toString() {
-		return "CommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname=" + nickname + ", bbsIdx="
-				+ bbsIdx + ", content=" + content + ", writeDate=" + writeDate + ", profileImg=" + profileImg
-				+ ", email=" + email + "]";
+		return "CommentVO [commentIdx=" + commentIdx + ", useridx=" + useridx + ", nickname="
+				+ nickname + ", bbsIdx=" + bbsIdx + ", content=" + content + ", writeDate=" + writeDate
+				+ ", profileImg=" + profileImg + ", email=" + email + "]";
 	}
 	
+	
+
 }
