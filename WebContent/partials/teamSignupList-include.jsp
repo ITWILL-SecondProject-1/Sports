@@ -26,10 +26,35 @@
 						</div>
 						<div id="lookJoinBbs" class="collapse"
 							aria-labelledby="headingTwo">
-							<div class="card-body">Some placeholder content for the
-								second accordion panel. This panel is hidden by default.</div>
+							<div class="card-body">
+								<!-- 가장 최근 모집글 -->
+								<div>
+									<div class="card border-secondary shadow mb-3 join-card" data-bs-toggle="modal" data-bs-target="#joinModal" style="width: 300px; height:190px;">
+										<div class="row no-gutters">
+											<div class="col-md-4 border">
+												<div class="square-image">
+													<img src="${joinVO.logo }" alt="Team's logo" class="card-img image-fluid">								
+												</div>
+											</div>
+											<div class="col-md-8">
+												<div class="card-body">
+													<h5 class="card-title">${joinVO.teamName}</h5>
+													<p class="card-text">${joinVO.subject }</p>
+													<p class="card-text">
+														<small class="text-muted">${joinVO.writerEmail }</small>
+													</p>
+												</div>
+												<div class="card-footer">
+													<small class="text-muted">${joinVO.writeDate }</small>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+					
 					<div class="card">
 						<div class="card-header bg-dark" id="headingThree">
 							<h2 class="mb-0">
@@ -73,5 +98,6 @@
 						</c:forEach>
 						</div>
 					</div>
+					
 					
 				</div>

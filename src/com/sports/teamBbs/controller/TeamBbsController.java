@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sport.joinBbs.dao.JoinBbsDAO;
 import com.sport.joinBbs.dao.TeamDAO;
+import com.sport.joinBbs.vo.JoinBbsVO;
 import com.sports.model.dao.TeamBbsDAO;
 import com.sports.model.vo.TeamSignupVO;
 import com.sports.model.vo.UserVO;
@@ -39,6 +41,7 @@ public class TeamBbsController extends HttpServlet {
 		memberList : 팀가입맴버 리스트
 		signupList : 팀신청서 리스트
 		list : 현재페이지 게시글 목록
+		jionVO : 이팀의 모집글 하나
 		
 		*/
 		//게시글VO : TeamBbsVO, 게시글DAO : JoinBbsDAO
@@ -95,6 +98,10 @@ public class TeamBbsController extends HttpServlet {
 		//게시글 리스트 
 		List<BbsVO> list = TeamBbsDAO.getBbsList(p.getBegin(),p.getEnd(), Integer.parseInt(teamIdx));
 		
+		//가장최근모집글 1개
+		JoinBbsVO joinVO = JoinBbsDAO.getOndJoinBbsByTeamIdx(teamIdx);
+		System.out.println("    joinVO :"+joinVO.toString());
+		
 		//응답
 		request.setAttribute("bbsUrl", bbsUrl);
 		request.setAttribute("viewBbsUrl", viewBbsUrl);
@@ -106,7 +113,8 @@ public class TeamBbsController extends HttpServlet {
 		request.setAttribute("memberList", memberList);
 		request.setAttribute("signupList", signupList);
 		request.setAttribute("list", list);
-		request.setAttribute("userVO", loginUser);
+		request.setAttribute("list", list);
+		request.setAttribute("joinVO", joinVO);
 		request.getRequestDispatcher(responseUrl).forward(request, response);
 	}
 
