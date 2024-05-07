@@ -55,78 +55,77 @@
 	pageContext.setAttribute("freeBoardList", list);
 %>
 <div class="row user-page-card">
-<div class="flex-column col-3 mr-4">
-	<div class="user-info-profile-img-div">
-		<img src="<%= reqUserVO.getImage() %>" alt="profile-image" id="user-info-profile-img">	
-	</div>
-	<div class="card user-info">
-		<div class="card">
-			<div class="card-body">
-				<p>유저정보</p>
-			</div>
-	        <ul class="list-group list-group-flush">
-	            <li class="list-group-item">
-	                <i class="fa-regular fa-envelope"></i>
-	                <span class="ms-2"><%= reqUserVO.getEmail() %></span>
-	            </li>
-	            <li class="list-group-item">
-	                <i class="fa-regular fa-id-card"></i>
-	                <span class="ms-2"><%= reqUserVO.getNickname() %></span>
-	            </li>
-	            <li class="list-group-item">
-	                <i class="fa fa-phone fa-lg"></i>
-	                <span class="ms-2"><%= reqUserVO.getPhone() %></span>
-	            </li>
-	            <li class="list-group-item">
-	                <% if (reqUserVO.getGender().equals("female")) { %>
-	                    <!-- 남자 아이콘 표시 -->
-	                    <i class="fa fa-mars" aria-hidden="true"></i>
-					<% } else if (reqUserVO.getGender().equals("male")) { %>
-						<!-- 여자 아이콘 표시 -->
-						<i class="fa fa-venus" aria-hidden="true"></i>
-						<!-- 성 중립적 아이콘 -->
-					<% } else { %>
-						<i class="fa fa-question-circle" aria-hidden="true"></i>
-					<% } %>
-					<span class="ms-2"><%= reqUserVO.getGender() %></span>
-				</li>
-				<li class="list-group-item">
-					<i class="fa-solid fa-warehouse"></i>
-					<%
-						UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
-			    		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
-			    		pageContext.setAttribute("teamList", teamList);
-					%>
-						<c:forEach var="team" items="${teamList }">
-							<div class="row border m-1 p-2"><img src="${team.logo }" alt="profile-image" id="logo-img">${team.teamName }</div>
-						</c:forEach>
-						<c:if test="${teamList.size() } == 0">
-							<div class="row border">가입한 팀이 없습니다</div>
-						</c:if>
-				</li>
-			</ul>
+	<div class="flex-column col-3 mr-1">
+		<div class="user-info-profile-img-div">
+			<img src="<%= reqUserVO.getImage() %>" alt="profile-image" id="user-info-profile-img">	
 		</div>
+		<div class="card user-info">
+			<div class="card">
+				<div class="card-body">
+					<p>유저정보</p>
+				</div>
+		        <ul class="list-group list-group-flush">
+		            <li class="list-group-item">
+		                <i class="fa-regular fa-envelope"></i>
+		                <span class="ms-2"><%= reqUserVO.getEmail() %></span>
+		            </li>
+		            <li class="list-group-item">
+		                <i class="fa-regular fa-id-card"></i>
+		                <span class="ms-2"><%= reqUserVO.getNickname() %></span>
+		            </li>
+		            <li class="list-group-item">
+		                <i class="fa fa-phone fa-lg"></i>
+		                <span class="ms-2"><%= reqUserVO.getPhone() %></span>
+		            </li>
+		            <li class="list-group-item">
+		                <% if (reqUserVO.getGender().equals("female")) { %>
+		                    <!-- 남자 아이콘 표시 -->
+		                    <i class="fa fa-mars" aria-hidden="true"></i>
+						<% } else if (reqUserVO.getGender().equals("male")) { %>
+							<!-- 여자 아이콘 표시 -->
+							<i class="fa fa-venus" aria-hidden="true"></i>
+							<!-- 성 중립적 아이콘 -->
+						<% } else { %>
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						<% } %>
+						<span class="ms-2"><%= reqUserVO.getGender() %></span>
+					</li>
+					<li class="list-group-item">
+						<i class="fa-solid fa-warehouse"></i>
+						<%
+							UserVO user = (UserVO)request.getSession().getAttribute("UserVO");
+				    		List<TeamVO> teamList = TeamDAO.getMyTeamList(user.getUseridx());
+				    		pageContext.setAttribute("teamList", teamList);
+						%>
+							<c:forEach var="team" items="${teamList }">
+								<div class="row border m-1 p-2"><img src="${team.logo }" alt="profile-image" id="logo-img">${team.teamName }</div>
+							</c:forEach>
+							<c:if test="${teamList.size() } == 0">
+								<div class="row border">가입한 팀이 없습니다</div>
+							</c:if>
+					</li>
+				</ul>
+			</div>
+		</div>
+	<%
+		if (auth == true) {
+	%>
+		<div class="card" id="edit-user-profile-img-button">
+			<button type="button" onclick="editProfileImg();" class="btn btn-primary">프로필 사진 바꾸기</button>
+		</div>
+		<div class="card" id="edit-user-profile-button">
+			<button type="button" onclick="showEditProfilePopup();" class="btn btn-success">프로필 바꾸기</button>
+		</div>
+	<%
+		}	
+	%>
 	</div>
-<%
-	if (auth == true) {
-%>
-	<div class="card" id="edit-user-profile-img-button">
-		<button type="button" onclick="editProfileImg();" class="btn btn-primary">프로필 사진 바꾸기</button>
-	</div>
-	<div class="card" id="edit-user-profile-button">
-		<button type="button" onclick="showEditProfilePopup();" class="btn btn-success">프로필 바꾸기</button>
-	</div>
-<%
-	}	
-%>
-</div>
-	<div class="col-md-7 ml-4 card" id="user-board">
+	<div class="col-md-3 mx-2 card" id="user-board">
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>날짜</th>
 				</tr>
 			</thead>
 			<tbody id="tbody">
@@ -136,7 +135,6 @@
 					<td>
 						<a href="viewBoardOne?bbsIdx=${vo.bbsIdx}">${vo.subject}</a>
 					</td>
-					<td>${vo.writeDate}</td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -179,14 +177,13 @@
 			</nav>
 		</div>
 	</div>
-</div>
 <%
     if (userVO != null) {
         int userIdx = Integer.parseInt(userVO.getUseridx());
         List<ResVO> reservations = ResDAO.getList(userIdx);
         if (reservations != null && !reservations.isEmpty()) {
 %>
-    <div class="col-md-7 ml-4 card">
+    <div class="col-md-5 ml-2 p-2 card">
         <h3>나의 예약목록</h3>
         <form id="deleteForm" action="deleteReservation" method="post">
             <table class="table">
@@ -239,6 +236,7 @@
 <%
     }
 %>
+</div>
 
 
 

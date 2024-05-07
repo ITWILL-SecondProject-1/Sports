@@ -141,13 +141,13 @@
 						        <div class="card-header d-flex justify-content-between align-items-center comment-name">
 						            <span>
 						            	<img src="${UserDAO.indexToUserInfo(row.useridx).getImage() }" alt="profile-image" id="writer-info-profile-img">
-						            	<a href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() }" }>${row.nickname}</a>
+						            	<a href="userpage?email=${UserDAO.indexToUserInfo(row.useridx).getEmail() } }">${row.nickname}</a>
 						            	<br>
 						            	${row.writeDate }
 						            </span>
 						            <c:if test="${not empty useridx && useridx == row.useridx}">
 						                <div class="ml-auto"> <!-- 오른쪽 정렬을 위해 ml-auto 추가 -->
-						                    <button type="button" class="btn btn-danger btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx})">수정</button>
+						                    <button type="button" class="btn btn-warning btn-sm comment-edit" onclick="editComment(${useridx}, ${row.commentIdx})">수정</button>
 						                    <button type="button" class="btn btn-danger btn-sm comment-delete" onclick="confirmDeleteComment(${useridx}, ${row.commentIdx})">삭제</button>
 						                </div>
 						            </c:if>

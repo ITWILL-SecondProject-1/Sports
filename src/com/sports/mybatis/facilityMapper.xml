@@ -88,6 +88,22 @@
 		WHERE FACILITY_IDX = #{facilityIdx}
 	</update>
 	
+	<!-- 시설 수정 -->
+	<update id="updateFacilityWithThumb" parameterType="FaVO">
+		UPDATE FACILITY
+		SET FACILITY_NAME = #{facilityName},
+		    ADDRESS = #{address},
+		    PHONE_NUMBER = #{phoneNumber},
+		    EVENT = #{event},
+		    OPEN_TIME = #{openTime},
+		    CLOSE_TIME = #{closeTime},
+		    CAPACITY = #{capacity},
+		    DATE_RANGE_FOR_RESERVATION = #{DateRangeForReservation},
+			THUMB = #{thumb},
+			THUMB_PI = #{thumbPi}
+		WHERE FACILITY_IDX = #{facilityIdx}
+	</update>
+	
 	<!-- 시설 삭제 -->
 	<delete id="deleteFacility" parameterType="int">
 		DELETE

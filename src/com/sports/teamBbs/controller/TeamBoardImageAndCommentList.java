@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import com.sports.model.dao.ImagesDAO;
 import com.sports.model.dao.TeamBbsDAO;
 import com.sports.model.vo.ImagesVO;
+import com.sports.model.vo.TeamBbsVO;
 
 import Paging.CommentVO;
 
@@ -28,13 +29,13 @@ public class TeamBoardImageAndCommentList extends HttpServlet {
 		int imageIdx = Integer.parseInt(req.getParameter("imageIdx"));
 		List<CommentVO> comments = TeamBbsDAO.getCommentsList(bbsIdx);
 		List<ImagesVO> images = ImagesDAO.imageList(imageIdx);
+		TeamBbsVO boardVO = TeamBbsDAO.selectOneBBS(bbsIdx);
 
 		JSONObject jsonResponse = new JSONObject();
 		JSONArray jsonImages = new JSONArray();
 		JSONArray jsonComments = new JSONArray();
 
 		for (ImagesVO image : images) {
-			System.out.println(image.toString());
 		    jsonImages.add(image.toJSONObject());
 		}
 
@@ -44,6 +45,7 @@ public class TeamBoardImageAndCommentList extends HttpServlet {
 
 		jsonResponse.put("images", jsonImages);
 		jsonResponse.put("comments", jsonComments);
+		jsonResponse.put("boardVO", boardVO.toJSONObject());
 
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
