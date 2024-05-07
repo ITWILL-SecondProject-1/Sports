@@ -90,10 +90,17 @@
 	    border-color: #bd2130;
 	}
 	.form-actions {
-    text-align: right;
-    padding-top: 20px;
+	    text-align: right;
+	    padding-top: 20px;
 	}
 	.section-title {
     margin-top: 20px; 
     }
+    
+	#logo-img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
 </style>
