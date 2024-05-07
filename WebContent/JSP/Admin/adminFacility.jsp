@@ -69,26 +69,6 @@
               자유게시판관리
             </a>
           </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Products
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Customers
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Reports
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Integrations
-            </a>
-          </li>
         </ul>
       </div>
     </nav>

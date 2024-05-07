@@ -158,7 +158,6 @@
 	}
 	#sidebarMenu {
 		margin-top: 100px;
-		border: 1px solid black;
 	}
 	li .sidemenu {
 		border: 1px solid black;
@@ -208,26 +207,6 @@
           <li class="nav-item sidemenu">
             <a class="nav-link" href="adminBoard">
               자유게시판관리
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Products
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Customers
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Reports
-            </a>
-          </li>
-          <li class="nav-item sidemenu">
-            <a class="nav-link" href="#">
-              Integrations
             </a>
           </li>
         </ul>
