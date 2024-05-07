@@ -21,8 +21,8 @@
 	<!-- 이메인 중복 확인 -->
 	<select id="emailDuplicateCheck" parameterType="string" resultType="boolean">
 		SELECT CASE
-		         WHEN EXISTS (SELECT 1 FROM SPORT_USER WHERE EMAIL = #{email}) THEN 'True'
-		         ELSE 'False'
+		         WHEN EXISTS (SELECT 1 FROM SPORT_USER WHERE EMAIL = #{email}) THEN 1
+		         ELSE 0
 		       END AS Is_Exists
 		FROM dual
 	</select>
